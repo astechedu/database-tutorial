@@ -1,10 +1,12 @@
 # SQL Basics For Beginners
 
 Introduction:
+------------
 
 Sql is a standrd language forstoring, manipulatin and retrieving data in database
 
 What is SQL?
+-----------
   
    Sql stands for Structued Query Language
    Sql lets you access and manipulate databases
@@ -22,7 +24,8 @@ What is SQL?
    Sql can set permissions on tables, procedures, and views
 
 
-Using Sql in Web Site
+Using Sql in Web Site:
+---------------------
 
     An RDBMS database program ( MySql, SQL Server, Oracle, MS Access etc.)
     To use a server-side scripting language like php, asp etc.
@@ -40,6 +43,7 @@ Using Sql in Web Site
 
 
 Some Most Important sql commands: 
+--------------------------------
     
     CREATE DATABASE - creates a new database
     CREATE TABLE    - creates a new table
@@ -54,6 +58,24 @@ Some Most Important sql commands:
     ALTER TABLE     - modifies a table
 
 
+
+Table: 
+      ---------------------------------------
+      |  id  |  fname  |  lname    |  age    |
+      ---------------------------------------  
+      |  1   |  ajay   | sisaudiya |  88     |
+      ---------------------------------------                   
+      |  2   |  amit   | aryan     |  33     |
+      ---------------------------------------
+      |  3   | geeta   | rawat     |  83     |
+      ---------------------------------------
+      |  4   | akshita | sengar    |  9      |
+      ---------------------------------------
+      |  5   | aura    | negi      |   61    |
+      ---------------------------------------
+      |  6   | dev     | pratap    |  20     |
+      ---------------------------------------
+      
     Syntax: 
       
         CREATE DATABASE <db-name>
@@ -61,6 +83,7 @@ Some Most Important sql commands:
 
 
     Examples: 
+    --------
 
     select *from users;
 
