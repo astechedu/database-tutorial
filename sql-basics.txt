@@ -115,7 +115,8 @@ Table:
 
 
 #2. Update statement is used to modify the existing records in a table
-   
+               -- Update, Set & Where Clause --   
+
 SQL Update Statement: 
 
 Syntax: 
