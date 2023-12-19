@@ -151,4 +151,59 @@ Examples:
  select *from users where age = 23 limit 2;
 
 
+#4. SQL Alter Table Statement
+    The alter table statement is used to add, delete, or modify columns in an existing table.
+    or drop,  rename column, 
 
+  1. Add Column
+
+     alter table users
+     add column_name datatype;
+
+     Example: 
+     
+      alter table users
+      add email varchar(225);
+
+   2. Drop Column
+
+      alter table users
+      drop column column_name;
+
+      Example: 
+  
+       alter table users
+       drop column email;
+
+     3. Rename Column
+
+        alter table table_name
+        rename column old_name to new_name;
+
+        Example:
+  
+         alter table users
+         rename column lname to fname;
+
+       4. Modify Datatype
+
+          alter table uses
+          modify column_name datatype;
+
+          Example: 
+ 
+          alter table users
+          modify salary float;
+    
+        5. Change data type 
+
+           alter table_name
+           alter column old_datatype new_datatype
+
+          Example: 
+         
+          alter table users
+          alter column DateOfBirth year;
+
+
+-----x-----
