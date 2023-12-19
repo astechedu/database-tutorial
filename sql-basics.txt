@@ -1,6 +1,8 @@
 #https://github.com/astechedu/database-tutorial.git
 #SQL Basics For Beginers
 
+#1. 
+
 Introduction:
 ------------
 
@@ -108,5 +110,36 @@ Table:
 
     #Inserting data
     insert into users(id,fname,lname,age) values(1,"ajay","sisaudiya",23); 
-  
-    
+
+----x-----
+
+
+#2. Update statement is used to modify the existing records in a table
+   
+SQL Update Statement: 
+
+Syntax: 
+
+UPDATE table_name
+SET column1 = value
+WHERE condition;
+
+
+UPDATE table_name
+SET column1 = value1, column2 = value2, column3 = value3;
+WHERE condition;
+
+Examples: 
+
+1.
+update users
+set name = "amit"
+where id = 4;
+
+2.
+update users
+set fname = "rohit", lname = "gupta"
+where id = 6;
+
+------x------
+
