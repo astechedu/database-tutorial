@@ -117,30 +117,38 @@ Table:
 #2. Update statement is used to modify the existing records in a table
                -- Update, Set & Where Clause --   
 
-SQL Update Statement: 
+  SQL Update Statement: 
 
-Syntax: 
+   Syntax: 
 
-UPDATE table_name
-SET column1 = value
-WHERE condition;
+    UPDATE table_name
+    SET column1 = value
+    WHERE condition;
 
 
-UPDATE table_name
-SET column1 = value1, column2 = value2, column3 = value3;
-WHERE condition;
+    UPDATE table_name
+    SET column1 = value1, column2 = value2, column3 = value3;
+    WHERE condition;
 
 Examples: 
 
-1.
-update users
-set name = "amit"
-where id = 4;
+ 1.
+ update users
+ set name = "amit"
+ where id = 4;
 
-2.
-update users
-set fname = "rohit", lname = "gupta"
-where id = 6;
+ 2.
+ update users
+ set fname = "rohit", lname = "gupta"
+ where id = 6;
 
 ------x------
+
+#3. SQL Limit Clause is used to specify number of records to return 
+         -- select, limit -- 
+
+
+ select *from users where age = 23 limit 2;
+
+
 
