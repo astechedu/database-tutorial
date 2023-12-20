@@ -222,9 +222,9 @@ Syntax:
 ---x---
 
 
-# -- Day 3 --
+# -- Day 4 --
 
-#3. Update statement is used to modify the existing records in a table
+#4. Update statement is used to modify the existing records in a table
                -- Update, Set & Where Clause --   
 
    SQL Update Statement: 
@@ -260,9 +260,9 @@ Examples:
 
 
 
-# -- Day 4 --
+# -- Day 5 --
 
-#4. SQL WHERE Clause with Operators
+#5. SQL WHERE Clause with Operators
 
     The WHERE clause is used to filter records.
    
