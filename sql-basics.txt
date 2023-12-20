@@ -224,33 +224,109 @@ Syntax:
     SELECT * FROM table_name
     WHERE Column = value;   
    
-   Example:
+   Examples:
 
+-SQL Comparison Operators:
+
+   a)   
     SELECT * FROM users
-    WHERE Country='India'; 
-  
+    WHERE Country='India';     
+    
+   b)  
+    SELECT * FROM Products
+    WHERE Price = 18; 
+     
+   c)    
+    SELECT * FROM Products
+    WHERE Price > 30;
+    
+   d)   
+   SELECT * FROM Products
+   WHERE Price < 30;
+    
+   e)   
+   SELECT * FROM Products
+   WHERE Price >= 30;
+    
+   f)   
+   SELECT * FROM Products
+   WHERE Price <= 30; 
+        
+   g)   
+   SELECT * FROM Products
+   WHERE Price <> 18;
+    
+-Logical Operator Examples:
+ 
+   a)
+   SELECT ProductName 
+   FROM Products
+   WHERE ProductID = ALL (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);
+
+   b)
+   SELECT * FROM Customers
+   WHERE City = "London" AND Country = "UK";
+   
+   c)
+   SELECT * FROM Products
+   WHERE Price > ANY (SELECT Price FROM Products WHERE Price > 50);
+   
+   d)
+   SELECT * FROM Products
+   WHERE Price BETWEEN 50 AND 60;
+   
+   e)
+   SELECT SupplierName
+   FROM Suppliers
+   WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);  
+    
+   f)
+   SELECT * FROM Customers
+   WHERE City IN ('Paris','London');  
+   
+   g)
+   SELECT * FROM Customers
+   WHERE City LIKE 's%';
+
+   h)
+   SELECT * FROM Customers
+   WHERE City NOT LIKE 's%';
+
+   i)
+   SELECT * FROM Customers
+   WHERE City = "London" OR Country = "UK";
+
+   j)
+   SELECT * FROM Products
+   WHERE Price > SOME (SELECT Price FROM Products WHERE Price > 20); 
+ 
+ 
+ 
  > The following operators can be used in the WHERE clause:
  
        
  > SQL Arithmetic Operators:
 
-	Operator	Description	
-	+	        Add	
-	-		Subtract	
-	*		Multiply	
-	/		Divide	
-	%		Modulo        
+	Operator	Description	       Example:            Result:
+	
+	+	        Add	               select 8 + 2        10
+	-		Subtract	       select 9 - 4        5 
+	*		Multiply	       select 3 * 2        6
+	/		Divide	               select 8 / 2        4
+	%		Modulo                 select 8 % 3        2  (Remainer)
 	        
  > SQL Bitwise Operators:
 
 	Operator	Description
+	
 	&		Bitwise AND
 	|		Bitwise OR
 	^		Bitwise exclusive OR
 		
  > SQL Comparison Operators:
 
-	Operator	Description	
+	Operator	Description
+		
 	=		Equal to	
 	>		Greater than	
 	<		Less than	
@@ -261,6 +337,7 @@ Syntax:
  > SQL Compound Operators:
 
 	Operator	Description
+	
 	+=		Add equals
 	-=		Subtract equals
 	*=		Multiply equals
@@ -272,7 +349,8 @@ Syntax:
 	
  > SQL Logical Operators:
 
-	Operator	Description	
+	Operator	Description
+		
 	ALL		TRUE if all of the subquery values meet the condition
 	AND		TRUE if all the conditions separated by AND is TRUE	
 	ANY		TRUE if any of the subquery values meet the condition	
