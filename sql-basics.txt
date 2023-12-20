@@ -1,6 +1,7 @@
 #https://github.com/astechedu/database-tutorial.git
 #SQL Basics For Beginers
 
+# -- Day 1 --
 #1. 
 
 Introduction:
@@ -113,7 +114,7 @@ Table:
 
 ----x-----
 
-
+# -- Day 2 --
 #2. Update statement is used to modify the existing records in a table
                -- Update, Set & Where Clause --   
 
@@ -122,12 +123,16 @@ Table:
    Syntax: 
 
     UPDATE table_name
-    SET column1 = value
+    SET column_Name = value;
+
+
+    UPDATE table_name
+    SET column_name = value
     WHERE condition;
 
 
     UPDATE table_name
-    SET column1 = value1, column2 = value2, column3 = value3;
+    SET column_name1 = value1, column_name2 = value2, column_name3 = value3;
     WHERE condition;
 
 Examples: 
@@ -144,14 +149,9 @@ Examples:
 
 ------x------
 
-#3. SQL Limit Clause is used to specify number of records to return 
-         -- select, limit -- 
+# -- Day 3 --
 
-
- select *from users where age = 23 limit 2;
-
-
-#4. SQL Alter Table Statement
+#3. SQL Alter Table Statement
     The alter table statement is used to add, delete, or modify columns in an existing table.
     or drop,  rename column, 
 
@@ -205,5 +205,57 @@ Examples:
           alter table users
           alter column DateOfBirth year;
 
+---x---
+
+
+# -- Day 4 --
+
+#4. SQL WHERE Clause with Operators
+
+    The WHERE clause is used to filter records.
+   
+    Syntax:
+
+    SELECT * FROM table_name
+    WHERE Column = value;   
+   
+    Example:
+
+    SELECT * FROM users
+    WHERE Country='India'; 
+ 
+ 
+ > The following operators can be used in the WHERE clause:
+ 
+	Operator    Description 
+		
+	=	    Equal	
+	>	    Greater than	
+	<	    Less than	
+	>=	    Greater than or equal	
+	<=	    Less than or equal	
+	<>	    Not equal. Note: In some versions of SQL this operator may be written as !=	
+	BETWEEN     Between a certain range	
+	LIKE	    Search for a pattern	
+	IN	    To specify multiple possible values for a column	
+        AND
+        OR
+        NOT
+        UNION
+        UNION ALL
+        All
+        ANY
+        
+
+
+#5. SQL Limit Clause is used to specify number of records to return 
+         -- select, limit -- 
+
+
+ select *from users where age = 23 limit 2;
 
 -----x-----
+
+
+
+
