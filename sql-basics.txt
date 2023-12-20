@@ -7,7 +7,7 @@
 #1. 
 
 Introduction:
-------------
+-------------
 
 Sql is a standrd language forstoring, manipulatin and retrieving data in database
 
@@ -84,15 +84,13 @@ Table:
       
     Syntax: 
       
-        CREATE DATABASE <db-name>
-      
+        CREATE DATABASE <db-name>      
 
 
     Examples: 
     --------
 
     select *from users;
-
 
 
     Lab: 
@@ -115,12 +113,62 @@ Table:
 
 ----x-----
 
-
 # -- Day 2 --
 
-#2. SQL Alter Table Statement
-    The alter table statement is used to add, delete, or modify columns in an existing table.
-    or drop,  rename column, 
+#2. Copy Old_table to New_table
+
+
+Syntax:
+
+      create table new_table_name select *from old_table_name;
+      //OR
+      create table new_table_name AS select *from old_table_name;
+      
+      
+ > copy table from existing table into new table with data
+
+   Syntax:
+	 create table new_table_name select *from old_table_name;
+	
+   Example: 
+         create table users2 select *from users;
+        
+
+ > copy table's structure form old table to new table
+
+   Syntax:
+         create table new_table_name select *from old_table_name where 1=0;
+
+   Example: 
+	 create table users2 select *from users where 1=0;
+
+
+ > copy table with some columns from existing table to new table with data
+
+    Syntax:    
+	create table new_table_name select id, fname from old_table_name;
+	
+    Example:
+	create table users2 select id, fname from users;
+
+ > copy table's structure form old table to new table without data
+ 
+     Syntax: 
+        create table new_table_name select id, fname from old_table_name where 1=0;
+        
+     Example:
+	create table users2 select id, fname from users where 1=0;
+
+
+---x---
+
+
+# -- Day 3 --
+
+#3. SQL Alter Table Statement, Datatypes
+
+      The alter table statement is used to add, delete, or modify columns in an existing table.
+      or drop,  rename column, 
 
   1. Add Column
 
