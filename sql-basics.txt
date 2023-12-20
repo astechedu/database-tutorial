@@ -1,3 +1,5 @@
+# ----> SQL Tutorial ----
+
 #https://github.com/astechedu/database-tutorial.git
 #SQL Basics For Beginers
 
@@ -93,7 +95,6 @@ Table:
 
 
 
-
     Lab: 
 
     #Creating database
@@ -114,11 +115,71 @@ Table:
 
 ----x-----
 
+
 # -- Day 2 --
-#2. Update statement is used to modify the existing records in a table
+
+#2. SQL Alter Table Statement
+    The alter table statement is used to add, delete, or modify columns in an existing table.
+    or drop,  rename column, 
+
+  1. Add Column
+
+     alter table users
+     add column_name datatype;
+
+     Example: 
+     
+     alter table users
+     add email varchar(225);
+
+   2. Drop Column
+
+     alter table users
+     drop column column_name;
+
+     Example: 
+  
+     alter table users
+     drop column email;
+
+   3. Rename Column
+
+     alter table table_name
+     rename column old_name to new_name;
+
+     Example:
+  
+     alter table users
+     rename column lname to fname;
+
+   4. Modify Datatype
+
+     alter table uses
+     modify column_name datatype;
+
+     Example: 
+ 
+     alter table users
+     modify salary float;
+    
+   5. Change data type 
+
+      alter table_name
+      alter column old_datatype new_datatype
+      Example: 
+         
+      alter table users
+      alter column DateOfBirth year;
+
+---x---
+
+
+# -- Day 3 --
+
+#3. Update statement is used to modify the existing records in a table
                -- Update, Set & Where Clause --   
 
-  SQL Update Statement: 
+   SQL Update Statement: 
 
    Syntax: 
 
@@ -138,74 +199,17 @@ Table:
 Examples: 
 
  1.
- update users
- set name = "amit"
- where id = 4;
+	 update users
+	 set name = "amit"
+	 where id = 4;
 
  2.
- update users
- set fname = "rohit", lname = "gupta"
- where id = 6;
+	 update users
+	 set fname = "rohit", lname = "gupta"
+	 where id = 6;
 
 ------x------
 
-# -- Day 3 --
-
-#3. SQL Alter Table Statement
-    The alter table statement is used to add, delete, or modify columns in an existing table.
-    or drop,  rename column, 
-
-  1. Add Column
-
-     alter table users
-     add column_name datatype;
-
-     Example: 
-     
-      alter table users
-      add email varchar(225);
-
-   2. Drop Column
-
-      alter table users
-      drop column column_name;
-
-      Example: 
-  
-       alter table users
-       drop column email;
-
-     3. Rename Column
-
-        alter table table_name
-        rename column old_name to new_name;
-
-        Example:
-  
-         alter table users
-         rename column lname to fname;
-
-       4. Modify Datatype
-
-          alter table uses
-          modify column_name datatype;
-
-          Example: 
- 
-          alter table users
-          modify salary float;
-    
-        5. Change data type 
-
-           alter table_name
-           alter column old_datatype new_datatype
-
-          Example: 
-         
-          alter table users
-          alter column DateOfBirth year;
-
----x---
 
 
 # -- Day 4 --
