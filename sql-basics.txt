@@ -221,10 +221,88 @@ Syntax:
 
 ---x---
 
-
 # -- Day 4 --
 
-#4. Update statement is used to modify the existing records in a table
+#4. SQL WHERE Clause with Operators
+
+    The WHERE clause is used to filter records.
+    
+   Syntax:
+   
+    SELECT * FROM table_name
+    WHERE Column = value;   
+   
+   Example:
+
+    SELECT * FROM users
+    WHERE Country='India'; 
+ 
+ 
+ > The following operators can be used in the WHERE clause:
+ 
+       
+ > SQL Arithmetic Operators:
+
+	Operator 	Description 	
+	+ 		Add 	
+	- 		Subtract 	
+	* 		Multiply 	
+	/ 		Divide 	
+	% 		Modulo        
+		
+        
+ > SQL Bitwise Operators:
+
+	Operator 	Description
+	& 		Bitwise AND
+	| 		Bitwise OR
+	^ 		Bitwise exclusive OR
+	
+	
+
+ > SQL Comparison Operators:
+
+	Operator 	Description 	
+	= 		Equal to 	
+	> 		Greater than 	
+	< 		Less than 	
+	>= 		Greater than or equal to 	
+	<= 		Less than or equal to 	
+	<> 		Not equal to
+	
+ > SQL Compound Operators:
+
+	Operator 	Description
+	+= 		Add equals
+	-= 		Subtract equals
+	*= 		Multiply equals
+	/= 		Divide equals
+	%= 		Modulo equals
+	&= 		Bitwise AND equals
+	^-= 		Bitwise exclusive equals
+	|*= 		Bitwise OR equals	
+	
+ > SQL Logical Operators:
+
+	Operator 	Description 	
+	ALL 		TRUE if all of the subquery values meet the condition 	
+	AND 		TRUE if all the conditions separated by AND is TRUE 	
+	ANY 		TRUE if any of the subquery values meet the condition 	
+	BETWEEN 	TRUE if the operand is within the range of comparisons 	
+	EXISTS 		TRUE if the subquery returns one or more records 	
+	IN 		TRUE if the operand is equal to one of a list of expressions 	
+	LIKE 		TRUE if the operand matches a pattern 	
+	NOT 		Displays a record if the condition(s) is NOT TRUE 	
+	OR 		TRUE if any of the conditions separated by OR is TRUE 	
+	SOME 		TRUE if any of the subquery values meet the condition
+	
+		
+---x---
+
+
+# -- Day 5 --
+
+#5. Update statement is used to modify the existing records in a table
                -- Update, Set & Where Clause --   
 
    SQL Update Statement: 
@@ -259,54 +337,6 @@ Examples:
 ------x------
 
 
-
-# -- Day 5 --
-
-#5. SQL WHERE Clause with Operators
-
-    The WHERE clause is used to filter records.
-   
-    Syntax:
-
-    SELECT * FROM table_name
-    WHERE Column = value;   
-   
-    Example:
-
-    SELECT * FROM users
-    WHERE Country='India'; 
- 
- 
- > The following operators can be used in the WHERE clause:
- 
-	Operator    Description 
-		
-	=	    Equal	
-	>	    Greater than	
-	<	    Less than	
-	>=	    Greater than or equal	
-	<=	    Less than or equal	
-	<>	    Not equal. Note: In some versions of SQL this operator may be written as !=	
-	BETWEEN     Between a certain range	
-	LIKE	    Search for a pattern	
-	IN	    To specify multiple possible values for a column	
-        AND
-        OR
-        NOT
-        UNION
-        UNION ALL
-        All
-        ANY
-        
-
-
-#5. SQL Limit Clause is used to specify number of records to return 
-         -- select, limit -- 
-
-
- select *from users where age = 23 limit 2;
-
------x-----
 
 
 
