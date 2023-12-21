@@ -402,16 +402,38 @@ Syntax:
 
 Examples: 
 
- 1.
+ 1.      update users
+         set fname ="anuj";
+
+ 2.
 	 update users
 	 set name = "amit"
 	 where id = 4;
 
- 2.
+ 3.
 	 update users
 	 set fname = "rohit", lname = "gupta"
 	 where id = 6;
 
+ 4.      update employees
+         set emp_salary = 2000
+         where emp_id = 8;
+
+ 5.      update products
+         set product_price = 12000
+         where product_id = 8 AND product_id = 10;
+
+ 6.      update products
+         set product_price = 8000
+         where product_id = 1 OR product_id = 4
+
+ 7.      update products
+         set product_color = "xl"
+         where product_price between 500 AND 300
+
+ 8.      update products
+         set 
+         where
 ------x------
 
 
