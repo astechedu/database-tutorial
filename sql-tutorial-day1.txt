@@ -1,0 +1,115 @@
+# ----> SQL Tutorial ----
+
+#https://github.com/astechedu/database-tutorial.git
+#SQL Basics For Beginers
+
+# -- Day 1 --
+#1. 
+
+Introduction:
+-------------
+
+Sql is a standrd language forstoring, manipulatin and retrieving data in database
+
+What is SQL?
+-----------
+  
+   Sql stands for Structued Query Language
+   Sql lets you access and manipulate databases
+
+
+   Sql can retrieve data from database
+   Sql can execute queries against a database
+   Sql can insert records in a database
+   Sql can update records in database
+   Sql can create new database
+   Sql can create tables
+   Sql can delete records from database
+   Sql can create stored procedures in database
+   Sql can create views in databas
+   Sql can set permissions on tables, procedures, and views
+
+
+Using Sql in Web Site:
+---------------------
+
+    An RDBMS database program ( MySql, SQL Server, Oracle, MS Access etc.)
+    To use a server-side scripting language like php, asp etc.
+
+
+    RDBMS stands for Relational Database Mamagement System
+
+    RDBMS is the basis for SQL
+    And for all modern database systems such as MS SQL Server, Oracle, Mysql and Microsoft access etc.
+  
+    The data in RDBMS is stored in database Objects called tables.
+    A table is a collection of related data entries and it consists of columns and rows.
+
+
+
+
+Some Most Important sql commands: 
+--------------------------------
+    
+    CREATE DATABASE - creates a new database
+    CREATE TABLE    - creates a new table
+    INSERT INTO     - inserts new data into a database
+    SELECT          - extracts data from a database
+    UPDATE          - updates data in a database
+    ALTER DATABASE  - modifies a database
+    DROP TABLE      - deletes a table
+    CREATE INDEX    - creates an index (search key)
+    DELETE          - delete data from a database
+    DROP INDEX      - deletes an idex
+    ALTER TABLE     - modifies a table
+
+
+
+Table: 
+      ---------------------------------------
+      |  id  |  fname  |  lname    |  age    |
+      ---------------------------------------  
+      |  1   |  ajay   | sisaudiya |  88     |
+      ---------------------------------------                   
+      |  2   |  amit   | aryan     |  33     |
+      ---------------------------------------
+      |  3   |  geeta  | rawat     |  83     |
+      ---------------------------------------
+      |  4   | akshita | sengar    |  9      |
+      ---------------------------------------
+      |  5   |  aura   | negi      |   61    |
+      ---------------------------------------
+      |  6   |  dev    | pratap    |  20     |
+      ---------------------------------------
+      
+    Syntax: 
+      
+        CREATE DATABASE <db-name>      
+
+
+    Examples: 
+    --------
+
+    select *from users;
+
+
+    Lab: 
+
+    #Creating database
+    create database sql_tutorial;
+   
+    #Creating table 
+    create table users{
+
+     id int,
+     fname varchar(20),
+     lname varchar(20),
+     age int
+     
+    };  
+
+    #Inserting data
+    insert into users(id,fname,lname,age) values(1,"ajay","sisaudiya",23); 
+
+----x-----
+

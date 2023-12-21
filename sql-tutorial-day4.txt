@@ -1,0 +1,175 @@
+# ----> SQL Tutorial ----
+
+#https://github.com/astechedu/database-tutorial.git
+#SQL Basics For Beginers
+
+
+# -- Day 4 --
+
+#4. SQL WHERE Clause with Operators
+
+    The WHERE clause is used to filter records.
+    
+   Syntax:
+   
+    SELECT * FROM table_name
+    WHERE Column = value;   
+   
+   Examples:
+
+ > SQL Arithmetic Operators:
+
+      Example:           
+	
+      select 8 + 2
+      select 9 - 4
+      select 3 * 2
+      select 8 / 2
+      select 8 % 3
+	  
+	  
+-SQL Comparison Operators:
+
+   a)   
+    SELECT * FROM users
+    WHERE Country='India';     
+    
+   b)  
+    SELECT * FROM Products
+    WHERE Price = 18; 
+     
+   c)    
+    SELECT * FROM Products
+    WHERE Price > 30;
+    
+   d)   
+   SELECT * FROM Products
+   WHERE Price < 30;
+    
+   e)   
+   SELECT * FROM Products
+   WHERE Price >= 30;
+    
+   f)   
+   SELECT * FROM Products
+   WHERE Price <= 30; 
+        
+   g)   
+   SELECT * FROM Products
+   WHERE Price <> 18;
+    
+-Logical Operator Examples:
+ 
+   a)
+   SELECT ProductName 
+   FROM Products
+   WHERE ProductID = ALL (SELECT ProductID FROM OrderDetails WHERE Quantity = 10);
+
+   b)
+   SELECT * FROM Customers
+   WHERE City = "London" AND Country = "UK";
+   
+   c)
+   SELECT * FROM Products
+   WHERE Price > ANY (SELECT Price FROM Products WHERE Price > 50);
+   
+   d)
+   SELECT * FROM Products
+   WHERE Price BETWEEN 50 AND 60;
+   
+   e)
+   SELECT SupplierName
+   FROM Suppliers
+   WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);  
+    
+   f)
+   SELECT * FROM Customers
+   WHERE City IN ('Paris','London');  
+   
+   g)
+   SELECT * FROM Customers
+   WHERE City LIKE 's%';
+
+   h)
+   SELECT * FROM Customers
+   WHERE City NOT LIKE 's%';
+
+   i)
+   SELECT * FROM Customers
+   WHERE City = "London" OR Country = "UK";
+
+   j)
+   SELECT * FROM Products
+   WHERE Price > SOME (SELECT Price FROM Products WHERE Price > 20); 
+ 
+ 
+ 
+ > The following operators can be used in the WHERE clause:
+ 
+       
+ > SQL Arithmetic Operators:
+
+	Operator	Description	       Example:            Result:
+	
+	+	        Add	               select 8 + 2        10
+	-		Subtract	       select 9 - 4        5 
+	*		Multiply	       select 3 * 2        6
+	/		Divide	               select 8 / 2        4
+	%		Modulo                 select 8 % 3        2  (Remaider)
+	        
+ > SQL Bitwise Operators:
+
+	Operator	Description
+	
+	&		Bitwise AND
+	|		Bitwise OR
+	^		Bitwise exclusive OR
+		
+ > SQL Comparison Operators:
+
+	Operator	Description
+		
+	=		Equal to	
+	>		Greater than	
+	<		Less than	
+	>=		Greater than or equal to	
+	<=		Less than or equal to	
+	<>		Not equal to
+	
+ > SQL Compound Operators:
+
+	Operator	Description
+	
+	+=		Add equals
+	-=		Subtract equals
+	*=		Multiply equals
+	/=		Divide equals
+	%=		Modulo equals
+	&=		Bitwise AND equals
+	^-=		Bitwise exclusive equals
+	|*=		Bitwise OR equals	
+	
+ > SQL Logical Operators:
+
+	Operator	Description
+		
+	ALL		TRUE if all of the subquery values meet the condition
+	AND		TRUE if all the conditions separated by AND is TRUE	
+	ANY		TRUE if any of the subquery values meet the condition	
+	BETWEEN	        TRUE if the operand is within the range of comparisons
+	EXI
+        STS		TRUE if the subquery returns one or more records	
+	IN		TRUE if the operand is equal to one of a list of expressions	
+	LIKE		TRUE if the operand matches a pattern
+	NOT		Displays a record if the condition(s) is NOT TRUE	
+	OR		TRUE if any of the conditions separated by OR is TRUE	
+	SOME		TRUE if any of the subquery values meet the condition
+	
+		
+---x---
+
+
+
+
+
+

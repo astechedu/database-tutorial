@@ -1,0 +1,104 @@
+# ----> SQL Tutorial ----
+
+#https://github.com/astechedu/database-tutorial.git
+#SQL Basics For Beginers
+
+
+# -- Day 5 --
+
+#5. Update statement is used to modify the existing records in a table
+               -- Update, Set & Where Clause --   
+
+   SQL Update Statement: 
+
+   Syntax: 
+
+    UPDATE table_name
+    SET column_Name = value;
+
+
+    UPDATE table_name
+    SET column_name = value
+    WHERE condition;
+
+
+    UPDATE table_name
+    SET column_name1 = value1, column_name2 = value2, column_name3 = value3;
+    WHERE condition;
+
+Examples: 
+
+ 1.      update users
+         set fname ="anuj";
+
+ 2.
+	 update users
+	 set name = "amit"
+	 where id = 4;
+
+ 3.
+	 update users
+	 set fname = "rohit", lname = "gupta"
+	 where id = 6;
+
+ 4.      update employees
+         set emp_salary = 2000
+         where emp_id = 8;
+
+ 5.      update products
+         set product_price = 12000
+         where product_id = 8 AND product_id = 10;
+
+ 6.      update products
+         set product_price = 8000
+         where product_id = 1 OR product_id = 4
+
+ 7.      update products
+         set product_color = "xl"
+         where product_price between 500 AND 300
+
+ 8.      update users
+         set status = 0;
+         where city like 'in%';
+
+ 9       update users
+         set status = 1
+         where country NOT LIKE 'in%';
+
+10       update users
+         set status = 0
+         where salary > 3000;
+
+11       update users
+         set status = 1
+         where salary < 4000;
+
+12       update users
+         set comment = "valuable user"
+         where id >= 30;
+
+13       update users
+         set comment = "average user"
+         where id <= 10;
+
+14       update users
+         set status = 1
+         where id IN (1,4,6);
+
+14       update employees
+         set bonus = salary * 0.2 
+         where status = 1;
+
+15       update employees
+         set tot_salary = salary + bonus
+         where status = 1;
+
+
+
+------x------
+
+
+
+
+
+
