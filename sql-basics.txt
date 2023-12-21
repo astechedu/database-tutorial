@@ -226,6 +226,17 @@ Syntax:
    
    Examples:
 
+ > SQL Arithmetic Operators:
+
+      Example:           
+	
+      select 8 + 2
+      select 9 - 4
+      select 3 * 2
+      select 8 / 2
+      select 8 % 3
+	  
+	  
 -SQL Comparison Operators:
 
    a)   
@@ -313,7 +324,7 @@ Syntax:
 	-		Subtract	       select 9 - 4        5 
 	*		Multiply	       select 3 * 2        6
 	/		Divide	               select 8 / 2        4
-	%		Modulo                 select 8 % 3        2  (Remainer)
+	%		Modulo                 select 8 % 3        2  (Remaider)
 	        
  > SQL Bitwise Operators:
 
