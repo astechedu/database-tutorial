@@ -47,7 +47,7 @@ Examples:
 
  5.      update products
          set product_price = 12000
-         where product_id = 8 AND product_id = 10;
+         where product_id = 8 AND product_quantity = 1;
 
  6.      update products
          set product_price = 8000
