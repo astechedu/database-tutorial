@@ -1,0 +1,185 @@
+# ----> SQL Tutorial ----
+
+#https://github.com/astechedu/database-tutorial.git
+#SQL Basics For Beginers
+
+
+ # -- Day 6 --
+ 
+ #6. SQL Aggregate Functions 
+
+
+     COUNT        counts how many rows are in a particular column.
+     SUM          adds together all the values in a particular column.
+     MIN, MAX     return the lowest and highest values in a particular column, respectively.
+     AVG          calculates the average of a group of selected values.
+
+
+     1. SQL COUNT():
+     
+         The COUNT() function returns the number of rows that matches a specified criterion.
+     
+     Syntax:
+	
+	SELECT COUNT(column_name)
+	FROM table_name
+	WHERE condition;      
+
+	SELECT COUNT(emp_id)
+	FROM employees; 
+	
+	SELECT COUNT(emp_id) NoOfUsers
+	FROM employees; 
+				  
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_salary > 4000;
+		  
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_salary < 3000;
+	
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_salary >= 3000;	
+	
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_salary <= 3000;	
+	  
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_country LIKE 'a%';
+		  
+	SELECT COUNT(emp_id)
+	FROM employees	  
+	WHERE emp_country NOT LIKE 'a%';
+
+		  
+        The following SQL statement finds the number of products:
+        
+	SELECT COUNT(ProductID)
+	FROM Products; 
+	
+	SELECT COUNT(ProductID)
+	FROM Products	  
+	WHERE unit_price > 4;
+		
+		
+	Note: NULL values are not counted.  
+	  
+	  
+     2. SQL AVG():
+     
+  	The AVG() function returns the average value of a numeric column. 	
+  	  
+     Syntax: 
+     
+     	SELECT AVG(column_name)
+	FROM table_name
+	WHERE condition; 
+ 
+      	SELECT AVG(emp_salary)
+	FROM users
+	where emp_salary > 4000;
+ 
+       	SELECT AVG(emp_salary)
+	FROM users
+	where emp_salary >= 2000;
+	
+      	SELECT AVG(emp_salary)
+	FROM users
+	where emp_city LIKE 'h%';
+	
+		
+        The following SQL statement finds the average price of all products:
+ 
+	SELECT AVG(Price)
+	FROM Products;
+	
+        Note: NULL values are ignored.
+        
+
+      3. SQL SUM():
+      
+  	The SUM() function returns the total sum of a numeric column. 	
+  	  
+     Syntax: 
+   
+	SELECT SUM(column_name)
+	FROM table_name
+	WHERE condition; 
+ 
+       	SELECT SUM(emp_salary)
+	FROM users
+	
+       	SELECT SUM(emp_salary)
+	FROM users	
+	where emp_salary <= 1000;
+	
+       	SELECT SUM(emp_salary)
+	FROM users
+        where emp_city LIKE 'h%';
+	
+ 	The following SQL statement finds the sum of the "Quantity" fields in the "OrderDetails" table:
+ 	
+	SELECT SUM(Quantity)
+	FROM OrderDetails; 
+
+	Note: NULL values are ignored.
+	
+	
+	
+      3. SQL MAX():
+      
+  	The MAX() returns the highest value (maximum) in a set of non-NULL values.
+  	  
+     Syntax: 
+   
+	SELECT Max(column_name)
+	FROM table_name
+	WHERE condition; 	
+	
+	SELECT Max(emp_salary)
+	FROM employees	
+	
+	SELECT Max(emp_salary)
+	FROM employees	
+	WHERE emp_salary > 4000;
+	
+	SELECT Max(emp_salary)
+	FROM employees	
+	WHERE emp_salary >= 5000;
+	
+	SELECT Max(emp_salary)
+	FROM employees	
+	WHERE emp_City LIKE 'h%';
+		
+	
+      3. SQL MIN():
+      
+  	The MIN() aggregate function returns the lowest value (minimum) in a set of non-NULL values.
+  	  
+     Syntax: 
+   
+	SELECT MIN(column_name)
+	FROM table_name
+	WHERE condition; 	
+	
+	SELECT MIN(emp_salary)
+	FROM employees	
+	
+	SELECT MIN(emp_salary)
+	FROM employees	
+	WHERE emp_salary > 4000;
+	
+	SELECT MIN(emp_salary)
+	FROM employees	
+	WHERE emp_salary >= 5000;
+				
+	SELECT MIN(emp_salary)
+	FROM employees	
+	WHERE emp_city LIKE 'h%';			
+
+				
+ ----x----
