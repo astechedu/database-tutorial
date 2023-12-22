@@ -3,8 +3,9 @@
 #https://github.com/astechedu/database-tutorial.git
 #SQL Basics For Beginers
 
+
 # -- Day 1 --
-#1. 
+
 
 Introduction:
 -------------
@@ -46,8 +47,6 @@ Using Sql in Web Site:
     A table is a collection of related data entries and it consists of columns and rows.
 
 
-
-
 Some Most Important sql commands: 
 --------------------------------
     
@@ -75,41 +74,124 @@ Table:
       ---------------------------------------
       |  3   |  geeta  | rawat     |  83     |
       ---------------------------------------
-      |  4   | akshita | sengar    |  9      |
+      |  4   | akshita | sengar    |   9     |
       ---------------------------------------
       |  5   |  aura   | negi      |   61    |
       ---------------------------------------
-      |  6   |  dev    | pratap    |  20     |
+      |  6   |  dev    | pratap    |   20    |
       ---------------------------------------
       
+LAB: 
+
+ #1. Showing database:
+
     Syntax: 
       
-        CREATE DATABASE <db-name>      
+        SHOW DATABASES;   
 
 
-    Examples: 
-    --------
+ #2. Creating database:
 
-    select *from users;
+    Syntax: 
+      
+        CREATE DATABASE <db-name>   
+
+    Example:    
+
+        CREATE DATABASE sql_tutorial;
 
 
-    Lab: 
+ #3. Select database:
 
-    #Creating database
-    create database sql_tutorial;
+    Syntax: 
+      
+        USE <db-name>   
+
+    Example:    
+
+        USE sql_tutorial;
+  
+ #4. Showing tables:
+
+    Syntax: 
+      
+        SHOW TABLES;   
+
+  
+ #5. Creating table:
+    
+    Syntax:  
    
-    #Creating table 
-    create table users{
+       CREATE Table table_name{
 
-     id int,
-     fname varchar(20),
-     lname varchar(20),
-     age int
+         COLUMN1 DATATYPE,
+         COLUMN1 DATATYPE,
+         COLUMN1 DATATYPE,
+         COLUMN1 DATATYPE,
+         ...
+        };  
+       
+    Example:  
+    
+       CREATE Table users{
+
+        id INT,
+        fname VARCHAR(20),
+        lname VARCHAR(20),
+        age INT
      
-    };  
+       };  
 
-    #Inserting data
-    insert into users(id,fname,lname,age) values(1,"ajay","sisaudiya",23); 
 
+ #6. Inserting data:
+    
+    Syntax: 
+    
+       INSERT INTO table_name(column_name1,column_name2.....) VALUES (column_value1,column_value2.....);
+       
+    Example: 
+    
+       INSERT INTO users(id,fname,lname,age) VALUES (1,"ajay","sisaudiya",23); 
+
+
+ #7. Showing Structure of a table:
+    
+    Syntax: 
+    
+       DESCRIBE table_name;
+       
+       OR
+       
+       DESC table_name;
+       
+    Example: 
+    
+       DESC employees;       
+       
+
+ #8. Drop Table or delete a table
+    
+    Syntax: 
+    
+       DROP TABLE table_name;      
+      
+       
+    Example: 
+    
+       DROP TABLE employees;
+       
+       
+ #9. Delete all data from a table but not structure:
+    
+    Syntax: 
+    
+       TRUNCATE table_name;     
+       
+    Example: 
+    
+       TRUNCATE table_name;
+       
+       
+              
 ----x-----
 

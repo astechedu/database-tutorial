@@ -3,7 +3,6 @@
 #https://github.com/astechedu/database-tutorial.git
 #SQL Basics For Beginers
 
-
 # -- Day 5 --
 
 #5. Update statement is used to modify the existing records in a table
@@ -50,53 +49,59 @@ Examples:
          where product_id = 8 AND product_quantity = 1;
 
  6.      update products
+         set product_price = 12000
+         where product_id > 3 AND product_id < 8 ;
+         
+ 7.      update products
+         set product_price = 12000
+         where product_price > 3000 AND product_price < 8000 ;
+
+ 8.      update products
          set product_price = 8000
          where product_id = 1 OR product_id = 4
 
- 7.      update products
+ 9.      update products
          set product_color = "xl"
          where product_price between 500 AND 300
 
- 8.      update users
+ 10.      update users
          set status = 0;
          where city like 'in%';
 
- 9       update users
+ 11       update users
          set status = 1
          where country NOT LIKE 'in%';
 
-10       update users
+ 12      update users
          set status = 0
          where salary > 3000;
 
-11       update users
+ 13      update users
          set status = 1
          where salary < 4000;
 
-12       update users
+ 14      update users
          set comment = "valuable user"
          where id >= 30;
 
-13       update users
+ 15      update users
          set comment = "average user"
          where id <= 10;
 
-14       update users
+ 16      update users
          set status = 1
          where id IN (1,4,6);
 
-14       update employees
+ 17      update employees
          set bonus = salary * 0.2 
          where status = 1;
 
-15       update employees
+ 18      update employees
          set tot_salary = salary + bonus
          where status = 1;
 
 
-
 ------x------
-
 
 
 

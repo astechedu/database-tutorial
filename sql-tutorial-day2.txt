@@ -12,45 +12,54 @@
 Syntax:
 
       create table new_table_name select *from old_table_name;
+      
       //OR
+      
       create table new_table_name AS select *from old_table_name;
       
       
  > copy table from existing table into new table with data
 
    Syntax:
+   
 	 create table new_table_name select *from old_table_name;
 	
    Example: 
+   
          create table users2 select *from users;
         
 
  > copy table's structure form old table to new table
 
    Syntax:
+   
          create table new_table_name select *from old_table_name where 1=0;
 
    Example: 
+   
 	 create table users2 select *from users where 1=0;
 
 
  > copy table with some columns from existing table to new table with data
 
-    Syntax:    
+    Syntax: 
+       
 	create table new_table_name select id, fname from old_table_name;
 	
     Example:
+    
 	create table users2 select id, fname from users;
 
  > copy table's structure form old table to new table without data
  
      Syntax: 
+     
         create table new_table_name select id, fname from old_table_name where 1=0;
         
      Example:
+     
 	create table users2 select id, fname from users where 1=0;
 
 
 ---x---
-
 

@@ -1,7 +1,9 @@
 # ----> SQL Tutorial ----
 
-#https://github.com/astechedu/database-tutorial.git
-#SQL Basics For Beginers
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
 
 # -- Day 7 --
 
@@ -41,13 +43,19 @@
 	
   	SELECT * FROM employees;
 	WHERE emp_id > 5 ORDER BY emp_fname asc;      
+
+  	SELECT emp_id, emp_fname, emp_salary FROM employees;
+	WHERE emp_id > 3 AND emp_id < 8 ORDER BY emp_fname asc;	
 	
   	SELECT emp_id, emp_fname, emp_salary FROM employees;
 	WHERE emp_id BETWEEN 3 AND 8 ORDER BY emp_fname asc;
 	
   	SELECT emp_fname, emp_salary FROM employees;
 	WHERE emp_id > 6 ORDER BY emp_salary asc;
-	
+
+  	SELECT emp_fname, emp_salary FROM employees;
+	WHERE emp_salary > 23000 AND emp_salary < 50000 ORDER BY emp_fname asc;
+			
   	SELECT emp_fname, emp_salary FROM employees;
 	WHERE emp_salary > 23000 ORDER BY emp_fname asc;
 		
@@ -55,5 +63,6 @@
 	WHERE emp_salary > 23000 ORDER BY emp_fname desc;	
 	
   	SELECT emp_fname, emp_salary FROM employees;
-	WHERE emp_country LIKE 'i%' ORDER BY emp_fname asc;	
-			  	
+	WHERE emp_country LIKE 'i%' ORDER BY emp_fname asc;
+	
+-----x-----

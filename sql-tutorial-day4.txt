@@ -12,8 +12,8 @@
     
    Syntax:
    
-    SELECT * FROM table_name
-    WHERE Column = value;   
+     SELECT * FROM table_name
+     WHERE Column = value;   
    
    Examples:
 
@@ -21,11 +21,11 @@
 
       Example:           
 	
-      select 8 + 2
-      select 9 - 4
-      select 3 * 2
-      select 8 / 2
-      select 8 % 3
+        select 8 + 2
+        select 9 - 4
+        select 3 * 2
+        select 8 / 2
+        select 8 % 3
 	  
 	  
 -SQL Comparison Operators:
@@ -75,30 +75,34 @@
    
    d)
    SELECT * FROM Products
+   WHERE Price > 1200 AND Price < 20000;
+      
+   e)
+   SELECT * FROM Products
    WHERE Price BETWEEN 50 AND 60;
    
-   e)
+   f)
    SELECT SupplierName
    FROM Suppliers
    WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);  
     
-   f)
+   g)
    SELECT * FROM Customers
    WHERE City IN ('Paris','London');  
    
-   g)
+   h)
    SELECT * FROM Customers
    WHERE City LIKE 's%';
 
-   h)
+   i)
    SELECT * FROM Customers
    WHERE City NOT LIKE 's%';
 
-   i)
+   j)
    SELECT * FROM Customers
    WHERE City = "London" OR Country = "UK";
 
-   j)
+   k)
    SELECT * FROM Products
    WHERE Price > SOME (SELECT Price FROM Products WHERE Price > 20); 
  
@@ -109,13 +113,13 @@
        
  > SQL Arithmetic Operators:
 
-	Operator	Description	       Example:            Result:
+	Operator	Description
 	
-	+	        Add	               select 8 + 2        10
-	-		Subtract	       select 9 - 4        5 
-	*		Multiply	       select 3 * 2        6
-	/		Divide	               select 8 / 2        4
-	%		Modulo                 select 8 % 3        2  (Remaider)
+	+	        Add
+	-		Subtract 
+	*		Multiply
+	/		Divide
+	%		Modulo
 	        
  > SQL Bitwise Operators:
 
