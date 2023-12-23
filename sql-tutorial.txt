@@ -835,12 +835,208 @@ Examples:
   	SELECT emp_fname, emp_salary FROM employees;
 	WHERE emp_country LIKE 'i%' ORDER BY emp_fname asc;
 	
+	
 -----x-----
 
 
  # -- Day 8 --
  
- #8. SQL GROUP BY Statement   
+ #8. SQL Revision Day-1 TO Day-7
+
+
+Table: students
+
+		      ----------------------------------------
+		      |  id  |  fname  |  lname    |  age    |
+		      ---------------------------------------  
+		      |  1   |  ajay   | sisaudiya |  88     |
+		      ---------------------------------------                   
+		      |  2   |  amit   | kumar     |  33     |
+		      ---------------------------------------
+		      |  3   |  geeta  | rawat     |  83     |
+		      ---------------------------------------
+		      |  4   | akshita | sengar    |   9     |
+		      ---------------------------------------
+		      |  5   |  aura   | negi      |   61    |
+		      ---------------------------------------
+		      |  6   |  dev    | pratap    |   20    |
+		      ----------------------------------------
+      
+   mariadb> 
+   
+   OR
+   
+   mysql> mysql -u root -p
+   PASSWORD: abc
+   
+   mysql>
+   
+    SHOW DATABASES
+    CREATE DATABASE 
+    DROP DATABASE
+    SHOW TABLES
+    CREATE TABLE        
+    INSERT INTO 
+    TRUNCATE
+    DROP TABLE    
+    SELECT 
+    ALTER TABLE         
+    UPDATE          
+    DELETE          
+        
+    WHERE
+    
+    ORDER BY
+    
+    OPERATORS:   >, <, <=, >=, *, /, IN, BETEEN, AND, OR, NOT, LIKE, ANY, ALL 
+
+    Aggregate : SUM(), MIN(), MAX(), AVG()
+    
+    Functions
+    
+
+      
+LAB: 
+
+     mysql> SHOW DATABASES;                     //Or mariadb> 
+     
+     mysql> CREATE DATABASE sqltutorial;        //Create new database
+     
+     mysql> DROP DATABASE sqltutorial;          //Drop or delete database
+     
+     mysql> SHOW TABLES;                        //Show all tables in a database
+     
+     mysql> DESC employees;                     //Or DESCRIBE employees
+     
+     mysql> CREATE TABLE students(              //Create a table with structure
+              id int, 
+              fname varchar(20), 
+              lname varchar(), 
+              age int(2)
+            );
+            
+
+     mysql> INSERT INTO students(id,fname,lname,age)           //Insert one record into a table
+            VALUES (1,"ajay","sisaudiya",88);
+
+     	    INSERT INTO students(id,fname,lname,age) 
+            VALUES (2,"amit","kumar",33);
+
+     	    INSERT INTO students(id,fname,lname,age) 
+            VALUES (3,"geeta","rawat",83);
+
+	    INSERT INTO students(id,fname,lname,age) 
+            VALUES (4,"akshita","sengar",9);
+
+	    INSERT INTO students(id,fname,lname,age) 
+            VALUES (5,"aura","negi",61);
+            
+	    INSERT INTO students(id,fname,lname,age) 
+            VALUES (6,"dev","pratap",20);
+            
+            
+  OR
+     //Multi Values
+     
+     mysql> INSERT INTO students(id,fname,lname,age)   //Insert multi rows into a table
+            VALUES (1,"ajay","sisaudiya",88),
+                   (2,"amit","kumar",33),
+                   (3,"geeta","rawat",83),
+                   (4,"akshita","sengar",9),
+		   (5,"aura","negi",61),
+                   (6,"dev","pratap",20) 
+            
+            
+     mysql> CREATE TABLE students1                    //Copy table students to students1 table
+            SELECT *FROM students            
+
+     mysql> TRUNCATE students1;                       //Delete only data from a table not structure
+     
+     mysql> DROP students1;                           //Delete a table with data & its structure
+     
+     
+     mysql> CREATE TABle students1                    //Copy table students to students1 table
+            SELECT *FROM students            
+
+     mysql> SELECT *FROM students1                    //Select all data from a table
+     
+     mysql> SELECT id, fname from students1           //Select id and fname from table 
+            ORDER BY fname asc;                       //in ascending order by fname
+            
+     mysql> SELECT id, fname from students1           //Select id and fname from table
+            ORDER BY fname desc;                      //in descending order by fname
+     
+     mysql> SELECT id, fname from students1           //
+            WHERE id = 1;  
+
+     mysql> SELECT id, fname from students1           //
+            WHERE id < 4;  
+                             
+     mysql> SELECT id, fname from students1           //
+            WHERE id > 2; 
+             
+     mysql> SELECT id, fname from students1           //
+            WHERE id > 2 AND < 5;                        
+                  
+     mysql> SELECT id, fname from students1           //
+            WHERE id >= 2 AND < 5; 
+                          
+     mysql> SELECT id, fname from students1           //
+            WHERE id >= 2 AND <= 5; 
+                           
+     mysql> SELECT id, fname from students1           //
+            WHERE id IN (1,3,5);
+
+     mysql> SELECT id, fname from students1           //
+            WHERE id NOT IN (1,3,5);
+
+     mysql> SELECT id, fname from students1           //
+            WHERE id BETWEEN 3 AND 5;
+
+     mysql> SELECT id, fname from students1           //
+            WHERE id = 3 OR id = 5;
+                        
+      mysql> SELECT id, fname from students1           //
+            WHERE fname LIKE 'a%';
+            
+      mysql> SELECT id, fname from students1           //
+            WHERE fname NOT LIKE 'a%';
+                                      
+      mysql> SELECT id, fname from students1           //
+            WHERE fname LIKE '%a%';
+                                                                                                                                                                                            
+     mysql> ALTER TABle students1                     //Add new column
+            ADD COLUMN city varchar(20);
+            
+     mysql> ALTER TABle students1                     //Change column datatype
+            MODIFY COLUMN city varchar(30);
+            
+     mysql> ALTER TABle students1                     //Rename column name
+            RENAME COLUMN city to state;
+            
+     mysql> ALTER TABle students1                     //Drop or Delete column
+            DROP COLUMN state;
+      
+     mydql> DELETE FROM students1                     //Delete table's row
+            WHERE id = 1;
+     
+     
+     mysql> UPDATE students1                          //Update only one column
+            SET city = "dehradun"
+            WHERE id = 1;
+     
+     mysql> UPDATE students1                          //Update multi columns
+            SET fname = "atul", city = "dehradun"
+            WHERE id = 1;     
+           
+     
+---x---
+
+
+
+ # -- Day 9 --
+ 
+ #9. SQL GROUP BY Statement   
     
          In SQL, the GROUP BY statement is used for organizing similaar data into groups.
          
@@ -858,22 +1054,47 @@ Examples:
 	   -GROUP BY clause is placed after the WHERE clause in SQL.
 	   -GROUP BY clause is placed before the ORDER BY clause in SQL.  
         
-   Syntax:
-
-      1.
+   Syntex:
+   
+      1.                                  // Do practice using these syntex
+	SELECT column1
+	FROM table_name
+	GROUP BY colune1
+	
+      2.
+	SELECT column1,column2
+	FROM table_name
+	GROUP BY colune1,column2
+	
+      3.
+	SELECT column1,COUNT(*)
+	FROM table_name
+	GROUP BY colune1
+	
+      4.
+	SELECT column1,column2,COUNT(*)
+	FROM table_name
+	GROUP BY colune1,column2	
+	
+      5.
+	SELECT column1,column2,column3....
+	FROM table_name
+	GROUP BY colune1,column2,column3...
+				
+      6.
 	SELECT column_name(s)
 	FROM table_name
 	WHERE condition
 	GROUP BY column_name(s) 
 	       
-      2.       
+      7.       
 	SELECT column_name(s)
 	FROM table_name
 	WHERE condition
 	GROUP BY column_name(s)
 	ORDER BY column_name(s);  
 	    
-      3. 
+      8. 
         SELECT column_name(s), aggregate_functions(column_name)
         FROM table_name
         WHERE conditon
@@ -1174,6 +1395,22 @@ Examples:
       
          SELECT emp_salary, COUNT(emp_salary) 
          FROM emps1 GROUP BY emp_salary;
+         
+         
+         
+         
+Note: 
+
+ FROM Clause
+ WHERE Clause
+ GROUP BY Clause
+ HAVING Clause
+ SELECT Clause
+ ORDER BY Clause
+
+Using this order you will apply the filter in the WHERE prior to a GROUP BY.
+The WHERE is used limit the number of records.  
+The WHERE clause comes before the GROUP BY because conceptually you filter before you group.
          
 	
 ---x---
