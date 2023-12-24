@@ -203,55 +203,86 @@ LAB:
 
 Syntax:
 
-      create table new_table_name select *from old_table_name;
+      CREATE TABLE new_table_name 
+      SELECT *FROM old_table_name;
       
       //OR
       
-      create table new_table_name AS select *from old_table_name;
+      CREATE TABLE new_table_name AS 
+      SELECT *FROM old_table_name;
       
       
  > copy table from existing table into new table with data
 
    Syntax:
    
-	 create table new_table_name select *from old_table_name;
+	 CREATE TABLE new_table_name 
+	 SELECT *FROM old_table_name;
 	
    Example: 
    
-         create table users2 select *from users;
+         CREATE TABLE users2 
+         SELECT *FROM users;
         
 
  > copy table's structure form old table to new table
 
    Syntax:
    
-         create table new_table_name select *from old_table_name where 1=0;
+         CREATE TABLE new_table_name 
+         SELECT *FROM old_table_name 
+         WHERE 1=0;
 
    Example: 
    
-	 create table users2 select *from users where 1=0;
+	 CREATE TABLE users2 
+	 SELECT *FROM users 
+	 WHERE 1=0;
 
 
  > copy table with some columns from existing table to new table with data
 
     Syntax: 
        
-	create table new_table_name select id, fname from old_table_name;
+	CREATE TABLE new_table_name 
+	SELECT id, fname 
+	FROM old_table_name;
 	
     Example:
     
-	create table users2 select id, fname from users;
+	CREATE table users2 
+	SELECT id, fname 
+	FROM users;
 
  > copy table's structure form old table to new table without data
  
      Syntax: 
      
-        create table new_table_name select id, fname from old_table_name where 1=0;
+        CREATE TABLE new_table_name 
+        SELECT id, fname 
+        FROM old_table_name 
+        WHERE 1=0;
         
      Example:
      
-	create table users2 select id, fname from users where 1=0;
+	CREATE TABLE users2 
+	SELECT id, fname 
+	FROM users 
+	WHERE 1=0;
 
+
+ > 
+     Syntax:
+     
+     INSERT INTO newtable             //Copy data into new existing table  
+     SELECT *FROM old table;                 
+
+
+NOTE:
+
+   CREATE TABLE newtable SELECT *FROM old table;             //Copy table with data into new table
+   SELECT TABLE newtable SELECT *FROM old table where 1=2;   //Copy only table structure to create new table
+   INSERT INTO newtable SELECT *FROM old table;              //Copy data into new existing table     
 
 ---x---
 
@@ -1414,4 +1445,589 @@ The WHERE clause comes before the GROUP BY because conceptually you filter befor
          
 	
 ---x---
+
+
+  
+# -- Day 10 --
+
+#10. The SQL HAVING Clause
+
+     The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+
+     When to use HAVING and WHERE in SQL?
+     
+             If “Where” clause is used to filter the records from a table that is based on a specified condition, 
+             then the “Having” clause is used to filter the record from the groups based on the specified condition.
+             
+             The SQL HAVING clause is used if we need to filter the result set based on aggregate functions 
+             such as MIN() and MAX(), SUM() and AVG(), and COUNT().
+
+
+
+     Syntax:
+
+	SELECT column_name(s)                     //colume1,colume2....
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)                   //column1,column2....
+	HAVING condition
+	ORDER BY column_name(s); 
+
+   
+      Examples: 
+    
+	SELECT COUNT(CustomerID), Country
+	FROM Customers
+	GROUP BY Country
+	HAVING COUNT(CustomerID) > 5;   
+	    
+    
+      Example:
+
+	SELECT COUNT(CustomerID), Country
+	FROM Customers
+	GROUP BY Country
+	HAVING COUNT(CustomerID) > 5
+	ORDER BY COUNT(CustomerID) DESC;
+	
+
+     1.                                  // Do practice using these syntex
+	SELECT column1
+	FROM table_name
+	GROUP BY colune1
+	HAVING Condition;
+	
+      2.
+	SELECT column1,column2
+	FROM table_name
+	GROUP BY colune1,column2
+	HAVING Condition;
+	
+      3.
+	SELECT column1,COUNT(*)
+	FROM table_name
+	GROUP BY colune1
+	HAVING Condition;
+	
+      4.
+	SELECT column1,column2,COUNT(*)
+	FROM table_name
+	GROUP BY colune1,column2
+	HAVING Condition;	
+	
+      5.
+	SELECT column1,column2,column3....
+	FROM table_name
+	GROUP BY colune1,column2,column3...
+	HAVING Condition;
+				
+      6.
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s) 
+	HAVING Condition;
+	       
+      7.       
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	ORDER BY column_name(s) 
+	HAVING Condition; 
+	    
+      8. 
+        SELECT column_name(s), aggregate_functions(column_name)
+        FROM table_name
+        WHERE conditon
+        GROUP BY column_name(s)
+        ORDER BY column_name(s)	
+        HAVING Condition;   
+
+
+   Example table emp:
+   
+		+--------+----------+---------+---------------+------------+---------+
+		| emp_id | emp_name | emp_age | emp_address   | emp_salary | dept_id |
+		+--------+----------+---------+---------------+------------+---------+
+		|      1 | ajay     |      23 | ladpur        |       2000 |     500 |
+		|      2 | sonu     |      38 | balawala      |       8000 |     500 |
+		|      3 | aryan    |      93 | sahastradhara |       3000 |     502 |
+		|      4 | aryan    |      93 | dharampur     |       9000 |     500 |
+		|      5 | renu     |      13 | ladpur        |       2000 |     500 |
+		|      6 | dev      |      10 | miyawala      |       4300 |     502 |
+		|      7 | aura     |      13 | nakronda road |       8000 |     501 |
+		|      8 | rakhi    |      15 | miyawala      |       2000 |     502 |
+		|      9 | raman    |      88 | sahastradhara |       8000 |     500 |
+		|     10 | rakhi    |      15 | ladpur        |       7400 |     501 |
+		+--------+----------+---------+---------------+------------+---------+
+
+
+   Example:  
+
+      a.				
+	SELECT dept_id   		
+	FROM emp			
+	GROUP BY dept_id;		
+				+---------+
+				| dept_id |
+				+---------+
+				|     500 |
+				|     501 |
+				|     502 |
+				+---------+
+			
+	
+      b.
+	SELECT dept_id, COUNT(*)       
+	FROM emp
+	GROUP BY dept_id;
+                         	        +---------+----------+
+					| dept_id | count(*) |
+					+---------+----------+
+					|     500 |        5 |
+					|     501 |        2 |
+					|     502 |        3 |
+					+---------+----------+
+										
+				
+      c.
+	SELECT dept_id, COUNT(*)       
+	FROM emp
+	GROUP BY dept_id
+	HAVING COUNT(*) > 2;                                                //Or > 2, < 2, >3, <3, <5 etc.
+					+---------+----------+
+					| dept_id | COUNT(*) |
+					+---------+----------+
+					|     500 |        5 |
+					|     502 |        3 |
+					+---------+----------+			
+	
+	
+      d.
+        SELECT dept_id, count(*), Max(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id;	
+					+---------+----------+-----------------+
+					| dept_id | count(*) | Max(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |            9000 |
+					|     501 |        2 |            8000 |
+					|     502 |        3 |            4300 |
+					+---------+----------+-----------------+
+	
+	
+      e.
+        SELECT dept_id, count(*), Max(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING MAX(emp_salary) < 9000;	
+					+---------+----------+-----------------+
+					| dept_id | count(*) | Max(emp_salary) |
+					+---------+----------+-----------------+
+					|     501 |        2 |            8000 |
+					|     502 |        3 |            4300 |
+					+---------+----------+-----------------+
+
+	
+      f.
+        SELECT dept_id, count(*), Max(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING MAX(emp_salary) < 9000
+        ORDER BY Max(emp_salary) asc;	
+					+---------+----------+-----------------+
+					| dept_id | count(*) | Max(emp_salary) |
+					+---------+----------+-----------------+
+					|     502 |        3 |            4300 |
+					|     501 |        2 |            8000 |
+					+---------+----------+-----------------+
+	
+	
+      g.
+        SELECT dept_id, count(*), Min(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id;	
+					+---------+----------+-----------------+
+					| dept_id | count(*) | Min(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |            2000 |
+					|     501 |        2 |            7400 |
+					|     502 |        3 |            2000 |
+					+---------+----------+-----------------+
+        
+      h.
+        SELECT dept_id, count(*), Min(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING Min(emp_salary) < 2000;        
+        
+                                          -- Empty set (0.001 sec) --
+
+                
+      i.
+        SELECT dept_id, count(*), Min(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING Min(emp_salary) < 7400;        
+					+---------+----------+-----------------+
+					| dept_id | count(*) | Min(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |            2000 |
+					|     502 |        3 |            2000 |
+					+---------+----------+-----------------+     
+                
+        
+      j.
+        SELECT dept_id, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id;	
+					+---------+----------+-----------------+
+					| dept_id | count(*) | sum(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |           26300 |
+					|     501 |        2 |           15400 |
+					|     502 |        3 |            9300 |
+					+---------+----------+-----------------+
+					
+      k.
+        SELECT dept_id, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING sum(emp_salary) > 9300;
+					+---------+----------+-----------------+
+					| dept_id | count(*) | sum(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |           29000 |
+					|     501 |        2 |           15400 |
+					+---------+----------+-----------------+
+					
+								       
+      l.
+        SELECT dept_id, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id
+        HAVING sum(emp_salary) > 9300
+        ORDER BY sum(emp_salary) asc;
+					+---------+----------+-----------------+
+					| dept_id | count(*) | sum(emp_salary) |
+					+---------+----------+-----------------+
+					|     501 |        2 |           15400 |
+					|     500 |        5 |           29000 |
+					+---------+----------+-----------------+
+
+
+      m.
+        SELECT dept_id, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY dept_id        
+        HAVING SUM(emp_salary) > 9300 AND SUM(emp_salary) < 29000;
+        
+					+---------+----------+-----------------+
+					| dept_id | count(*) | sum(emp_salary) |
+					+---------+----------+-----------------+
+					|     501 |        2 |           15400 |
+					+---------+----------+-----------------+             
+              
+       o.
+         SELECT dept_id, count(*), avg(emp_salary)   
+         FROM emp 
+         GROUP BY dept_id;
+            
+					+---------+----------+-----------------+
+					| dept_id | count(*) | avg(emp_salary) |
+					+---------+----------+-----------------+
+					|     500 |        5 |       5260.0000 |
+					|     501 |        2 |       7700.0000 |
+					|     502 |        3 |       3100.0000 |
+					+---------+----------+-----------------+
+        
+             
+       p.
+         SELECT dept_id, count(*), avg(emp_salary)   
+         FROM emp 
+         GROUP BY dept_id
+         HAVING AVG (emp_salary) > 5800; 
+					+---------+----------+-----------------+
+					| dept_id | count(*) | avg(emp_salary) |
+					+---------+----------+-----------------+
+					|     501 |        2 |       7700.0000 |
+					+---------+----------+-----------------+
+                  
+         
+                 
+        
+      q.                                  //Group by emp_address
+        SELECT emp_address              
+        FROM emp 
+        GROUP BY emp_address;
+               
+					+---------------+
+					| emp_address   |
+					+---------------+
+					| balawala      |
+					| dharampur     |
+					| ladpur        |
+					| miyawala      |
+					| nakronda road |
+					| sahastradhara |
+					+---------------+
+					
+        
+        
+      r.                                //Group by emp_address
+        SELECT emp_address, count(*)    
+        FROM emp 
+        GROUP BY emp_address;
+             	      	
+					+---------------+----------+
+					| emp_address   | count(*) |
+					+---------------+----------+
+					| balawala      |        1 |
+					| dharampur     |        1 |
+					| ladpur        |        3 |
+					| miyawala      |        2 |
+					| nakronda road |        1 |
+					| sahastradhara |        2 |
+					+---------------+----------+
+        	
+        	
+      s.                                
+        SELECT emp_address, count(*)    
+        FROM emp 
+        GROUP BY emp_address
+        HAVING COUNT(*) between 1 and 2;
+					+---------------+----------+
+					| emp_address   | count(*) |
+					+---------------+----------+
+					| balawala      |        1 |
+					| dharampur     |        1 |
+					| miyawala      |        2 |
+					| nakronda road |        1 |
+					| sahastradhara |        2 |
+					+---------------+----------+
+        	                                                                   
+        	                                                                    
+      t.
+        SELECT emp_address, count(*), max(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address
+	HAVING COUNT(*) between 1 and 2 
+	ORDER BY MAX(emp_salary) ASC;         
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | max(emp_salary) |
+					+---------------+----------+-----------------+
+					| miyawala      |        2 |            4300 |
+					| sahastradhara |        2 |            8000 |
+					| balawala      |        1 |            8000 |
+					| nakronda road |        1 |            8000 |
+					| dharampur     |        1 |            9000 |
+					+---------------+----------+-----------------+  
+        
+        
+      s.
+        SELECT emp_address, count(*), min(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address;
+        HAVING Condition;       
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | min(emp_salary) |
+					+---------------+----------+-----------------+
+					| balawala      |        1 |            8000 |
+					| dharampur     |        1 |            9000 |
+					| ladpur        |        3 |            2000 |
+					| miyawala      |        2 |            2000 |
+					| nakronda road |        1 |            8000 |
+					| sahastradhara |        2 |            3000 |
+					+---------------+----------+-----------------+
+        
+ 
+       t.
+        SELECT emp_address, count(*), MIN(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address
+	HAVING COUNT(*) between 1 and 2 
+	ORDER BY MIN(emp_salary) DESC; 
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | MIN(emp_salary) |
+					+---------------+----------+-----------------+
+					| dharampur     |        1 |            9000 |
+					| balawala      |        1 |            8000 |
+					| nakronda road |        1 |            8000 |
+					| sahastradhara |        2 |            3000 |
+					| miyawala      |        2 |            2000 |
+					+---------------+----------+-----------------+           	
+	       
+      t.
+        SELECT emp_address, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address
+        HAVING sum(emp_salary) > 8000;
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | sum(emp_salary) |
+					+---------------+----------+-----------------+
+					| dharampur     |        1 |            9000 |
+					| ladpur        |        3 |           11400 |
+					| sahastradhara |        2 |           11000 |
+					+---------------+----------+-----------------+    				
+					
+   
+       u.
+        SELECT emp_address, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address;        
+        HAVING sum(emp_salary) < 11000;
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | sum(emp_salary) |
+					+---------------+----------+-----------------+
+					| balawala      |        1 |            8000 |
+					| dharampur     |        1 |            9000 |
+					| miyawala      |        2 |            6300 |
+					| nakronda road |        1 |            8000 |
+					+---------------+----------+-----------------+      
+						
+        
+       v.
+        SELECT emp_address, count(*), sum(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address
+        HAVING sum(emp_salary) > 6300 AND sum(emp_salary) < 11400;
+        
+					+---------------+----------+-----------------+
+					| emp_address   | count(*) | sum(emp_salary) |
+					+---------------+----------+-----------------+
+					| balawala      |        1 |            8000 |
+					| dharampur     |        1 |            9000 |
+					| nakronda road |        1 |            8000 |
+					| sahastradhara |        2 |           11000 |
+					+---------------+----------+-----------------+    
+					     
+        
+        
+      w.
+        SELECT emp_address, count(*), avg(emp_salary)   
+        FROM emp 
+        GROUP BY emp_address
+        HAVING avg(emp_salary) > 6300 AND avg(emp_salary) < 11400;
+        
+				+---------------+----------+-----------------+
+				| emp_address   | count(*) | avg(emp_salary) |
+				+---------------+----------+-----------------+
+				| balawala      |        1 |       8000.0000 |
+				| dharampur     |        1 |       9000.0000 |
+				| nakronda road |        1 |       8000.0000 |
+				+---------------+----------+-----------------+
+				      	
+		    
+   Example:
+  
+	SELECT COUNT(CustomerID), Country
+	FROM Customers
+	GROUP BY Country 
+	HAVING Condition; 
+	      
+   Example:
+    
+	SELECT COUNT(CustomerID), Country
+	FROM Customers
+	GROUP BY Country
+	HAVING Condition
+	ORDER BY COUNT(CustomerID) DESC;
+	
+
+   Example: 
+      
+         SELECT emp_salary, COUNT(emp_salary) 
+         FROM emps1 
+         GROUP BY emp_salary;
+ 	 HAVING Condition;
+
+	
+ > Table: customers:	
+
+		+-------------+------------+-----------+------+---------+
+		| customer_id | first_name | last_name | age  | country |
+		+-------------+------------+-----------+------+---------+
+		|           1 | Jyoti      | Doe       |   31 | USA     |
+		|           2 | Rohan      | Luna      |   22 | USA     |
+		|           3 | Dev        | Robinson  |   22 | UK      |
+		|           4 | Johar      | Reinhardt |   25 | UK      |
+		|           5 | Bhanu      | doe       |   28 | UAE     |
+		+-------------+------------+-----------+------+---------+
+
+
+-- select customers with the same first name based on their age count 
+	
+	SELECT COUNT(age) AS Count, first_name                                                
+	FROM customers
+	GROUP BY first_name
+	HAVING COUNT(age) > 1;                           //Empty set (0.001 sec)  
+
+    Here, the SQL command:
+    
+    1. counts the age of each row and groups them by first_name
+    2. returns the result set if the count of age is greater than 1 (thus filtering out customers with the same first_name)
+
+
+
+-- select the count of customer ids greater than one and their corresponding country 
+
+	SELECT COUNT(customer_id), country
+	FROM customers
+	GROUP BY country
+	HAVING COUNT(customer_id) > 1;
+
+		+--------------------+---------+
+		| COUNT(customer_id) | country |
+		+--------------------+---------+
+		|                  2 | UK      |
+		|                  2 | USA     |
+		+--------------------+---------+
+
+    Here, the SQL command:
+    
+    1. counts the number of rows by grouping them by country
+    2. returns the result set if their count is greater than 1.
+
+ 
+
+---x---
+
+
+--- NOTE ---
+
+SQL HAVING vs. WHERE
+	       
+
+
+  HAVING Clause: The HAVING clause checks the condition on a group of rows. 
+  WHERE Clause:  The WHERE clause checks the condition on each individual row.
+
+
+  HAVING Clause: HAVING is used with aggregate functions.
+  WHERE Clause:  The WHERE clause cannot be used with aggregate functions.
+
+
+  HAVING Clause: The HAVING clause is executed after the GROUP BY clause.
+  WHERE Clause:  The WHERE clause is executed before the GROUP BY clause.  
+	
+
+	
+       We can write a WHERE clause to filter out rows where the value of amount in the Orders table is less than 500:
+
+	SELECT customer_id, amount
+	FROM Orders
+	WHERE amount < 500; 	
+	
+
+       But with the HAVING clause, we can use an aggregate function like SUM to calculate the sum of 
+       amounts in the order table and get the total order value of less than 500 for each customer:
+
+	SELECT customer_id, SUM(amount) AS total
+	FROM Orders
+	GROUP BY customer_id
+	HAVING SUM(amount) < 500;
+	
+---x---	   
+
 

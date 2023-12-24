@@ -9,71 +9,88 @@
 #2. Copy Old_table to New_table
 
 
-  Syntax:
+Syntax:
 
-        CREATE table new_table_name 
-        SELETE *from old_table_name;
+      CREATE TABLE new_table_name 
+      SELECT *FROM old_table_name;
       
-        //OR
+      //OR
       
-        CREATE table new_table_name AS 
-        SELECT *from old_table_name;
+      CREATE TABLE new_table_name AS 
+      SELECT *FROM old_table_name;
       
       
->> copy table from existing table into new table with data
+ > copy table from existing table into new table with data
 
    Syntax:
    
-	 CREATE table new_table_name 
-	 SELECT *from old_table_name;
+	 CREATE TABLE new_table_name 
+	 SELECT *FROM old_table_name;
 	
    Example: 
    
-         CREATE table users2 
-         SELECT *from users;
+         CREATE TABLE users2 
+         SELECT *FROM users;
         
 
- >> copy table's structure form old table to new table
+ > copy table's structure form old table to new table
 
    Syntax:
    
-         CREATE table new_table_name 
-         SELECT *from old_table_name where 1=0;
+         CREATE TABLE new_table_name 
+         SELECT *FROM old_table_name 
+         WHERE 1=0;
 
    Example: 
    
-	 CREATE table users2 
-	 SELECT *from users 
+	 CREATE TABLE users2 
+	 SELECT *FROM users 
 	 WHERE 1=0;
 
 
- >> copy table with some columns from existing table to new table with data
+ > copy table with some columns from existing table to new table with data
 
     Syntax: 
        
-	CREATE table new_table_name 
-	SELECT id, fname from old_table_name;
+	CREATE TABLE new_table_name 
+	SELECT id, fname 
+	FROM old_table_name;
 	
     Example:
     
 	CREATE table users2 
 	SELECT id, fname 
-	WHERE users;
+	FROM users;
 
- >> copy table's structure form old table to new table without data
+ > copy table's structure form old table to new table without data
  
      Syntax: 
      
-        CREATE table new_table_name 
-        SELECT id, fname from old_table_name 
+        CREATE TABLE new_table_name 
+        SELECT id, fname 
+        FROM old_table_name 
         WHERE 1=0;
         
      Example:
      
-	CREATE table users2 
-	SELECT id, fname from users 
+	CREATE TABLE users2 
+	SELECT id, fname 
+	FROM users 
 	WHERE 1=0;
 
+
+ > 
+     Syntax:
+     
+     INSERT INTO newtable             //Copy data into new existing table  
+     SELECT *FROM old table;                 
+
+
+NOTE:
+
+   CREATE TABLE newtable SELECT *FROM old table;             //Copy table with data into new table
+   SELECT TABLE newtable SELECT *FROM old table where 1=2;   //Copy only table structure to create new table
+   INSERT INTO newtable SELECT *FROM old table;              //Copy data into new existing table     
 
 ---x---
 
