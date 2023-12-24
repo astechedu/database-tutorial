@@ -15,7 +15,7 @@
      after the table is created with the ALTER TABLE statement.
 
 
-Syntax:
+ Syntax:
 	CREATE TABLE table_name (
 	    column1 datatype constraint,
 	    column2 datatype constraint,
@@ -49,9 +49,9 @@ Syntax:
    INSERT INTO constraints (id, name, age) 
    VALUES(1, "ajay", 22),
          (2, "sonu", 33),
-         (8, " ",      ),
-         (3, "dev", 99 ),
-         ( , " ",   56 );
+         (8, "aman", 11),
+         (3, "dev",  99),
+         (1, "top",  56);
 
 
 1) 
