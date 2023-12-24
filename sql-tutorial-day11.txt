@@ -6,6 +6,7 @@
 
      
 # -- Day 11 --
+
 #11. SQL Constraints
 
      SQL constraints are used to specify rules for data in a table.
@@ -35,14 +36,32 @@ Syntax:
     CREATE INDEX - Used to create and retrieve data from the database very quickly
 
 
+#Create New Table: 
+
+  CREATE TABLE constraints(
+    id int,
+    name varcchar(20),
+    age int
+  );
+
+#Insert Data
+
+   INSERT INTO constraints (id, name, age) 
+   VALUES(1, "ajay", 22),
+         (2, "sonu", 33),
+         (8, " ",      ),
+         (3, "dev", 99 ),
+         ( ,      , 56 );
+
+
 1) 
 
-SQL NOT NULL on CREATE TABLE
+  SQL NOT NULL on CREATE TABLE
 
          The following SQL ensures that the "ID", "LastName", and "FirstName" columns will NOT accept 
          NULL values when the "Persons" table is created:
 
-Example:
+  Example:
 
 
 	CREATE TABLE Persons (
@@ -53,7 +72,7 @@ Example:
 	);
 
 
-SQL NOT NULL on ALTER TABLE:
+  SQL NOT NULL on ALTER TABLE:
 
 	ALTER TABLE Persons
 	MODIFY COLUMN Age int NOT NULL; 
