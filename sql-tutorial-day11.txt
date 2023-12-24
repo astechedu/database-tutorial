@@ -487,7 +487,17 @@ DROP INDEX Statement:
 	ALTER TABLE table_name
 	DROP INDEX index_name;
 
-
+        DROP INDEX index_name
+        ON table_name;
+     
+     
+     
+  . Automatically creates the indexes for PRIMARY KEY and UNIQUE columns.
+  . Index columns that you frequently use to retrieve the data.    
+  . Index columns that are used for joins to improve join performance.    
+  . Avoid columns that contain too many NULL values.
+  . Small tables do not require indexes.
+     
 --
 
 
