@@ -40,6 +40,7 @@
 AND: 
     Keywords: Unsigned, Auto_increment
  
+ 
    
   ---- L A B ---
    
@@ -156,7 +157,7 @@ SOLUTIONS:
 				
 				
    
- 2. UNIQUE:                               (Below: Column id is UNIQUE but null: No Duplicate Values, Except NULL Values)
+ 2. UNIQUE:                            (Below: Column id is UNIQUE but null: No Duplicate Values, Except NULL Values)
  
 	  CREATE TABLE constraints(
 	    id int,
@@ -174,7 +175,7 @@ SOLUTIONS:
 
 
 
- 2. UNIQUE + NOT NULL:                    (Column is unique and not null: Not except NULL & Duplicate Values)
+ 2. UNIQUE + NOT NULL:                  (Column is unique and not null: Not except NULL & Duplicate Values)
  
 	  CREATE TABLE constraints(
 	    id int NOT NULL,
@@ -189,17 +190,21 @@ SOLUTIONS:
 				| name  | varchar(20) | YES  |     | NULL    |       |
 				| age   | int(11)     | YES  |     | NULL    |       |
 				+-------+-------------+------+-----+---------+-------+
-
-
+	  
+	  
    
  3. PRIMARY KEY:                          (Column is Primary: Not except NULL & Duplicate Values)
    
 	  CREATE TABLE constraints(
-	    id int,
+	    id int auto_increment,
 	    name varchar(20),
 	    age int,
 	    PRIMARY KEY (id)
-	  );                    DESC constraints;
+	  );  
+	                    
+	  INSERT INTO constraints (name,age) VALUES ("ajay",18);
+	  
+	  			DESC constraints;
 				+-------+-------------+------+-----+---------+-------+
 				| Field | Type        | Null | Key | Default | Extra |
 				+-------+-------------+------+-----+---------+-------+
@@ -207,9 +212,7 @@ SOLUTIONS:
 				| name  | varchar(20) | YES  |     | NULL    |       |
 				| age   | int(11)     | YES  |     | NULL    |       |
 				+-------+-------------+------+-----+---------+-------+
-
-   
-   
+      
  4. FOREIGN KEY:
    
 	  CREATE TABLE info (
@@ -230,8 +233,6 @@ SOLUTIONS:
 				| constraints_id | int(11)     | YES  | MUL | NULL    |       |
 				+----------------+-------------+------+-----+---------+-------+
 
-
-
  5. CHECK:                          
    
 	  CREATE TABLE constraints(
@@ -239,8 +240,11 @@ SOLUTIONS:
 	    name varchar(20),
 	    age int,	    
 	    PRIMARY KEY (id),
-	    CHECK (age >=18)
+	    CHECK (age >= 18)
 	  );  
+           
+          INSERT INTO constraints (id, name,age) VALUES (1,"ajay",18);                
+                           
                                 DESC constraints;
 				+-------+-------------+------+-----+---------+-------+
 				| Field | Type        | Null | Key | Default | Extra |
@@ -260,7 +264,11 @@ SOLUTIONS:
 	    salary int DEFAULT 0,
 	    role varchar(10) DEFAULT "user",	    
 	    PRIMARY KEY (id)
-	  );                    DESC constraint;
+	  ); 
+	    
+	  INSERT INTO constraints (id,name,age,salary,role) VALUES (1,"ajay",18,1200,"admin"); 
+	  
+	                   DESC constraint;
 				+--------+-------------+------+-----+---------+-------+
 				| Field  | Type        | Null | Key | Default | Extra |
 				+--------+-------------+------+-----+---------+-------+
@@ -278,7 +286,7 @@ SOLUTIONS:
      Index On Single Column: 
      
 	CREATE INDEX index_name
-	ON table_name (column1, column2, ...);      
+	ON table_name (column1);      
      
      Index On Multi Columns:
      
@@ -308,6 +316,7 @@ SOLUTIONS:
  Example: 
     
 	SHOW index FROM table_name;
+	SHOW INDEX FROM constraints;
 	
 +-------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
 | Table       | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Ignored |
@@ -317,9 +326,73 @@ SOLUTIONS:
 +-------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
 2 rows in set (0.001 sec)
 
-   
-     
+       
+
  
+ 
+ 
+> UNSIGNED:                         //For positive numbers in a column
+
+ 	  CREATE TABLE constraints(
+	    id int unsigned,
+	    name varchar(20),
+	    age int,
+	    PRIMARY KEY (id)
+	  ); 
+
+          INSERT INTO constraints (id,name,age) VALUES (1,"ajay",18);  
+            
+			+-------+------------------+------+-----+---------+-------+
+			| Field | Type             | Null | Key | Default | Extra |
+			+-------+------------------+------+-----+---------+-------+
+			| id    | int(10) unsigned | NO   | PRI | NULL    |       |
+			| name  | varchar(20)      | YES  |     | NULL    |       |
+			| age   | int(11)          | YES  |     | NULL    |       |
+			+-------+------------------+------+-----+---------+-------+
+
+
+
+> AUTO_INCREMENT:                      //Auto increment in numbers 
+ 
+ 	  CREATE TABLE constraints(
+	    id int auto_increment,
+	    name varchar(20),
+	    age int,
+	    PRIMARY KEY (id)
+	  );  
+	                    
+	  INSERT INTO constraints (name,age) VALUES ("ajay",18);
+ 
+			+-------+-------------+------+-----+---------+----------------+
+			| Field | Type        | Null | Key | Default | Extra          |
+			+-------+-------------+------+-----+---------+----------------+
+			| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+			| name  | varchar(20) | YES  |     | NULL    |                |
+			| age   | int(11)     | YES  |     | NULL    |                |
+			+-------+-------------+------+-----+---------+----------------+
+
+ 
+ 
+> UNSINGED AUTO_INCREMENT:                    //Positive numbers and auto increment in numbers
+ 
+ 	  CREATE TABLE constraints(
+	    id int unsigned auto_increment,
+	    name varchar(20),
+	    age int,
+	    PRIMARY KEY (id)
+	  );  
+			+-------+------------------+------+-----+---------+----------------+
+			| Field | Type             | Null | Key | Default | Extra          |
+			+-------+------------------+------+-----+---------+----------------+
+			| id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+			| name  | varchar(20)      | YES  |     | NULL    |                |
+			| age   | int(11)          | YES  |     | NULL    |                |
+			+-------+------------------+------+-----+---------+----------------+
+	        
+  
+  
+  
+  
   
 
 --- READ MORE INFORMATION ( REVISION ) ---
