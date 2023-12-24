@@ -36,6 +36,14 @@
 
 
 
+
+AND: 
+    Keywords: Unsigned, Auto_increment
+ 
+   
+  ---- L A B ---
+   
+   
 #Create New Table For Tesing: 
 
 
@@ -261,18 +269,60 @@ SOLUTIONS:
 				| age    | int(11)     | YES  |     | NULL    |       |
 				| salary | int(11)     | YES  |     | 0       |       |
 				| role   | varchar(10) | YES  |     | user    |       |
-				+--------+-------------+------+-----+---------+-------+
- 
+				+--------+-------------+------+-----+---------+-------+   
   
  7. CREATE INDEX:
  
- 
- 
- 
- 
- 
+        Creates an index on a table. Duplicate values are allowed:
 
---- MORE INFORMATION ---
+     Index On Single Column: 
+     
+	CREATE INDEX index_name
+	ON table_name (column1, column2, ...);      
+     
+     Index On Multi Columns:
+     
+	CREATE INDEX index_name
+	ON table_name (column1, column2, ...); 
+	
+	ALTER TABLE table_name
+	DROP INDEX index_name;  
+
+        DROP INDEX index_name
+        ON table_name;  
+          
+         
+   Example:
+   
+        CREATE INDEX my_index01
+	ON constraints (name);  	       	   
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | NO   | PRI | NULL    |       |
+				| name  | varchar(20) | YES  | MUL | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
+	
+				     
+ Example: 
+    
+	SHOW index FROM table_name;
+	
++-------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+| Table       | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Ignored |
++-------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+| constraints |          0 | PRIMARY    |            1 | id          | A         |           0 |     NULL | NULL   |      | BTREE      |         |               | NO      |
+| constraints |          1 | my_index01 |            1 | name        | A         |           0 |     NULL | NULL   | YES  | BTREE      |         |               | NO      |
++-------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+
+2 rows in set (0.001 sec)
+
+   
+     
+ 
+  
+
+--- READ MORE INFORMATION ( REVISION ) ---
          
 1) 
 
@@ -490,6 +540,7 @@ DROP INDEX Statement:
         DROP INDEX index_name
         ON table_name;
      
+        SHOW index FROM table_name;
      
      
   . Automatically creates the indexes for PRIMARY KEY and UNIQUE columns.
