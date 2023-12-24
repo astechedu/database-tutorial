@@ -40,7 +40,7 @@ Syntax:
 
   CREATE TABLE constraints(
     id int,
-    name varcchar(20),
+    name varchar(20),
     age int
   );
 
