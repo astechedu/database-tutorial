@@ -24,7 +24,6 @@
 	);
 
 
-
 > The following constraints are commonly used in SQL:
 
     NOT NULL     - Ensures that a column cannot have a NULL value
@@ -36,27 +35,248 @@
     CREATE INDEX - Used to create and retrieve data from the database very quickly
 
 
-#Create New Table: 
+
+#Create New Table For Tesing: 
+
 
   CREATE TABLE constraints(
     id int,
     name varchar(20),
     age int
   );
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | YES  |     | NULL    |       |
+				| name  | varchar(20) | YES  |     | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
 
 #Insert Data
 
+   1.                                              //Constraint not created in table
+   
+   INSERT INTO constraints (id, name, age)             
+   VALUES(1, "ajay", 22), 
+         (2, "sonu", 33),
+         (3, "aman", 11),
+         (4, "dev",  99),
+         (5, "top",  56);         
+					+------+------+------+
+					| id   | name | age  |
+					+------+------+------+
+					|    1 | ajay |   22 |
+					|    2 | sonu |   33 |
+					|    3 | aman |   11 |
+					|    4 | dev  |   99 |
+					|    5 | top  |   56 |
+					+------+------+------+         
+         
+   2.                                               //Constraint not created in table
+             
    INSERT INTO constraints (id, name, age) 
    VALUES(1, "ajay", 22),
          (2, "sonu", 33),
-         (8, "aman", 11),
-         (3, "dev",  99),
-         (1, "top",  56);
+         (3, "aman", 11),
+         (1, "dev",   0),
+         (2, "top",  56),
+         (0, "ram",  56);         
+					+------+------+------+
+					| id   | name | age  |
+					+------+------+------+
+					|    1 | ajay |   22 |
+					|    2 | sonu |   33 |
+					|    3 | aman |   11 |
+					|    1 | dev  |    0 |
+					|    2 | top  |   56 |
+					|    0 | ram  |   56 |
+					+------+------+------+
+
+   3.                                              //Constraint not created in table
+   
+   INSERT INTO constraints (name, age) 
+   VALUES("ajay", 22),
+         ("sonu", 33),
+         ("aman", 11),
+         ("dev",   0),
+         ("top",  56);  
+   
+				+------+------+------+
+				| id   | name | age  |
+				+------+------+------+
+				| NULL | ajay |   22 |
+				| NULL | sonu |   33 |
+				| NULL | aman |   11 |
+				| NULL | dev  |    0 |
+				| NULL | top  |   56 |
+				+------+------+------+
+   
+   4.                                              //Constraint not created in table
+   
+   INSERT INTO constraints (id, age) 
+   VALUES(2, 22),
+         (2, 33),
+         (98, 11),
+         (3,  0),
+         (1, 56);    
+				+------+------+------+
+				| id   | name | age  |
+				+------+------+------+
+				|    2 | NULL |   22 |
+				|    2 | NULL |   33 |
+				|   98 | NULL |   11 |
+				|    3 | NULL |    0 |
+				|    1 | NULL |   56 |
+				+------+------+------+
+    
+         
+SOLUTIONS: 
+
+  1. NOT NULL:                     (Blow: Column id is Not null but not unique: Don't except Null Values, Except Duplicate Values)
+
+	  CREATE TABLE constraints(
+	    id int NOT NULL,
+	    name varchar(20) NOT NULL,
+	    age int NOT NULL
+	  );		        +-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | NO   |     | NULL    |       |
+				| name  | varchar(20) | NO   |     | NULL    |       |
+				| age   | int(11)     | NO   |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
+				
+				
+   
+ 2. UNIQUE:                               (Below: Column id is UNIQUE but null: No Duplicate Values, Except NULL Values)
+ 
+	  CREATE TABLE constraints(
+	    id int,
+	    name varchar(20),
+	    age int,
+	    UNIQUE(id)
+	  ); 		        DESC constraints
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | YES  | UNI | NULL    |       |
+				| name  | varchar(20) | YES  |     | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
 
 
+
+ 2. UNIQUE + NOT NULL:                    (Column is unique and not null: Not except NULL & Duplicate Values)
+ 
+	  CREATE TABLE constraints(
+	    id int NOT NULL,
+	    name varchar(20),
+	    age int,
+	    UNIQUE(id)
+	  ); 		        DESC constraints
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | NO   | PRI | NULL    |       |
+				| name  | varchar(20) | YES  |     | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
+
+
+   
+ 3. PRIMARY KEY:                          (Column is Primary: Not except NULL & Duplicate Values)
+   
+	  CREATE TABLE constraints(
+	    id int,
+	    name varchar(20),
+	    age int,
+	    PRIMARY KEY (id)
+	  );                    DESC constraints;
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | NO   | PRI | NULL    |       |
+				| name  | varchar(20) | YES  |     | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
+
+   
+   
+ 4. FOREIGN KEY:
+   
+	  CREATE TABLE info (
+	    id int,
+	    city varchar(20),
+	    country varchar(20),
+	    constraints_id int,	
+	    PRIMARY KEY (id),    
+	    FOREIGN KEY (constraints_id) REFERENCES constraints (id)	    
+	  );   
+		                DESC info; 
+				+----------------+-------------+------+-----+---------+-------+
+				| Field          | Type        | Null | Key | Default | Extra |
+				+----------------+-------------+------+-----+---------+-------+
+				| id             | int(11)     | NO   | PRI | NULL    |       |
+				| city           | varchar(20) | YES  |     | NULL    |       |
+				| country        | varchar(20) | YES  |     | NULL    |       |
+				| constraints_id | int(11)     | YES  | MUL | NULL    |       |
+				+----------------+-------------+------+-----+---------+-------+
+
+
+
+ 5. CHECK:                          
+   
+	  CREATE TABLE constraints(
+	    id int,
+	    name varchar(20),
+	    age int,	    
+	    PRIMARY KEY (id),
+	    CHECK (age >=18)
+	  );  
+                                DESC constraints;
+				+-------+-------------+------+-----+---------+-------+
+				| Field | Type        | Null | Key | Default | Extra |
+				+-------+-------------+------+-----+---------+-------+
+				| id    | int(11)     | NO   | PRI | NULL    |       |
+				| name  | varchar(20) | YES  |     | NULL    |       |
+				| age   | int(11)     | YES  |     | NULL    |       |
+				+-------+-------------+------+-----+---------+-------+
+
+
+ 6. DEFAULT:  
+ 
+ 	  CREATE TABLE constraints(
+	    id int,
+	    name varchar(20),
+	    age int,
+	    salary int DEFAULT 0,
+	    role varchar(10) DEFAULT "user",	    
+	    PRIMARY KEY (id)
+	  );                    DESC constraint;
+				+--------+-------------+------+-----+---------+-------+
+				| Field  | Type        | Null | Key | Default | Extra |
+				+--------+-------------+------+-----+---------+-------+
+				| id     | int(11)     | NO   | PRI | NULL    |       |
+				| name   | varchar(20) | YES  |     | NULL    |       |
+				| age    | int(11)     | YES  |     | NULL    |       |
+				| salary | int(11)     | YES  |     | 0       |       |
+				| role   | varchar(10) | YES  |     | user    |       |
+				+--------+-------------+------+-----+---------+-------+
+ 
+  
+ 7. CREATE INDEX:
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- MORE INFORMATION ---
+         
 1) 
 
-  SQL NOT NULL on CREATE TABLE
+  SQL NOT NULL on CREATE TABLE:
 
          The following SQL ensures that the "ID", "LastName", and "FirstName" columns will NOT accept 
          NULL values when the "Persons" table is created:
@@ -108,9 +328,6 @@ DROP a UNIQUE Constraint:
 
 	ALTER TABLE Persons
 	DROP INDEX UC_Person;      
-     
-
-
 
 3)
    SQL PRIMARY KEY Constraint:
@@ -138,9 +355,6 @@ DROP a PRIMARY KEY Constraint:
 
 	ALTER TABLE Persons
 	DROP PRIMARY KEY; 
-
-
-
 4)
   SQL FOREIGN KEY Constraint:
 
@@ -168,7 +382,6 @@ DROP a FOREIGN KEY Constraint:
 
 	ALTER TABLE Orders
 	DROP FOREIGN KEY FK_PersonOrder; 
-
 
 
 
