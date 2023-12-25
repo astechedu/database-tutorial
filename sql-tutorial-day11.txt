@@ -45,7 +45,7 @@ AND:
   ---- L A B ---
    
    
-#Create New Table For Tesing: 
+#Create New Table For Testing: 
 
 
   CREATE TABLE constraints(
