@@ -21,6 +21,11 @@ SQL CASE Expression:
 	     IF (Condition, TRUE Result, FALSE Result ) AS alias_name
 	     FROM table_name;
 	     
+        Example: 
+        
+              SELECT id, name, percentage,
+              IF(percentage >= 33, "Pass","Fail") AS Result
+              FROM students;       
          
  
 CASE STATEMENT Syntax:
@@ -64,6 +69,32 @@ CASE Expression Syntax:
 	 END AS CustomerStatus
 	 FROM payment        
  
+ 
+ 
+ 
+ Example: 
+ Tabe: Students: Field Names: id, name, percentage, age, gender, ciyt, courses
+ 
+	 SELECT id, name, percentage, 
+	 CASE
+	    WHEN percentage >= 80 AND percentage <= 100 THEN "Merit"
+	    WHEN percentage >= 60 AND percentage < 80 THEN "Ist Division"
+	    WHEN percentage >= 45 AND percentage < 60 THEN "Ind Division"
+	    WHEN percentage >= 33 AND percentage < 45 THEN "IIIrd Division"
+	    WHEN percentage < 33 THEN "Fail" 
+	    ELSE "Not Correct %" 
+	 END AS Grade
+	 FROM students;
+ 
+//With Update
+
+	UPDATE students SET
+	percentage = (CASE id
+	    WHEN  3 THEN 40
+	    WHEN  7 THEN 35
+	END) 
+	WHERE id IN (3,7);
+	 
  
  
  
@@ -351,7 +382,45 @@ SELECT
 
 
 
+
+//IF...ELSE  in SQL Server
+
+	DECLARE @math INT, @phy INT, @chem INT;
+	SET @math = 80;
+	SET @phy = 78;
+	SET @chem = 70;
+
+	IF @math < 50 
+	BEGIN
+	    PRINT 'You Failed In Math';
+	END
+
+        ELSE       
+        BEGIN
+             PRNT 'You Failed in Math;
+        END
 	
+	 
+//While Loop
+
+	DECLARE @count INT, @i INT, @stName VARCHAR(20);
+	SELECT @count = COUNT(*) FROM TheStudentTBL;
+
+	WHILE @i <= @count
+	BEGIN
+	   SELECT @stName = [NAME] FROM TheStudentTBL WHERE ID=@i;
+	   SET @i = @i + 1;
+	END
+		 
+	 
+	DECLARE @count INT, @i INT, @stName VARCHAR(20);
+	SELECT @count = COUNT(*) FROM emp;
+
+	WHILE @i <= @count
+	BEGIN
+	   SELECT @stName = [NAME] FROM emp WHERE ID=@i;
+	   SET @i = @i + 1;
+	END;
 	 
 ---x---
 
