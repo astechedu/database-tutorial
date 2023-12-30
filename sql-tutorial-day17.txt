@@ -1,0 +1,172 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+---17----
+#17. SQL JOINS
+
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+
+Dfferent Types of SQL JOINs:
+
+Here are the different types of the JOINs in SQL:
+
+    (INNER) JOIN: Returns records that have matching values in both tables
+    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+    RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+    FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+
+
+INNER JOIN Syntax:
+
+    SELECT columns    
+    FROM table1    
+    INNER JOIN table2 ON condition1    
+    INNER JOIN table3 ON condition2   
+    
+    
+INNER JOIN Example:    
+     
+     
+     
+The INNER JOIN using the following command:
+
+    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+    FROM Student  
+    INNER JOIN Fee  
+    ON Student.admission_no = Fee.admission_no;       
+     
+     
+     
+   SELF JOIN:
+   
+   A table is joined to itself using the SELF JOIN.  
+   
+   
+   SELF JOIN Syntax:
+   
+    SELECT T1.col_name, T2.col_name...    
+    FROM table1 T1, table1 T2    
+    WHERE join_condition;       
+   
+   
+ The SELF JOIN using the following command:
+
+    SELECT S1.first_name, S2.last_name, S2.city  
+    FROM Student S1, Student S2  
+    WHERE S1.id <> S2.iD AND S1.city = S2.city  
+    ORDER BY S2.city;    
+   
+   
+   
+CROSS JOIN: 
+
+CROSS JOIN Syntax
+   
+   
+    SELECT column_lists    
+    FROM table1    
+    CROSS JOIN table2;   
+   
+   
+Example:
+
+The CROSS JOIN using the following command:
+
+    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+    FROM Student  
+    CROSS JOIN Fee  
+    WHERE Student.admission_no = Fee.admission_no;     
+   
+   
+OUTER JOIN:
+
+
+We can categories the OUTER JOIN further into three types:
+
+    LEFT OUTER JOIN
+    RIGHT OUTER JOIN
+    FULL OUTER JOIN
+
+
+LEFT OUTER JOIN:
+
+	LEFT OUTER JOIN Syntax:
+
+	The following syntax illustrates the use of LEFT OUTER JOIN in SQL Server:
+
+	    SELECT column_lists  
+	    FROM table1    
+	    LEFT [OUTER] JOIN table2    
+	    ON table1.column = table2.column;  
+
+	   
+	Example
+
+	The LEFT OUTER JOIN using the following command:
+
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    LEFT OUTER JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;     
+	   
+	     
+ RIGHT OUTER JOIN:
+ 
+ RIGHT OUTER JOIN Syntax
+
+	The use of RIGHT OUTER JOIN in SQL Server:
+
+	    SELECT column_lists    
+	    FROM table1    
+	    RIGHT [OUTER] JOIN table2    
+	    ON table1.column = table2.column;
+	 
+	 
+ 
+	Example:
+
+	The following example explains how to use the RIGHT OUTER JOIN to get records from both tables:
+
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    RIGHT OUTER JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;   
+	     
+     
+     
+ FULL OUTER JOIN:
+ 
+ FULL OUTER JOIN Syntax
+
+	The use of FULL OUTER JOIN in SQL Server:
+
+	    SELECT column_lists    
+	    FROM table1    
+	    FULL [OUTER] JOIN table2    
+	    ON table1.column = table2.column;    
+	 
+	 
+	Example:
+
+	The following example explains how to use the FULL OUTER JOIN to get records from both tables:
+
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    FULL OUTER JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;      
+	     
+	     
+	     
+     
+---x---
+

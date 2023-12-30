@@ -1,0 +1,204 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+--- Day 14 ---
+
+#13. CASE.....END
+
+
+SQL CASE Expression:
+
+         The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement).
+         
+         If there is no ELSE part and no conditions are true, it returns NULL.
+     
+
+ 
+CASE Syntax:
+
+	CASE
+	    WHEN condition1 THEN result1
+	    WHEN condition2 THEN result2
+	    WHEN conditionN THEN resultN
+	    ELSE result
+	END;   
+  
+  
+  SQL CASE Examples:
+  
+      The following SQL goes through conditions and returns a value when the first condition is met:
+     
+     
+        Example:
+	
+	SELECT OrderID, Quantity,
+	CASE
+	    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+	    WHEN Quantity = 30 THEN 'The quantity is 30'
+	    ELSE 'The quantity is under 30'
+	END AS QuantityText
+	FROM OrderDetails; 
+
+        The following SQL will order the customers by City. 
+        However, if City is NULL, then order by Country:
+
+
+
+	Example:
+	
+	SELECT CustomerName, City, Country
+	FROM Customers
+	ORDER BY
+	(CASE
+	    WHEN City IS NULL THEN Country
+	    ELSE City
+	END); 
+	    
+	  
+	  	  
+	
+The SQL CASE statement evaluates a list of conditions one-by-one and returns a value based on that condition.
+
+	SELECT order_id, item, amount,
+	CASE
+	  WHEN amout >= 10000 THEN 'HIGH'
+	  WHEN amout < 10000 THEN 'LOW'
+	END AS amout_category
+	FROM orders;	
+	
+	
+	
+	SELECT emp_id,emp_salary,
+	CASE
+	  WHEN emp_salary >= 3000 THEN 'HIGH'
+	  WHEN emp_salary < 3000 THEN 'LOW'
+	END AS amount_category
+	FROM emp;
+				+--------+------------+-----------------+
+				| emp_id | emp_salary | amount_category |
+				+--------+------------+-----------------+
+				|      1 |       2000 | LOW             |
+				|      2 |       8000 | HIGH            |
+				|      3 |       3000 | HIGH            |
+				|      4 |       9000 | HIGH            |
+				|      5 |       2000 | LOW             |
+				|      6 |       4300 | HIGH            |
+				|      7 |       8000 | HIGH            |
+				|      8 |       2000 | LOW             |
+				|      9 |       8000 | HIGH            |
+				|     10 |       7400 | HIGH            |
+				+--------+------------+-----------------+
+
+		
+
+THE SQL CASE statement has the following systax:
+
+	SELECT column1, column2.....,
+	CASE
+	 WHEN condition THEN result
+	END AS Alias
+	FROM table;
+
+
+Example 1: 
+
+	SELECT customer_id, first_name,
+	CASE
+	  WHEN age >= 18 THEN 'ALLowed'
+	END AS can_vote
+	FROM customers;
+				+-------------+------------+----------+
+				| customer_id | first_name | can_vote |
+				+-------------+------------+----------+
+				|           1 | Jyoti      | ALLowed  |
+				|           2 | Rohan      | ALLowed  |
+				|           3 | Dev        | ALLowed  |
+				|           4 | Johar      | ALLowed  |
+				|           5 | Bhanu      | ALLowed  |
+				+-------------+------------+----------+
+
+
+
+//Customer Table: 
+
+create table customers(
+ customer_id int auto_increment 
+ first_name varchar(20),
+ last_name varchar(20),
+ age int(2),
+ country varchar(20),
+primary key(customer_id)
+);
+
+INSERT INTO customers(customer_id,first_name,last_name,age,country) 
+                     values(1,"john","doe",34,"USA"),
+                           (2,"robert","luna",23,"USA"),
+                           (3,"david","singh",23,"UK"),
+                           (4,"john","pratap",26,"US"),
+                           (5,"Betty","doe",29,"UAE"),
+                           
+                           
+
+Example 2: 
+
+	SELECT order_id, customer_id, 
+	CASE
+	  WHEN amount >= 400 THEN (amount = amount * 10/100)
+	END AS offer_price
+	FROM orders;
+
+
+
+//SQL CASE with multiple consitions:
+
+   It is possible to stack multiple conditions inside a single CASE clause;
+   
+	SELECT customer_id, first_name,
+	CASE
+	  WHEN country = 'USA' THEN 'United States Of America'
+	  WHEN country = 'UK' THEN 'United Kindom'
+	END AS country_name
+	FROM customers;
+				+-------------+------------+--------------------------+
+				| customer_id | first_name | country_name             |
+				+-------------+------------+--------------------------+
+				|           1 | Jyoti      | United States Of America |
+				|           2 | Rohan      | United States Of America |
+				|           3 | Dev        | United Kindom            |
+				|           4 | Johar      | United Kindom            |
+				|           5 | Bhanu      | NULL                     |
+				+-------------+------------+--------------------------+
+	
+	
+//SQL CASE with ELSE:
+	
+	SELECT customer_id, first_name,
+	CASE
+	  WHEN country = 'USA' THEN 'United States of America'
+	  WHEN country = 'UK' THEN 'United Kindom'
+	  ELSE 'Unknown country'
+	END AS country_name
+	FROM customers;	
+						+-------------+------------+--------------------------+
+						| customer_id | first_name | country_name             |
+						+-------------+------------+--------------------------+
+						|           1 | Jyoti      | United States of America |
+						|           2 | Rohan      | United States of America |
+						|           3 | Dev        | United Kindom            |
+						|           4 | Johar      | United Kindom            |
+						|           5 | Bhanu      | Unknown country          |
+						+-------------+------------+--------------------------+
+	
+	
+	
+	
+	
+	 
+---x---
+
+

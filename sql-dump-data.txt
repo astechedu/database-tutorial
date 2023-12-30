@@ -1,0 +1,154 @@
+
+
+Schemas: 
+
+
+
+    
+    Create two tables Student & Fee
+    
+    
+    CREATE TABLE Student (      
+      id int PRIMARY KEY,     
+      admission_no varchar(15) NOT NULL,  
+      first_name varchar(15) NOT NULL,      
+      last_name varchar(15) NOT NULL,  
+      age int,  
+      city varchar(15) NOT NULL      
+    );    
+      
+    CREATE TABLE Fee (   
+      admission_no varchar(15) NOT NULL,  
+      course varchar(15) NOT NULL,      
+      amount_paid int,    
+    );      
+    
+    Insert Data: 
+     
+    INSERT INTO Student (admission_no, first_name, last_name, age, city)       
+    VALUES (3354,'Luisa', 'Evans', 13, 'Texas'),       
+    (2135, 'Paul', 'Ward', 15, 'Alaska'),       
+    (4321, 'Peter', 'Bennett', 14, 'California'),    
+    (4213,'Carlos', 'Patterson', 17, 'New York'),       
+    (5112, 'Rose', 'Huges', 16, 'Florida'),  
+    (6113, 'Marielia', 'Simmons', 15, 'Arizona'),    
+    (7555,'Antonio', 'Butler', 14, 'New York'),       
+    (8345, 'Diego', 'Cox', 13, 'California');  
+      
+      
+    INSERT INTO Fee (admission_no, course, amount_paid)       
+    VALUES (3354,'Java', 20000),       
+    (7555, 'Android', 22000),       
+    (4321, 'Python', 18000),    
+    (8345,'SQL', 15000),       
+    (5112, 'Machine Learning', 30000);       
+
+
+
+
+
+CREATE TABLE Orders(
+ order_id int auto_increment,
+ item varchar(20),
+ amount int,
+ customer_id int,
+ primary key(order_id)
+);
+
+
+insert into orders(order_id,item,amout,customer_id) 
+            vaoues (1,"keyboard",500,5),
+                   (2,"Mouse",400,5),
+                   (3,"Monitor",13000,3),
+                   (4,"keyboard",500,1),
+                   (5,"mousepad",250,2);
+                   
+                   
+                   
+CREATE TABLE Product (
+    PName varchar(255) PRIMARY KEY, 
+    Price money, 
+    Category varchar(255), 
+    Manufacturer varchar(255),
+    FOREIGN KEY (Manufacturer) REFERENCES Company(CName)
+);
+ 
+CREATE TABLE Purchase(
+    id varchar(255) PRIMARY KEY,
+    product varchar(255) NOT NULL, 
+    buyer varchar(255) NOT NULL,
+    FOREIGN KEY (product) REFERENCES Product(PName)
+);
+
+
+   
+    CREATE TABLE products (      
+      id int auto_increment,     
+      name varchar(15) NOT NULL,  
+      price float(5),      
+      qty int,
+      primary key(id)            
+    );    
+      
+      
+    Insert Data: 
+     
+    INSERT INTO products (id,name,price,qty)        
+    VALUES(1,"tv",388,1),(2,"comb",89,3),(3,"camera",636,2);
+    
+    
+          
+    CREATE TABLE orders (   
+      id int,
+      pid int,
+      order_date date,
+      primary key(id),
+      FOREIGN KEY (pid) REFERENCES products(id)     
+    );      
+       
+    
+    Insert Data: 
+     
+    INSERT INTO orders (id,pid,order_date)        
+    VALUES(1,1,"2023-12-01"),(2,2,"2023-12-22"),(3,1,"2023-01-01"),(4,1,"2023-03-05");
+    
+---x ---
+
+
+
+  
+1. emps table 
+
+	create table emps(
+	 emp_id int auto_increment,
+	 emp_name varchar(15),
+	 emp_city varchar(15),
+	 emp_country varchar(15),
+	 primary key(emp_id)
+	);
+
+insert into emps(emp_id,emp_name,emp_city,emp_country) values(1,"ajay","dehradun","india"),
+                                                             (2,"sonu","dehli","india"),
+                                                             (3,"rohan","lahor","pakistan"),
+                                                             (4,"sumit","dhamput","india"),
+                                                             (5,"amit","dehradun","india");
+
+2. deptments table
+    
+	create table departments(
+	 dept_id int auto_increment,
+	 emp_id int,
+	 dept_name varchar(15),
+	 primary key(dept_id),
+	 foreign key(emp_id) references emps(emp_id)
+	);   
+	    
+insert into departments(dept_id,emp_id,dept_name) values(1,1,"holticulture"),
+                                                        (2,2,"hidle"), 
+                                                        (3,3,"water"),                                                       
+                                                        (5,4,"police"),
+
+
+----x----
+
+

@@ -1,0 +1,345 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+-- Day 13 --
+
+#13. Whildcards, Alliases, Comments
+
+
+
+>> SQL Comments: 
+
+  Comments are used to explaine sections of SQL statements.
+
+	Single Line Comment: 
+	--All
+	   
+	Multi Line Comment: 
+	/* Multi line comments */
+	    
+	    
+	    
+>> SQL Whildcards: 
+
+	
+	A wildcard characters in sql is used with the LIKE clause to raplace a single character or a set of characters in a string.
+	A whilcard charactor is used to substitute one or more characters in a string.
+       
+        WildCard          Description
+        
+           %              A substitute for zero or more characters
+           -              A substitute for a single character
+           [charlist]     Sets and ranges of characters to match
+           [^charlist]    Matches only a character NOT specified within the bracket
+           or 
+           [!charlist]   
+        
+       
+       
+Syntax :
+ 
+	SELECT column1, column2,...
+	FROM table
+	WHERE column LIKE 'Wildcard String';
+	
+
+1. % and _ are two commonly used wildcard characters in SQL
+
+Example:
+
+	SELECT *
+	From customers
+	WHERE country LIKE 'US_';
+
+				+-------------+------------+-----------+------+---------+
+				| customer_id | first_name | last_name | age  | country |
+				+-------------+------------+-----------+------+---------+
+				|           1 | Jyoti      | Doe       |   31 | USA     |
+				|           2 | Rohan      | Luna      |   22 | USA     |
+				+-------------+------------+-----------+------+---------+
+				
+				
+2. _ is a wildcard characters that represents exactly one characters after a string.
+
+Example: 
+	SELECT *
+	From customers
+	WHERE country LIKE 'U_';
+				+-------------+------------+-----------+------+---------+
+				| customer_id | first_name | last_name | age  | country |
+				+-------------+------------+-----------+------+---------+
+				|           3 | Dev        | Robinson  |   22 | UK      |
+				|           4 | Johar      | Reinhardt |   25 | UK      |
+				+-------------+------------+-----------+------+---------+
+Example: 
+
+	SELECT *
+	From customers
+	WHERE country LIKE 'U__';
+	
+				+-------------+------------+-----------+------+---------+
+				| customer_id | first_name | last_name | age  | country |
+				+-------------+------------+-----------+------+---------+
+				|           1 | Jyoti      | Doe       |   31 | USA     |
+				|           2 | Rohan      | Luna      |   22 | USA     |
+				|           5 | Bhanu      | doe       |   28 | UAE     |
+				+-------------+------------+-----------+------+---------+					
+				
+Example: 
+
+	SELECT * 
+	from customers
+	where last_name LIKE 'R%';
+				+-------------+------------+-----------+------+---------+
+				| customer_id | first_name | last_name | age  | country |
+				+-------------+------------+-----------+------+---------+
+				|           3 | Dev        | Robinson  |   22 | UK      |
+				|           4 | Johar      | Reinhardt |   25 | UK      |
+				+-------------+------------+-----------+------+---------+
+	
+
+Example: 
+
+	SELECT * 
+	from customers
+	where first_name LIKE 'J%';
+	
+			+-------------+------------+-----------+------+---------+
+			| customer_id | first_name | last_name | age  | country |
+			+-------------+------------+-----------+------+---------+
+			|           1 | Jyoti      | Doe       |   31 | USA     |
+			|           4 | Johar      | Reinhardt |   25 | UK      |
+			+-------------+------------+-----------+------+---------+
+
+Example: 
+
+	SELECT * 
+	from customers
+	where last_name LIKE '_oe';
+				+-------------+------------+-----------+------+---------+
+				| customer_id | first_name | last_name | age  | country |
+				+-------------+------------+-----------+------+---------+
+				|           1 | Jyoti      | Doe       |   31 | USA     |
+				|           5 | Bhanu      | doe       |   28 | UAE     |
+				+-------------+------------+-----------+------+---------+
+
+Example: 
+
+	SELECT * 
+	from customers
+	where last_name LIKE 'U[KA]%';
+
+
+Example: 
+
+	select * 
+	from customers
+	where last_name LIKE '[!DR]%';
+
+
+
+Example: 
+      
+         Return all customers that starts with the letter 'a':
+         
+         SELECT *FROM customers
+         WHERE first_name LIKE 'j%';
+					+-------------+------------+-----------+------+---------+
+					| customer_id | first_name | last_name | age  | country |
+					+-------------+------------+-----------+------+---------+
+					|           1 | Jyoti      | Doe       |   31 | USA     |
+					|           4 | Johar      | Reinhardt |   25 | UK      |
+					+-------------+------------+-----------+------+---------+       
+         
+  
+         SELECT *FROM customers
+         WHERE first_name LIKE '%ti';         
+					+-------------+------------+-----------+------+---------+
+					| customer_id | first_name | last_name | age  | country |
+					+-------------+------------+-----------+------+---------+
+					|           1 | Jyoti      | Doe       |   31 | USA     |
+					+-------------+------------+-----------+------+---------+			 
+         
+         
+         SELECT *FROM customers
+         WHERE first_name LIKE '%oh%';
+					+-------------+------------+-----------+------+---------+
+					| customer_id | first_name | last_name | age  | country |
+					+-------------+------------+-----------+------+---------+
+					|           2 | Rohan      | Luna      |   22 | USA     |
+					|           4 | Johar      | Reinhardt |   25 | UK      |
+					+-------------+------------+-----------+------+---------+	         
+        
+          
+         SELECT *FROM employees 
+         WHERE emp_city LIKE '%_ehradun%';
+	+--------+-----------+-----------+---------+-------------+------------+----------+-------------+---------------------+
+	| emp_id | emp_fname | emp_lname | emp_age | emp_address | emp_salary | emp_city | emp_country | created_at          |
+	+--------+-----------+-----------+---------+-------------+------------+----------+-------------+---------------------+
+	|      1 | ajay      | gupta     |      23 | ladpur      |       2000 | dehradun | india       | 2023-12-21 08:46:28 |
+	+--------+-----------+-----------+---------+-------------+------------+----------+-------------+---------------------+
+
+
+  
+--- End of Wildcard Characters ----
+
+
+
+>> SQL Alliases <<
+
+    SQL aliases are used to give a table, or a column in a table, a temporary name.
+    An alias is created with the AS keyword.
+    
+    
+Example:
+	
+	SELECT customer_id AS ID
+	FROM customers;  
+				+------+
+				| ID   |
+				+------+
+				|    1 |
+				|    2 |
+				|    3 |
+				|    4 |
+				|    5 |
+				+------+ 
+    
+    
+    
+       //AS is Optional; 
+               
+Example:
+	
+	SELECT customer_id ID
+	FROM customers; 
+    
+    
+     Syntax:
+
+	When alias is used on column:
+
+	SELECT column_name AS alias_name
+	FROM table_name;
+
+	When alias is used on table:
+
+	SELECT column_name(s)
+	FROM table_name AS alias_name;
+
+    
+>> Alias for Columns:
+
+Example:
+
+	SELECT customer_id AS ID, first_name AS Customer
+	FROM customers;    
+	    
+				+------+----------+
+				| ID   | Customer |
+				+------+----------+
+				|    1 | Jyoti    |
+				|    2 | Rohan    |
+				|    3 | Dev      |
+				|    4 | Johar    |
+				|    5 | Bhanu    |
+				+------+----------+    
+	    
+	    
+	    
+  Using Aliases With a Space Character:
+  
+Example:
+
+	Using [square brackets] for aliases with space characters:
+	
+	SELECT ProductName AS [My Great Products]
+	FROM Products;  
+	    
+	  
+Example:
+
+	Using "double quotes" for aliases with space characters:
+	
+	SELECT first_name AS "My Great Person"
+	FROM customers; 
+				+-----------------+
+				| My Great Person |
+				+-----------------+
+				| Jyoti           |
+				| Rohan           |
+				| Dev             |
+				| Johar           |
+				| Bhanu           |
+				+-----------------+
+				
+
+Concatenate Columns:
+
+	The following SQL statement creates an alias named "Address" that combine four columns (Address, PostalCode, City  
+		and Country):
+
+Example:
+	
+	SELECT emp_id, CONCAT(emp_fname,' ',emp_lname,', ',emp_age,', ',emp_address,', ', emp_country) AS Address
+	FROM employees; 
+					+--------+--------------------------------------------+
+					| emp_id | Address                                    |
+					+--------+--------------------------------------------+
+					|      1 | ajay gupta, 23, ladpur, india              |
+					|      2 | sonu rawat, 38, balawala, india            |
+					|      3 | aryan negi, 93, sahastradhara, pakistan    |
+					|      4 | aryan kumar, 93, dharampur, china          |
+					|      5 | renu gusain, 13, miyawala, japan           |
+					|      6 | dev bist, 10, miyawala, japan              |
+					|      7 | aura rawat, 13, nakronda road, japan       |
+					|      8 | rakhi gupta, 15, nakronda road, america    |
+					|      9 | raman pawar, 88, sahastradhara road, china |
+					|     10 | rakhi gupta, 15, vivek vihar, israel       |
+					+--------+--------------------------------------------+
+
+
+	
+
+
+>> Alias for Tables:
+
+	The same rules applies when you want to use an alias for a table.
+	
+Example:
+
+	Refer to the Customers table as Persons instead:
+	
+	SELECT * FROM customers AS Persons;
+					+-------------+------------+-----------+------+---------+
+					| customer_id | first_name | last_name | age  | country |
+					+-------------+------------+-----------+------+---------+
+					|           1 | Jyoti      | Doe       |   31 | USA     |
+					|           2 | Rohan      | Luna      |   22 | USA     |
+					|           3 | Dev        | Robinson  |   22 | UK      |
+					|           4 | Johar      | Reinhardt |   25 | UK      |
+					|           5 | Bhanu      | doe       |   28 | UAE     |
+					+-------------+------------+-----------+------+---------+
+
+Example:
+
+	SELECT o.OrderID, o.OrderDate, c.CustomerName
+	FROM Customers AS c, Orders AS o
+	WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+
+
+
+Example:
+
+	SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName
+	FROM Customers, Orders
+	WHERE Customers.CustomerName='Ajay Sisaudiya' AND Customers.CustomerID=Orders.CustomerID;
+
+
+----x----
+

@@ -1,0 +1,495 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+
+
+-------- Problem Solving ON Subquery -------------
+
+SQL Problems on Subqueries
+
+Topic: 
+> ANY Opeartor     (=,<>,!=,>,>=,<,or <=)
+> ALL Operator      (=,<>,!=,>,>=,<,or <=)
+> EXISTS Operator
+> Examples
+> EXISTS vs IN vs JOINS
+
+1. ANY OPERATOR:
+Syntax: 
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY (Subqery);
+
+
+Q.1 Write an SQL query to get all employees from the employee table whose salary is equal to any salary in the 'HR' department.
+
+SELECT *
+FROM employee
+WHERE salary = ANY (
+ SELECT salary 
+ FROM employee
+ WHERE department = 'hr'
+);
+
+1. All Operator: 
+
+Syntax: 
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL (Subqery);
+
+Q.2 Write an SQL query to retrieve all employees whose salary is greater than the salary of all employees in the Accounts department.
+
+SELECT * 
+FROM employees
+WHERE salary > ALL (
+SELECT salary
+FROM employee
+WHERE department = 'Accounts'
+);
+
+
+3. EXISTS Operator
+
+Syntax:
+	SELECT column_name(s)
+	FROM table_name
+	WHERE EXISTS (Subqery);
+
+
+Q.3 Write an SQL query to retrieve the names of customer who have placed at least one order.
+
+select name
+from customers
+where exists (
+   select *
+   from orders
+   where orders.customer_id = customers.id
+);
+
+
+'OR'             BUT EXISTS vs IN : Performance, Readability, Rersonal preference
+
+select name
+from customers
+where name IN (
+   select *
+   from orders
+   where orders.customer_id = customers.id
+);
+
+
+
+----x-----
+
+
+
+
+
+------x-------
+
+
+
+
+
+
+
+
+
+
+
+--------- Problem Solving On GROUP BY ---------
+
+
+----> 1. SQL Basics For Beginers <-----
+
+#SQL Problem Solving On GROUP:
+
+GROUP BY Examples: or Problem Solving
+
+
+Sample Tables;
+
+CREATE TABLE table_name{
+    emp_Id int not null auto_increment,
+    name varchar(20),
+    age int(3),
+    address varchar(30),
+    salary float,
+    dept_id int,
+    primary key (Emp_id)
+}
+
+INSERT INTO EMP(emp_id,name,age,address,salary,dept_id) VALUES(1,"ajay",23,"ladpur",2993,100);
+
+Ex:
+
+1. Write a query to find the number of employees in each department
+
+	SELECT dept_id COUNT(*)        //Or COUNT(1)
+	FROM emp
+	GROUP BY dept_id;
+
+
+2. Write a query to find the number of employees in each department sorted low to high
+
+	SELECT dept_id COUNT(*)        //Or COUNT(1)
+	FROM emp
+	GROUP BY dept_id
+	ORDER BY COUNT(*);
+
+
+3. Write query to find the sum of salaries of employees from each department
+
+	SELECT dept_id SUM(salary) AS 'SumSalary'    
+	FROM emp
+	GROUP BY dept_id;
+
+
+4. Write a query to find the average of salaries of employees from each department
+
+	SELECT dept_id ROUND(AVG(salary))  
+	FROM emp
+	GROUP BY dept_id;
+
+
+5. Write a query to find maximum salaries of employees from each department
+
+	SELECT dept_id MAX(salary)
+	FROM emp
+	GROUP BY dept_id;
+
+
+6. Write a query to find minimum salaries of employees from each department
+
+	SELECT dept_id MIN(salary)
+	FROM emp
+	GROUP BY dept_id;
+
+7. Write a query to find minimum and maximum salaries of employees from each department
+
+	SELECT dept_id MAX(salary), MAX(slary)
+	FROM emp
+	GROUP BY dept_id;
+
+7. Write a query to find minimum and maximum salaries of employees from each department
+
+	SELECT dept_id MAX(salary), MAX(slary)
+	FROM emp
+	GROUP BY dept_id;
+
+8. Write a query to find the number of employees in each department location wise
+
+	SELECT dept_id, address, COUNT(*)
+	FROM emp
+	GROUP BY dept_id, address;
+
+
+- Having : Problem solving -
+
+Having Clause:
+
+  Having clause is used eith GROUP BY clause & Filter the groups created by the GROUP BY clause
+
+  The VAVING clause enables you to specify conditions that filter which group results appear in the result.
+  
+  The HAVING clause was added to SQL because the aggregte functions like SUM,AVG,MIN,MAX,COUNT can not be used with WHERE clause.
+  
+  The WHERE clause loaces conditions on the selected columns, whereas the HAVING clause places conditins on groups created by the GROUP BY clause
+  
+  In SQL query, HAVING clause is placed after the GROUP BY clause
+  
+  
+  Syntax:
+	  
+	SELECT column_name(s), aggregate_function(column_name)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	HAVING condition
+	ORDER BY column_name(s);
+	  
+  
+  
+>Order: 
+
+	select
+	from 
+	where
+	group by
+	having 
+	order by
+
+
+1. Write a query to display departments where the number of employee is greater than 2
+
+	SELECT dept_id, count(*)
+	FROM emp
+	GROUP BY dept_id
+	HAVING count(*) > 2
+
+2. Write a query to find departments where the sum of salaries of employees is more than 10000
+ 
+	SELECT dept_id, SUM(salary)
+	FROM emp
+	GROUP BY dept_id
+	HAVING SUM(salary) > 1000
+
+3. Write a query to find the sum of salaries of employees that lives on same location
+
+	SELECT address, SUM(salary)
+	FROM emp
+	GROUP BY address
+	HAVING COUNT(address) >= 2 
+	
+
+----x----
+
+
+
+---->2. SQL Problem Solving On GROUP BY <-----
+
+
+SQL Problem Solving on GROUP BY 
+
+Syntax: 
+
+	select column_name, function_name(column_name)
+	form table_name
+	where condition
+	group by columne_name1,columne_name2
+	having condition
+	order by column_name1,column_name2;
+
+
+
+
+Table: salary_details 
+
+DATA: 
+	department   salary 
+
+	hr           10000
+	developer    3500
+	developer    4000
+	tester       3000
+	hr           5500
+	developer    15000
+
+
+
+
+Table: employee_info
+
+DATA: 
+
+id name            email              department    salary 
+1  karan mehra      karan@gmail.com    hr           300000
+2  rohit sharma     rohtit@gmail.com   admin       75000
+3  ankush rajput    ankush@gmail.com    accounts    NULL
+4  priyanshi sharme prianshi@gmail.com   hr         500000
+5  sanket gupta     sanket@gmail.com     developer  100000
+6  shruti kapoor   shruti@gmail.com      admin       80000
+7 raj kumar       raj@gmail.com          NULL        62000
+8  suraj roy      suraj@gmail.com       NULL         25000
+9  geet gour      geet@gmail.com        tester       17000
+
+
+Table: students
+
+id subject  semester   name
+1  ITB001    1         Robert
+2  ITB001    1    	bob
+3  ITB001    1    	lisa
+4  ITB001    2    	sam
+5  ITB001    2    	maria
+6  ECB130    1    	john
+7  ECB130    1    	robert
+8  ECB130    2    	mickey
+
+
+
+
+Use Cases of Group by
+
+.Group by with one column
+.Goup by with two columns
+.Group by and ORDER by
+.Group by and Having 
+.Group by, Having and Where
+
+
+
+
+Q.1 Find sum of salary of each department form employee_info table;
+
+	SELECT department, sum(salary)
+	FROM employee_info 
+	GROUP BY department;
+
+Q.2 Find the sum of salry of eaxh department from employee_info table and also arrange the result in 
+ascending order according to department.
+
+
+	SELECT department, sum(salary)
+	FROM employee_info 
+	GROUP BY department;
+        ORDER BY department asc;
+
+Q.3 Find sum of salary of each department from employee_info table where the sum of salary is more than 17000.
+
+ SELECT department, SUM(salary)
+ FROM employee_info
+ GROUP BY department
+ HAVING SUM(salary) > 17000;
+
+
+Q.4 Find sum of salary of each department except 'Admin' from employee_info table where the sum of salary is more than 17000.
+
+SELECT salary, SUM(salary)
+FROM emmployee_info
+WHERE department !='Admin'
+GROUP BY department
+HAVING SUM(salary) > 17000;
+
+
+Q.5 Find the mumber of studing same subject in same semester.
+
+select subject, semester, COUNT(*)
+FROM students
+GROUP BY subject,semester;	
+
+
+Do it youself: 
+
+.SQL Query to find Max Salary from each department.
+.Write an SQL Query to find the number of employees according to gender
+whose DOB is between 01/01/1960 to 31/12/1975.
+.SQL Query to find get number of employee in each department.
+
+----x----
+
+
+
+
+----> 3. SQL PRoblem Solving Using JOIN <-----
+
+
+        SQL Problem based interview Q/Ans: (JOIN, WHERE, GROUP, HAVING, JOIN-THREE-TABLES) 
+      
+    
+Prepare Three Tables: Managers, employees, departments
+
+
+
+Table Manager: 
+
+	create table managers(
+	 manager_id int auto_increment,
+	 manager_name varchar(50),
+	 city varchar(100),
+	 primary key(manager_id)
+	);
+
+	DATA: 
+	manager_id   manager_name  city
+	M101         ajy          pune
+	M102         amit         mumbi
+	M103         sandeep       banglore
+	M104         jaydep      indore
+	M106        shubham       banglore
+
+insert into managers(manager_id,manager_name,city) values()
+
+
+
+Table departments: 
+
+	create table departments(
+	 dept_id int auto_increment,
+	 dept_name varchar(255),
+	 primary key(dept_id)
+	);
+
+DATA: 
+	
+	dept_id    dept_name
+	1          admin
+	3          developer
+	4          tester
+	5          account
+
+
+Table employees: 
+
+	create table employee(
+	  emp_id  int(11) auto_increment
+	  emp_name varchar(225),
+	  salary  double,
+	  city varchar(225),
+	  primary key(emp_id),
+	  dept_id   int(11),
+	  manager_id varchar(50),
+	  foreign key(dept_id) references managers(mamager_id),
+	  forengin key(dept_id) references departments(dept_id) 
+	);
+
+Data: 
+
+	emp_id   emp_name   salary    city        dept_id  manager_id
+	1       karan       300000     mumbai     2        M102
+	2       rohit       75000      banglore   1        M106
+	3       ankush      35000     ahemdabad   5        M105
+	4       priyankshi  500000    kolkata     3        M102
+	5       sanket      100000    pune        3        M101
+	6       shruti      80000     indore      4       M105
+	7       jayraj      75000    bhopal       2       M103
+	8       dilip       66000    mumbai       3       M102
+	9       Geet       17000     mumbai       2       M101
+	10      zubin      18999     dehradun     1       M102
+
+    
+Q.1 Write a SQL query to find the name of the department where more than two employees are working.
+
+	select d.dept_name
+	from departments d left join employees e
+	on d.dept_id = e.dept_id
+	group by e.dept_id
+	having count(e.dept_id) > 2;
+
+
+Q.2 Write SQL query to calculate the average salary of each department which is higher than 75000. Find department name also in 
+descending order.
+
+	select d.dept_name, AVG(e.salary)
+	from employee e left join department d
+	on e.dept_id = d.dept_id
+	group by e.dept_id
+	having AVG(e.salary) > 75000
+	order by d.dept_name DESC;
+
+Q.3 Write a SQL query to find the manager and employee who belongs to same city.
+
+	select e.emp_name,m.manager_name,e.city
+	from employees e left join managers m 
+	on e.manager_id = m.manager_id
+	where e.city = m.city;
+
+Q.4 Write a SQL query to find those employees whose salary exists between 35000 and 90000 with the department and manager name
+//Using three tables
+
+
+	select d.dept_name,m.mamager_name,e.emp_name,e.salary
+	from employees inner join deprartment d
+	on e.dept_id = d.dept_id inner join manager m
+	on m.manager_id = e.mamager_id
+	where e.salary BETWEEN 35000 AND 90000;
+
+
+----x----
+
+---------- Problem Soving End of GROUP BY -------
+
+
+

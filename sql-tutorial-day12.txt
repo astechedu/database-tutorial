@@ -1,0 +1,508 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+
+-- Day 12 ---
+
+#12. STRING FUNCTIONS, DATE FUNCTIONS, NUMERIC FUNCTIONS, ADVANCED FUNCTIONS
+
+>> SQL Server Functions <<
+
+
+  STRING FUNCTIONS:
+ 	              
+ 	1. ASCII() 
+ 	2. CHAR()
+ 	3. CHARINDEX(),
+ 	4. UPPER()
+ 	5. LOWER()
+ 	6. LEFT(),
+ 	7. RIGHT()
+ 	8. TRIM()
+ 	9. SUBSTRING()
+       10. LTRIM()
+       11. LENGTH()
+       12. DATALENGTH()
+       13. CONCAT_WS()
+       14. CONCAT()
+       15. COUNT(); 	
+
+
+    DATE FUNCTIONS: 
+    
+	2. SELECT CURRENT_TIMESTAMPS()		
+	
+	1. SELECT DAY('2015/01/01');
+	
+    NUMERIC FUNCTIONS: 
+    
+	1. SELECT ROUND();
+	2. SELECT CEILING();
+
+
+    ADVANCED FUNCTIONS: 
+    
+        1. SELECT SESSION_USER();
+        2. SELECT SYSTEM_USER();
+        3. SELECT CURRENT_USER();
+        4. SELECT CAST(23 as int);
+
+
+>> SQL Server Functions: 
+
+	The ASCII() function returns the ASCII value for the specific character.
+	
+Syntax:
+
+	ASCII(character)
+	
+
+>>SQL Server ASCII() Function
+
+	Example:
+	Return the ASCII value of the first character in "CustomerName":
+
+		SELECT ASCII(CustomerName) AS NumCodeOfFirstChar
+		FROM Customers; 
+
+
+        Example: 
+        
+                SELECT ASCII('C');        
+					+------------+
+					| ASCII('C') |
+					+------------+
+					|         67 |
+					+------------+
+					               
+
+>>SQL Server CHAR() Function
+
+	The CHAR() function returns the character based on the ASCII code.
+	
+	Syntax:
+	
+		CHAR(code);
+
+        Example: 
+        
+                SELECT CHAR(87);
+					+----------+
+					| CHAR(87) |
+					+----------+
+					| W        |
+					+----------+          
+                
+
+>>SQL Server CHARINDEX() Function
+
+The CHARINDEX() function searches for a substring in a string, and returns the position.
+
+	If the substring is not found, this function returns 0. 
+
+
+	Syntax:
+
+	CHARINDEX(substring, string, start)
+
+
+	Example:
+	Search for "t" in string "Customer", and return position:
+	
+		SELECT CHARINDEX('t', 'Customer') AS MatchPosition; 
+
+
+	Example:
+	Search for "OM" in string "Customer", and return position:
+	
+		SELECT CHARINDEX('OM', 'Customer') AS MatchPosition; 
+
+
+	Example:
+	Search for "mer" in string "Customer", and return position (start in position 3):
+	
+		SELECT CHARINDEX('mer', 'Customer', 3) AS MatchPosition; 
+
+
+
+>>SQL Server CONCAT() Function
+
+	The CONCAT() function adds two or more strings together.
+	
+	Syntax:
+	
+		CONCAT(string1, string2, ...., string_n)
+
+	Example:
+	Add two strings together:
+	
+		SELECT CONCAT('google', '.com'); 
+						+--------------------------+
+						| CONCAT('google', '.com') |
+						+--------------------------+
+						| google.com               |
+						+--------------------------+
+
+
+	Example:
+	Add strings together (separate each string with a space character):
+	
+		SELECT CONCAT('SQL', ' ', 'is', ' ', 'fun!'); 
+							+-------------------------------+
+							| CONCAT('SQL', ' is', ' fun!') |
+							+-------------------------------+
+							| SQL is fun!                   |
+							+-------------------------------+
+
+>>SQL Server CONCAT_WS() Function:	
+
+	The CONCAT_WS() function adds two or more strings together with a separator.
+
+	Syntax:
+	
+	CONCAT_WS(separator, string1, string2, ...., string_n)
+
+
+	Example
+	Add strings together. Use '.' to separate the concatenated string values:
+	
+		SELECT CONCAT_WS('.', 'www', 'google', 'com'); 
+								+----------------------------------------+
+								| CONCAT_WS('.', 'www', 'google', 'com') |
+								+----------------------------------------+
+								| www.google.com                         |
+								+----------------------------------------+
+
+	
+
+>>SQL Server DATALENGTH() Function:
+
+	The DATALENGTH() function returns the number of bytes used to represent an expression.
+
+	Syntax:
+	
+	DATALENGTH(expression)
+
+
+	Example:
+	Return the length of an expression (in bytes):
+	
+		SELECT DATALENGTH('google.com'); 
+
+
+
+	Example:
+	Return the length of an expression (in bytes) (counts both leading and trailing spaces):
+	
+		SELECT DATALENGTH('   W3Schools.com   ');
+
+	Example:
+	Return the length of an expression (in bytes):
+	
+		SELECT DATALENGTH('2017-08'); 
+
+
+>>SQL Server LENGTH Function
+
+ 	The LENGTH() function returns the length of a string.
+
+	Syntax:
+	
+	LENGTH(string)
+
+
+	Example:
+	Return the length of a string:
+	
+		SELECT LENGTH('astechedu.com');
+
+	Example:
+	Return the length of a string (counts leading spaces, but not trailing spaces):
+	
+		SELECT LENGTH('  astechedu ');
+	
+	Example:
+	Return the length of a string:
+	
+		SELECT LENGTH('2017-08'); 
+
+
+
+>>SQL Server LEFT() Function
+
+	The LEFT() function extracts a number of characters from a string (starting from left).
+	
+	Syntax:
+	LEFT(string, number_of_chars)
+
+	Example:
+	Extract 3 characters from a string (starting from left):
+	
+		SELECT LEFT('SQL Tutorial', 3) AS ExtractString;
+									+---------------+
+									| ExtractString |
+									+---------------+
+									| SQL           |
+									+---------------+
+
+	Example:
+	Extract 5 characters from the text in the "CustomerName" column (starting from left):
+	
+		SELECT LEFT(CustomerName, 5) AS ExtractString
+		FROM Customers;
+
+	Example:
+	Extract 100 characters from a string (starting from left):
+	
+		SELECT LEFT('SQL Tutorial', 100) AS ExtractString;
+
+									+---------------+
+									| ExtractString |
+									+---------------+
+									| SQL Tutorial  |
+									+---------------+
+
+
+>>SQL Server LOWER() Function
+
+	The LOWER() function converts a string to lower-case.
+		
+	Syntax:
+
+	LOWER(text)
+
+	
+	Example:
+	Convert the text to lower-case:
+	
+		SELECT LOWER('SQL Tutorial is FUN!'); 
+							+-------------------------------+
+							| LOWER('SQL Tutorial is FUN!') |
+							+-------------------------------+
+							| sql tutorial is fun!          |
+							+-------------------------------+
+
+
+	Example:
+	Convert the text in "CustomerName" to lower-case:
+
+		SELECT LOWER(CustomerName) AS LowercaseCustomerName
+		FROM Customers; 
+
+
+
+>>SQL Server UPPER() Function
+
+	The UPPER() function converts a string to upper-case.
+
+	Syntax:
+	
+	UPPER(text)
+
+
+	Example:
+	Convert the text to upper-case:
+	
+		SELECT UPPER('SQL Tutorial is FUN!'); 
+							+-------------------------------+
+							| UPPER('SQL Tutorial is FUN!') |
+							+-------------------------------+
+							| SQL TUTORIAL IS FUN!          |
+							+-------------------------------+
+
+	Example:
+	Convert the text in "CustomerName" to upper-case:
+		
+		SELECT UPPER(CustomerName) AS UppercaseCustomerName
+		FROM customers; 
+
+        Example;
+		SELECT UPPER(name) FROM products;
+
+							+-------------+
+							| UPPER(name) |
+							+-------------+
+							| TV          |
+							| COMB        |
+							| CAMERA      |
+							| FREEZE      |
+							+-------------+
+
+ 
+>>SQL Server LTRIM() Function
+
+	The LTRIM() function removes leading spaces from a string.
+
+	Syntax:
+	
+	LTRIM(string)
+
+
+	Example:
+	Remove leading spaces from a string:
+
+	SELECT LTRIM('     SQL Tutorial') AS LeftTrimmedString; 
+
+								+-------------------+
+								| LeftTrimmedString |
+								+-------------------+
+								| SQL Tutorial      |
+								+-------------------+
+
+>>SQL Server SUBSTRING() Function
+
+	The SUBSTRING() function extracts some characters from a string.
+	
+	Syntax:
+	SUBSTRING(string, start, length)
+
+	Example:
+	Extract 3 characters from a string, starting in position 1:
+	
+		SELECT SUBSTRING('SQL Tutorial', 1, 3) AS ExtractString; 
+										+---------------+
+										| ExtractString |
+										+---------------+
+										| SQL           |
+										+---------------+
+
+
+	Example:
+	Extract 5 characters from the "CustomerName" column, starting in position 1:
+	
+		SELECT SUBSTRING(CustomerName, 1, 5) AS ExtractString
+		FROM Customers; 
+
+	Example:
+	Extract 100 characters from a string, starting in position 1:
+	
+		SELECT SUBSTRING('SQL Tutorial', 1, 100) AS ExtractString; 
+
+										+---------------+
+										| ExtractString |
+										+---------------+
+										| SQL Tutorial  |
+										+---------------+
+
+>>SQL Server REPLACE() Function
+
+
+	The REPLACE() function replaces all occurrences of a substring within a string, with a new substring.
+
+	Syntax:
+	
+		REPLACE(string, old_string, new_string)
+		
+
+	Example:
+	Replace "T" with "M":
+	
+		SELECT REPLACE('SQL Tutorial', 'T', 'M'); 
+								+-----------------------------------+
+								| REPLACE('SQL Tutorial', 'T', 'M') |
+								+-----------------------------------+
+								| SQL Mutorial                      |
+								+-----------------------------------+
+
+	Example:
+	Replace "SQL" with "HTML":
+	
+		SELECT REPLACE('SQL Tutorial', 'SQL', 'HTML');
+								+----------------------------------------+
+								| REPLACE('SQL Tutorial', 'SQL', 'HTML') |
+								+----------------------------------------+
+								| HTML Tutorial                          |
+								+----------------------------------------+
+
+	Example:
+	Replace "a" with "c":
+	
+		SELECT REPLACE('ABC ABC ABC', 'a', 'c'); 
+
+								+----------------------------------+
+								| REPLACE('ABC ABC ABC', 'a', 'c') |
+								+----------------------------------+
+								| ABC ABC ABC                      |
+								+----------------------------------+
+
+
+    DATE FUNCTIONS: 
+    
+	1. SELECT CURRENT_TIMESTAMP();	
+					+---------------------+
+					| CURRENT_TIMESTAMP() |
+					+---------------------+
+					| 2023-12-29 18:02:26 |
+					+---------------------+
+	
+	
+	
+	
+	2. SELECT DAY('2015/01/01');
+					+-------------------+
+					| DAY('2015/01/01') |
+					+-------------------+
+					|                 1 |
+					+-------------------+
+
+	
+    NUMERIC FUNCTIONS: 
+    
+	1. SELECT ROUND();              SELECT ROUND(23.23);
+					+--------------+
+					| ROUND(23.23) |
+					+--------------+
+					|           23 |
+					+--------------+
+
+	
+	2. SELECT CEILING();            SELECT CEILING(23.23);
+					+----------------+
+					| CEILING(23.23) |
+					+----------------+
+					|             24 |
+					+----------------+
+
+
+    ADVANCED FUNCTIONS: 
+    
+        1. SELECT SESSION_USER();
+					+----------------+
+					| SESSION_USER() |
+					+----------------+
+					| ajay@localhost |
+					+----------------+
+
+        
+        2. SELECT SYSTEM_USER();        
+					+----------------+
+					| SYSTEM_USER()  |
+					+----------------+
+					| ajay@localhost |
+					+----------------+
+
+
+        3. SELECT CURRENT_USER();
+					+----------------+
+					| CURRENT_USER() |
+					+----------------+
+					| ajay@localhost |
+					+----------------+
+       
+        4. SELECT CAST(23 as int);
+        
+					+-----------------+
+					| CAST(23 as int) |
+					+-----------------+
+					|              23 |
+					+-----------------+
+                              
+        
+---x---
+
+

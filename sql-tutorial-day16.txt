@@ -1,0 +1,196 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+-- Day 16 ---
+#16 Subquery: 
+    
+             Single Subquery, 
+             Multiple Subquery, 
+             Corelated Subquery
+
+ 
+
+SQL Subquery:
+
+
+	A subquery, or nested query, is a query placed within another SQL query. When requesting information from a database, you may find it necessary to include a subquery into the SELECT, FROM , JOIN, or WHERE clause. However, you can also use subqueries when updating the database (i.e. in INSERT, UPDATE, and DELETE statements).
+
+	In SQL a Subquery can be simply defined as a query within another query. In other words we can say that a Subquery is a query that is embedded in WHERE clause of another SQL query. 
+
+
+	You can place the Subquery in a number of SQL clauses: WHERE clause, HAVING clause, FROM clause. Subqueries can be used with SELECT, UPDATE, INSERT, DELETE statements along with expression operator. It could be equality operator or comparison operator such as =, >, =, <= and Like operator.
+
+
+      A subquery is a query within another query. The outer query is called as main query and inner query is called as subquery.
+      Subqueries are on the right side of the comparison operator.      
+      ORDER BY command cannot be used in a Subquery. GROUP BY command can be used to perform same function as ORDER BY command.
+
+
+Single Line Subquery: 
+            select *from emp where deptno = (select deptno from dept where dname="sales";
+            
+Multiline Subquery  : 
+            select *from emp where deptno IN (select deptno from dept where dname="sales" or dname="research");
+            
+Multiline Subquery  : 
+            select *from emp where deptno IN (select deptno from dept where dname="sales" or dname="research") order by deptno desc;
+
+	select ename,sal from emp e where sal > (select sal from emp n where e.mgr = n.empno);
+	select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id);
+
+
+Subqueries:
+	1. select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id);
+	2. select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id d.dept_id > 3);
+
+	3. select *from emps where emp_id IN (select emp_id from departments);
+	4. select *from emps where emp_id IN (select emp_id from departments)  order by emp_city;
+
+
+
+There are several types of SQL subqueries:
+
+    .Scalar subqueries return a single value, or exactly one row and exactly one column.
+    
+    .Multirow subqueries return either:
+        One column with multiple rows (i.e. a list of values), or
+        Multiple columns with multiple rows (i.e. tables).
+        
+    .Correlated subqueries, where the inner query relies on information obtained from the outer query.
+
+
+
+Example 1 - Scalar Subquery
+
+
+	SELECT name, listed_price
+	FROM paintings
+	WHERE listed_price > (
+	    SELECT AVG(listed_price)
+	    FROM paintings
+	);
+
+
+
+
+Examples 2 – Multirow Subquery
+
+	SELECT first_name, last_name
+	FROM collectors
+	WHERE id IN (
+	    SELECT collector_id
+	    FROM sales
+	);
+
+
+	SELECT DISTINCT collectors.first_name, collectors.last_name
+	FROM collectors
+	JOIN sales
+	  ON collectors.id = sales.collector_id;
+
+
+
+Example 3 – Multirow Subquery with Multiple Columns:
+
+
+	ELECT
+	  artists.first_name,
+	  artists.last_name,
+	  artist_sales.sales
+	FROM artists
+	JOIN (
+	    SELECT artist_id, SUM(sales_price) AS sales
+	    FROM sales
+	    GROUP BY artist_id
+	  ) AS artist_sales
+	  ON artists.id = artist_sales.artist_id;
+
+
+Example 4 – Correlated Subquery:
+
+
+
+        Tables: 
+        
+         EMP Table              Dept Table
+         Eid Name Address       Did Dname Eid
+
+         1   ajay   delhi       D1  hr        1
+         2   dev    pune        D2  it        2
+         3   aman   dhampur     D3  mrkt      3
+         4   sunita meerut      D4  tesiting  4
+         5   zubin  noida       
+         6   ram    mumbai      
+
+
+         select *from dept where dept.id = emp.id;
+         
+         
+         
+
+
+
+
+
+      Nested Subquery:       select *from emp where dept_id IN (select dept_id from dept);
+      
+      Correlated Subquery:   select *from emp where EXISTS (select id from dept whose emp.e_id = dept.e_id);
+      
+      Joins:                 select attribute from emp e.id = dept.e_id;
+      
+
+
+Syntax: 
+
+	SELECT column_name
+	FROM table_name
+	WHERE column_name expression operator 
+	    ( 
+	        SELECT COLUMN_NAME  from TABLE_NAME   WHERE ... 
+	    );
+	    
+	    
+
+      Example: 
+
+          To display NAME, LOCATION, PHONE_NUMBER of the students from DATABASE table whose section is B
+          
+          
+		Select NAME, LOCATION, PHONE_NUMBER from DATABASE 		
+		WHERE ROLL_NO IN		
+		(
+			SELECT ROLL_NO from STUDENT where SECTION='B'
+		);       
+			  
+
+      Example:       
+      
+          To delete students from Student2 table whose rollno is same as that in Student1 table and having location as punjab
+
+
+		DELETE FROM Student2 
+		WHERE ROLL_NO IN ( SELECT ROLL_NO 
+				   FROM Student1 
+				   WHERE LOCATION = 'punjab);
+				   
+				   
+       
+       Exaple: 
+       
+         To update name of the students to ajay in Student2 table whose location is same as geeta,dev in Student1 table            
+                   
+                   
+		UPDATE Student2 
+		SET NAME= 'ajay' 
+		WHERE LOCATION IN ( SELECT LOCATION 
+				    FROM Student1 
+				    WHERE NAME IN ('geeta','dev'));                 
+                   
+            
+---x---
+
