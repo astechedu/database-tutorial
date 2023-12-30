@@ -94,6 +94,36 @@ The SQL CASE statement evaluates a list of conditions one-by-one and returns a v
 				|     10 |       7400 | HIGH            |
 				+--------+------------+-----------------+
 
+
+Example: 
+
+	SELECT *, (
+	    CASE WHEN emp_salary <= 3000 THEN '-Slow-' 
+	      ELSE '' 
+	      END 
+	     )
+	     AS Status 
+	     FROM emp;
+
+			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
+			| emp_id | emp_name | emp_age | emp_address   | emp_salary | created_at          | dept_id | Status |
+			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
+			|      1 | ajay     |      23 | ladpur        |       2000 | 2023-10-23 08:46:28 |     500 | -Slow- |
+			|      2 | sonu     |      38 | balawala      |       8000 | 2023-01-13 05:46:28 |     500 |        |
+			|      3 | aryan    |      93 | sahastradhara |       3000 | 2023-01-15 02:36:28 |     502 | -Slow- |
+			|      4 | aryan    |      93 | dharampur     |       9000 | 2023-02-12 02:10:28 |     500 |        |
+			|      5 | renu     |      13 | ladpur        |       2000 | 2023-03-22 04:10:28 |     500 | -Slow- |
+			|      6 | dev      |      10 | miyawala      |       4300 | 2023-04-22 04:10:28 |     502 |        |
+			|      7 | aura     |      13 | nakronda road |       8000 | 2023-04-12 06:10:28 |     501 |        |
+			|      8 | rakhi    |      15 | miyawala      |       2000 | 2023-04-02 09:08:28 |     502 | -Slow- |
+			|      9 | raman    |      88 | sahastradhara |       8000 | 2023-05-02 04:08:28 |     500 |        |
+			|     10 | rakhi    |      15 | ladpur        |       7400 | 2023-06-02 08:18:28 |     501 |        |
+			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
+
+
+
+
+
 		
 
 THE SQL CASE statement has the following systax:
@@ -194,9 +224,96 @@ Example 2:
 						|           5 | Bhanu      | Unknown country          |
 						+-------------+------------+--------------------------+
 	
+
+
 	
+//	
+The SQL CASE Statement
+CASE Statement With ORDER BY Clause
+CASE Statement With GROUP BY Clause
+CASE Statement With UPDATE statement
+CASE Statement Limitations
+
+
+The SQL CASE Statement
+
+Syntax:
+
+SELECT CASE Expression
+
+When expression1 Then Result1
+
+When expression2 Then Result2
+
+...
+
+ELSE Result
+
+END
+
 	
+//CASE
 	
+SELECT employee_id, job_title, salary
+CASE
+    WHEN salary >=50000 THEN 'The salary is greater then 50000'
+    WHEN salary >=50000 THEN 'The salary is 50000'
+    ELSE 'The salary is under 50000'
+END AS SalaryText	
+FROM AS employees;
+
+
+
+//CASE Statement With ORDER BY Clause
+
+//CASE
+select first_name, office_id, salary
+FROM employees
+ORDER BY CASE office_id
+WHEN '1' THEN salary END DESC,
+CASE WHEN '2' THEN salary
+END;
+
+
+//CASE Statement With UPDATE statement
+
+UPDATE officers
+SET state = CASE state
+  WHEN 'HO' THEN 'IN'
+  WHEN 'NY' THEN 'TK'
+  ELSE 'TX'
+  END
+
+
+
+//CASE Statement With GROUP BY Clause
+
+SELECT 
+ CASE
+ WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
+ WHEN salary >= 50000 AND salary <=800000 THEN 'Executive-LEVEL'
+ ELSE 'Senior Level'
+ END AS Designation,
+ Min(salary) as MinimumSalary,
+ Max(salary) as MaximumSalary
+ FROM employees 
+ GROUP BY
+ CASE
+  WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
+  WHEN salary >= 50000 AND salary <=80000 THEN 'Executive-LEVEL'
+  ELSE 'Senior-level'
+ END
+
+---------------------------------------------------------------------
+
+
+*CASE Statement Limitations
+
+    You cannot control the flow of execution of stored procedures and functions.
+    You cannot check the NULL value using the CASE statement.
+
+
+
 	
 	 
 ---x---
