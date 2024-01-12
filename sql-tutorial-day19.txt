@@ -1,0 +1,412 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+                               ---->  D A Y - 19  <----
+
+#19. SQL JOINS
+
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+
+
+          ----->--> Dfferent Types of SQL JOINs <--<-----
+
+
+
+          : Here are the different types of the JOINs in SQL :
+          
+
+
+           CROSS JOIN : 
+                       A cross join is a type of join that returns the Cartesian 
+                       product of rows from the tables in the join.
+
+	   
+	   
+	Ex:
+	   SELECT *FROM products p CROSS JOIN orders o;                    //This is cross product
+	   
+	   SELECT *FROM products p CROSS JOIN orders o ON p.id = o.pid;
+	   
+	   
+	   SELECT *FROM products, orders;                                  //This is cross product
+	   
+           SELECT *FROM products p, orders o where p.id = o.pid;
+
+
+		
+           | Join ---> Cross Product + Some Condition |
+
+           
+               
+-------------------------------------------------------------------------------------------
+
+
+1. 
+
+	SELECT *FROM products;          (Left table)
+	+----+--------+-------+------+
+	| id | name   | price | qty  |
+	+----+--------+-------+------+
+	|  1 | tv     |   388 |    1 |
+	|  2 | comb   |    89 |    3 |
+	|  3 | camera |   636 |    2 |
+	|  4 | freeze |  2000 |    3 |
+	|  5 | watch  |   150 |    5 |
+	|  6 | shoes  |   400 |    7 |
+	|  7 | pencil |     5 |   11 |
+	|  8 | table  |  3332 |    1 |
+	|  9 | bench  |  1011 |    3 |
+	| 10 | laptop | 30000 |    1 |
+	+----+--------+-------+------+
+	 PK                                           
+					SELECT *FROM orders;                 (Ritht Table)
+					+----+------+------------+-------------+-------------+------------+
+					| id | pid  | order_date | customer_id | employee_id | shipper_id |
+					+----+------+------------+-------------+-------------+------------+
+					|  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+					|  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+					|  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+					|  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+					+----+------+------------+-------------+-------------+------------+
+                                               FK
+
+2.
+	SELECT *FROM products, orders;                  (Product of two tables)
+	+----+--------+-------+------+----+------+------------+-------------+-------------+------------+
+	| id | name   | price | qty  | id | pid  | order_date | customer_id | employee_id | shipper_id |
+	+----+--------+-------+------+----+------+------------+-------------+-------------+------------+
+	|  1 | tv     |   388 |    1 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  1 | tv     |   388 |    1 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  1 | tv     |   388 |    1 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  1 | tv     |   388 |    1 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  2 | comb   |    89 |    3 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  2 | comb   |    89 |    3 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  2 | comb   |    89 |    3 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  2 | comb   |    89 |    3 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  3 | camera |   636 |    2 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  3 | camera |   636 |    2 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  3 | camera |   636 |    2 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  3 | camera |   636 |    2 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  4 | freeze |  2000 |    3 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  4 | freeze |  2000 |    3 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  4 | freeze |  2000 |    3 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  4 | freeze |  2000 |    3 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  5 | watch  |   150 |    5 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  5 | watch  |   150 |    5 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  5 | watch  |   150 |    5 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  5 | watch  |   150 |    5 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  6 | shoes  |   400 |    7 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  6 | shoes  |   400 |    7 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  6 | shoes  |   400 |    7 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  6 | shoes  |   400 |    7 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  7 | pencil |     5 |   11 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  7 | pencil |     5 |   11 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  7 | pencil |     5 |   11 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  7 | pencil |     5 |   11 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  8 | table  |  3332 |    1 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  8 | table  |  3332 |    1 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  8 | table  |  3332 |    1 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  8 | table  |  3332 |    1 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	|  9 | bench  |  1011 |    3 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	|  9 | bench  |  1011 |    3 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	|  9 | bench  |  1011 |    3 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	|  9 | bench  |  1011 |    3 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	| 10 | laptop | 30000 |    1 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+	| 10 | laptop | 30000 |    1 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+	| 10 | laptop | 30000 |    1 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+	| 10 | laptop | 30000 |    1 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+	+----+--------+-------+------+----+------+------------+-------------+-------------+------------+
+
+
+
+3.
+	SELECT p.id, o.pid FROM products p, orders o;
+		
+		+----+------+
+		| id | pid  |
+		+----+------+
+		|  1 |    1 |
+		|  1 |    1 |
+		|  1 |    1 |
+		|  1 |    2 |
+		|  2 |    1 |
+		|  2 |    1 |
+		|  2 |    1 |
+		|  2 |    2 |
+		|  3 |    1 |
+		|  3 |    1 |
+		|  3 |    1 |
+		|  3 |    2 |
+		|  4 |    1 |
+		|  4 |    1 |
+		|  4 |    1 |
+		|  4 |    2 |
+		|  5 |    1 |
+		|  5 |    1 |
+		|  5 |    1 |
+		|  5 |    2 |
+		|  6 |    1 |
+		|  6 |    1 |
+		|  6 |    1 |
+		|  6 |    2 |
+		|  7 |    1 |
+		|  7 |    1 |
+		|  7 |    1 |
+		|  7 |    2 |
+		|  8 |    1 |
+		|  8 |    1 |
+		|  8 |    1 |
+		|  8 |    2 |
+		|  9 |    1 |
+		|  9 |    1 |
+		|  9 |    1 |
+		|  9 |    2 |
+		| 10 |    1 |
+		| 10 |    1 |
+		| 10 |    1 |
+		| 10 |    2 |
+		+----+------+
+
+
+4.
+	SELECT p.id, p.name, o.order_date, o.pid FROM products p, orders o;
+		
+		+----+--------+------------+------+
+		| id | name   | order_date | pid  |
+		+----+--------+------------+------+
+		|  1 | tv     | 2023-12-01 |    1 |
+		|  1 | tv     | 2023-12-22 |    2 |
+		|  1 | tv     | 2023-01-01 |    1 |
+		|  1 | tv     | 2023-03-05 |    1 |
+		|  2 | comb   | 2023-12-01 |    1 |
+		|  2 | comb   | 2023-12-22 |    2 |
+		|  2 | comb   | 2023-01-01 |    1 |
+		|  2 | comb   | 2023-03-05 |    1 |
+		|  3 | camera | 2023-12-01 |    1 |
+		|  3 | camera | 2023-12-22 |    2 |
+		|  3 | camera | 2023-01-01 |    1 |
+		|  3 | camera | 2023-03-05 |    1 |
+		|  4 | freeze | 2023-12-01 |    1 |
+		|  4 | freeze | 2023-12-22 |    2 |
+		|  4 | freeze | 2023-01-01 |    1 |
+		|  4 | freeze | 2023-03-05 |    1 |
+		|  5 | watch  | 2023-12-01 |    1 |
+		|  5 | watch  | 2023-12-22 |    2 |
+		|  5 | watch  | 2023-01-01 |    1 |
+		|  5 | watch  | 2023-03-05 |    1 |
+		|  6 | shoes  | 2023-12-01 |    1 |
+		|  6 | shoes  | 2023-12-22 |    2 |
+		|  6 | shoes  | 2023-01-01 |    1 |
+		|  6 | shoes  | 2023-03-05 |    1 |
+		|  7 | pencil | 2023-12-01 |    1 |
+		|  7 | pencil | 2023-12-22 |    2 |
+		|  7 | pencil | 2023-01-01 |    1 |
+		|  7 | pencil | 2023-03-05 |    1 |
+		|  8 | table  | 2023-12-01 |    1 |
+		|  8 | table  | 2023-12-22 |    2 |
+		|  8 | table  | 2023-01-01 |    1 |
+		|  8 | table  | 2023-03-05 |    1 |
+		|  9 | bench  | 2023-12-01 |    1 |
+		|  9 | bench  | 2023-12-22 |    2 |
+		|  9 | bench  | 2023-01-01 |    1 |
+		|  9 | bench  | 2023-03-05 |    1 |
+		| 10 | laptop | 2023-12-01 |    1 |
+		| 10 | laptop | 2023-12-22 |    2 |
+		| 10 | laptop | 2023-01-01 |    1 |
+		| 10 | laptop | 2023-03-05 |    1 |
+		+----+--------+------------+------+
+
+
+
+5.
+
+	SELECT p.id, p.name, o.order_date, o.pid FROM products p, orders o where p.id = o.pid;
+	
+		+----+------+------------+------+
+		| id | name | order_date | pid  |
+		+----+------+------------+------+
+		|  1 | tv   | 2023-12-01 |    1 |
+		|  2 | comb | 2023-12-22 |    2 |
+		|  1 | tv   | 2023-01-01 |    1 |
+		|  1 | tv   | 2023-03-05 |    1 |
+		+----+------+------------+------+
+
+
+
+6.
+
+	 SELECT *FROM users, roles, users_roles;
+	 
+	+----+-------+-----------+------+-------------+-----------+---------+--------+---------+---------+
+	| id | fname | lname     | age  | email       | city      | role_id | role   | user_id | role_id |
+	+----+-------+-----------+------+-------------+-----------+---------+--------+---------+---------+
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       1 | admin  |       1 |       1 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       2 | guest  |       1 |       1 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       3 | editor |       1 |       1 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       4 | user   |       1 |       1 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       5 | author |       1 |       1 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       1 | admin  |       1 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       2 | guest  |       1 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       3 | editor |       1 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       4 | user   |       1 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       5 | author |       1 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       1 | admin  |       1 |       5 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       2 | guest  |       1 |       5 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       3 | editor |       1 |       5 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       4 | user   |       1 |       5 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       5 | author |       1 |       5 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       1 | admin  |       2 |       4 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       2 | guest  |       2 |       4 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       3 | editor |       2 |       4 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       4 | user   |       2 |       4 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       5 | author |       2 |       4 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       1 | admin  |       3 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       2 | guest  |       3 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       3 | editor |       3 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       4 | user   |       3 |       3 |
+	|  1 | ajay  | sisaudiya |   40 | a@gmail.com | dehradun  |       5 | author |       3 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       1 | admin  |       1 |       1 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       2 | guest  |       1 |       1 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       3 | editor |       1 |       1 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       4 | user   |       1 |       1 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       5 | author |       1 |       1 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       1 | admin  |       1 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       2 | guest  |       1 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       3 | editor |       1 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       4 | user   |       1 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       5 | author |       1 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       1 | admin  |       1 |       5 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       2 | guest  |       1 |       5 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       3 | editor |       1 |       5 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       4 | user   |       1 |       5 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       5 | author |       1 |       5 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       1 | admin  |       2 |       4 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       2 | guest  |       2 |       4 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       3 | editor |       2 |       4 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       4 | user   |       2 |       4 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       5 | author |       2 |       4 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       1 | admin  |       3 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       2 | guest  |       3 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       3 | editor |       3 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       4 | user   |       3 |       3 |
+	|  2 | sohan | rawat     |   43 | b@gmail.com | meerut    |       5 | author |       3 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       1 | admin  |       1 |       1 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       2 | guest  |       1 |       1 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       3 | editor |       1 |       1 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       4 | user   |       1 |       1 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       5 | author |       1 |       1 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       1 | admin  |       1 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       2 | guest  |       1 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       3 | editor |       1 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       4 | user   |       1 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       5 | author |       1 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       1 | admin  |       1 |       5 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       2 | guest  |       1 |       5 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       3 | editor |       1 |       5 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       4 | user   |       1 |       5 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       5 | author |       1 |       5 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       1 | admin  |       2 |       4 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       2 | guest  |       2 |       4 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       3 | editor |       2 |       4 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       4 | user   |       2 |       4 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       5 | author |       2 |       4 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       1 | admin  |       3 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       2 | guest  |       3 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       3 | editor |       3 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       4 | user   |       3 |       3 |
+	|  3 | sonu  | negi      |   23 | c@gmail.com | delhi     |       5 | author |       3 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       1 | admin  |       1 |       1 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       2 | guest  |       1 |       1 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       3 | editor |       1 |       1 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       4 | user   |       1 |       1 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       5 | author |       1 |       1 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       1 | admin  |       1 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       2 | guest  |       1 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       3 | editor |       1 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       4 | user   |       1 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       5 | author |       1 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       1 | admin  |       1 |       5 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       2 | guest  |       1 |       5 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       3 | editor |       1 |       5 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       4 | user   |       1 |       5 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       5 | author |       1 |       5 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       1 | admin  |       2 |       4 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       2 | guest  |       2 |       4 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       3 | editor |       2 |       4 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       4 | user   |       2 |       4 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       5 | author |       2 |       4 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       1 | admin  |       3 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       2 | guest  |       3 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       3 | editor |       3 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       4 | user   |       3 |       3 |
+	|  4 | rman  | negi      |   23 | d@gmail.com | dhampur   |       5 | author |       3 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       1 | admin  |       1 |       1 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       2 | guest  |       1 |       1 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       3 | editor |       1 |       1 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       4 | user   |       1 |       1 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       5 | author |       1 |       1 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       1 | admin  |       1 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       2 | guest  |       1 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       3 | editor |       1 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       4 | user   |       1 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       5 | author |       1 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       1 | admin  |       1 |       5 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       2 | guest  |       1 |       5 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       3 | editor |       1 |       5 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       4 | user   |       1 |       5 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       5 | author |       1 |       5 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       1 | admin  |       2 |       4 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       2 | guest  |       2 |       4 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       3 | editor |       2 |       4 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       4 | user   |       2 |       4 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       5 | author |       2 |       4 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       1 | admin  |       3 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       2 | guest  |       3 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       3 | editor |       3 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       4 | user   |       3 |       3 |
+	|  5 | dev   | pratap    |   23 | e@gmail.com | deharadun |       5 | author |       3 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       1 | admin  |       1 |       1 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       2 | guest  |       1 |       1 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       3 | editor |       1 |       1 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       4 | user   |       1 |       1 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       5 | author |       1 |       1 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       1 | admin  |       1 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       2 | guest  |       1 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       3 | editor |       1 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       4 | user   |       1 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       5 | author |       1 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       1 | admin  |       1 |       5 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       2 | guest  |       1 |       5 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       3 | editor |       1 |       5 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       4 | user   |       1 |       5 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       5 | author |       1 |       5 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       1 | admin  |       2 |       4 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       2 | guest  |       2 |       4 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       3 | editor |       2 |       4 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       4 | user   |       2 |       4 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       5 | author |       2 |       4 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       1 | admin  |       3 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       2 | guest  |       3 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       3 | editor |       3 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       4 | user   |       3 |       3 |
+	|  6 | rohit | kumar     |   23 | f@gmail.com | haridwar  |       5 | author |       3 |       3 |
+	+----+-------+-----------+------+-------------+-----------+---------+--------+---------+---------+
+
+
+
+
+
+
+
+
+
+----x----

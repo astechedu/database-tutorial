@@ -1,0 +1,115 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					 -----> DAY - 20 <-----
+
+#20. SQL JOINS
+
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+
+        Dfferent Types of SQL JOINs: Natural, Inner, Left, Right, Full Join etc.
+
+
+
+            > NATURAL NOIN : 
+            
+                             A NATURAL JOIN is a JOIN operation that creates an implicit join clause for you based on the common  
+                             columns in the two tables being joined. Common columns are columns that have the same name in both   
+                             tables.
+                             
+                             A NATURAL JOIN can be an INNER JOIN, a LEFT join, or a Right join. The default is INNER join.
+                             
+                             
+                             
+             Ex: 
+                 SELECT *FROM products NATURAL JOIN orders;
+                 
+                             
+                 select p.name, p.price, o.order_date from products p, orders o where p.pid = o.pid;
+                 
+                
+                
+		SELECT *FROM products;
+			
+			+-----+--------+-------+------+
+			| pid | name   | price | qty  |
+			+-----+--------+-------+------+
+			|   1 | tv     |   388 |    1 |
+			|   2 | comb   |    89 |    3 |
+			|   3 | camera |   636 |    2 |
+			|   4 | freeze |  2000 |    3 |
+			|   5 | watch  |   150 |    5 |
+			|   6 | shoes  |   400 |    7 |
+			|   7 | pencil |     5 |   11 |
+			|   8 | table  |  3332 |    1 |
+			|   9 | bench  |  1011 |    3 |
+			|  10 | laptop | 30000 |    1 |
+			+-----+--------+-------+------+
+                               
+                               
+                               
+		 SELECT *FROM orders;
+	 
+			+----+------+------------+-------------+-------------+------------+
+			| id | pid  | order_date | customer_id | employee_id | shipper_id |
+			+----+------+------------+-------------+-------------+------------+
+			|  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+			|  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+			|  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+			|  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+			+----+------+------------+-------------+-------------+------------+
+				
+						      
+				
+ 		 SELECT *FROM products p NATURAL JOIN orders;
+ 	
+			+-----+------+-------+------+----+------------+-------------+-------------+------------+
+			| pid | name | price | qty  | id | order_date | customer_id | employee_id | shipper_id |
+			+-----+------+-------+------+----+------------+-------------+-------------+------------+
+			|   1 | tv   |   388 |    1 |  1 | 2023-12-01 |           1 |           2 |          1 |
+			|   2 | comb |    89 |    3 |  2 | 2023-12-22 |           2 |           1 |          2 |
+			|   1 | tv   |   388 |    1 |  3 | 2023-01-01 |           1 |           1 |          1 |
+			|   1 | tv   |   388 |    1 |  4 | 2023-03-05 |           3 |           2 |          3 |
+			+-----+------+-------+------+----+------------+-------------+-------------+------------+
+
+
+
+
+
+
+                            
+                            
+                            
+                             
+            
+	    > INNER JOIN   : Returns records that have matching values in both tables.
+	    
+	    > LEFT JOIN    : Returns all records from the left table, and the matched records from the right table.
+	    
+	    > RIGHT JOIN   : Returns all records from the right table, and the matched records from the left table.
+	    
+	    > FULL JOIN    : Returns all records when there is a match in either left or right table.
+
+
+
+----x----
+
+
+
+
+
+
+
+
+
+
+

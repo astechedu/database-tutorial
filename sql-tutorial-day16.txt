@@ -6,191 +6,331 @@
 
 
 
--- Day 16 ---
-#16 Subquery: 
+--- Day 16 ---
+
+#16. SQL Queries For Beginners : Practice 
+
+
+
+
+#1. Write a query to create a table.
+
+    CREATE TABLE testing (
     
-             Single Subquery, 
-             Multiple Subquery, 
-             Corelated Subquery
-
- 
-
-SQL Subquery:
-
-
-	A subquery, or nested query, is a query placed within another SQL query. When requesting information from a database, you may find it necessary to include a subquery into the SELECT, FROM , JOIN, or WHERE clause. However, you can also use subqueries when updating the database (i.e. in INSERT, UPDATE, and DELETE statements).
-
-	In SQL a Subquery can be simply defined as a query within another query. In other words we can say that a Subquery is a query that is embedded in WHERE clause of another SQL query. 
-
-
-	You can place the Subquery in a number of SQL clauses: WHERE clause, HAVING clause, FROM clause. Subqueries can be used with SELECT, UPDATE, INSERT, DELETE statements along with expression operator. It could be equality operator or comparison operator such as =, >, =, <= and Like operator.
-
-
-      A subquery is a query within another query. The outer query is called as main query and inner query is called as subquery.
-      Subqueries are on the right side of the comparison operator.      
-      ORDER BY command cannot be used in a Subquery. GROUP BY command can be used to perform same function as ORDER BY command.
-
-
-Single Line Subquery: 
-            select *from emp where deptno = (select deptno from dept where dname="sales";
-            
-Multiline Subquery  : 
-            select *from emp where deptno IN (select deptno from dept where dname="sales" or dname="research");
-            
-Multiline Subquery  : 
-            select *from emp where deptno IN (select deptno from dept where dname="sales" or dname="research") order by deptno desc;
-
-	select ename,sal from emp e where sal > (select sal from emp n where e.mgr = n.empno);
-	select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id);
-
-
-Subqueries:
-	1. select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id);
-	2. select e.* from emps e where  exists (select d.emp_id from departments d where d.emp_id=e.emp_id d.dept_id > 3);
-
-	3. select *from emps where emp_id IN (select emp_id from departments);
-	4. select *from emps where emp_id IN (select emp_id from departments)  order by emp_city;
-
-
-
-There are several types of SQL subqueries:
-
-    .Scalar subqueries return a single value, or exactly one row and exactly one column.
-    
-    .Multirow subqueries return either:
-        One column with multiple rows (i.e. a list of values), or
-        Multiple columns with multiple rows (i.e. tables).
-        
-    .Correlated subqueries, where the inner query relies on information obtained from the outer query.
-
-
-
-Example 1 - Scalar Subquery
-
-
-	SELECT name, listed_price
-	FROM paintings
-	WHERE listed_price > (
-	    SELECT AVG(listed_price)
-	    FROM paintings
-	);
+      id int auto_increment,
+      name varchar(20),
+      primary key(id)
+      
+    );
 
 
 
 
-Examples 2 – Multirow Subquery
+#2. Write a query, how to drop a table?
 
-	SELECT first_name, last_name
-	FROM collectors
-	WHERE id IN (
-	    SELECT collector_id
-	    FROM sales
-	);
+    	DROP TABLE testing;
+    	
+    	
 
+#3. Write a query to remove records meeting a certain condition from a table
 
-	SELECT DISTINCT collectors.first_name, collectors.last_name
-	FROM collectors
-	JOIN sales
-	  ON collectors.id = sales.collector_id;
+	DELETE FROM testing
+	WHERE id  = 10;
+	
+	
 
+#4. Write a query to update a column in a table.
 
+	UPDATE testing
+	SET fname = 'ajay';
+	
+	
 
-Example 3 – Multirow Subquery with Multiple Columns:
+     
+#6. Write a query to retrieve data from all columns
 
-
-	ELECT
-	  artists.first_name,
-	  artists.last_name,
-	  artist_sales.sales
-	FROM artists
-	JOIN (
-	    SELECT artist_id, SUM(sales_price) AS sales
-	    FROM sales
-	    GROUP BY artist_id
-	  ) AS artist_sales
-	  ON artists.id = artist_sales.artist_id;
-
-
-Example 4 – Correlated Subquery:
+    	SELECT *FROM testing;
 
 
 
-        Tables: 
-        
-         EMP Table              Dept Table
-         Eid Name Address       Did Dname Eid
 
-         1   ajay   delhi       D1  hr        1
-         2   dev    pune        D2  it        2
-         3   aman   dhampur     D3  mrkt      3
-         4   sunita meerut      D4  tesiting  4
-         5   zubin  noida       
-         6   ram    mumbai      
+#7. Write a query to retrieve data from certain columns
+
+    	SELECT id, name 
+    	FROM testing;
 
 
-         select *from dept where dept.id = emp.id;
+
+
+#8.  Write a query to filter data using where clause
+
+    	SELECT id, name, age 
+    	FROM testing 
+    	WHERE age >= 17;
+
+
+
+		
+#9. Write a query to filter data using conditions joined by AND operator
+
+    	SELECT id, name, age 
+    	FROM testing 
+    	WHERE aga >= 17 AND name = 'amit';
+	
+	
+	
+		
+#10. Write a query to filter data using conditions joined by OR operator
+
+    	SELECT id, name, age 
+    	FROM testing 
+    	WHERE aga >= 17 OR name = 'amit';
+    	
+    	
+			
+#11. Write a query to eliminate duplicate records from the result.
+
+    	SELECT DINSTICT name, age
+    	FROM testing;
+	
+	
+	
+	
+#12. Write a query to retrieve data without NULL in a certain column
+
+    	SELECT DINSTICT name, age
+    	FROM testing
+    	WHERE age IS NOT NULL;
+		
+		
+		
+		
+#13. Write a query to sort data according to more than one column.
+
+    	SELECT DINSTICT name, age
+    	FROM testing
+    	ORDER BY name;
+	
+	
+	
+	
+#14. Write a query to delete all data from a table.
+  
+        TRUNCATE table testing;
+   
+	
+	
+	
+#15. Write a query to search for values matching a certain pattern.
+
+    	SELECT id, name
+    	FROM testing
+    	WHERE name LIKE '%d%';
+	
+	
+	
+			
+#16. Write a query to join values from text colums into one string.
+
+    	SELECT CONCAT(category, ' ', name)
+    	FROM tab;
+	
+	
+	
+	
+#17. Write a query for adding data from different table.	
+	
+	SELECT last_name FROM customer
+	UNION ALL
+	SELECT last_name FROM employees;	
+			
+			
+			
+			
+#18. Write a query to find the intersection of sets of data.
+
+	SELECT last_name FROM customer
+	INTERSECT
+	SELECT last_name FROM employees;			
+			
+			
+			
+			
+#19. Write a query to count number of row.
+
+         SELECT COUNT(id)
+         FROM testing;
+
+
+
+
+#20. Write a query to calculate average of the values in a column
+
+         SELECT AVG(price)
+         FROM testing;
          
          
          
 
+#21. Write a query to calculate the sum of the values in a column
+
+         SELECT SUM(price)
+         FROM testing;
+
+	
+	
+	
+#22. Write a query to retrieve the first three characters of emp last name from the employees table.
+
+	SELECT SUBSTR(last_name, 1, 3) 
+	FROM empoyees;
 
 
 
 
-      Nested Subquery:       select *from emp where dept_id IN (select dept_id from dept);
-      
-      Correlated Subquery:   select *from emp where EXISTS (select id from dept whose emp.e_id = dept.e_id);
-      
-      Joins:                 select attribute from emp e.id = dept.e_id;
-      
+#23. Write a query to create a new table which consists of data and structure copied from the other table.
+
+         CREATE TABLE test AS 
+         SELECT *FROM emp;
 
 
-Syntax: 
 
-	SELECT column_name
-	FROM table_name
-	WHERE column_name expression operator 
-	    ( 
-	        SELECT COLUMN_NAME  from TABLE_NAME   WHERE ... 
-	    );
-	    
-	    
 
-      Example: 
 
-          To display NAME, LOCATION, PHONE_NUMBER of the students from DATABASE table whose section is B
+#24. Write a query to get the current date.
+
+	SELECT SYSDATE();
+	
+
+
+
+
+#25. Write a query to crete a new table which only the structure copied from the other table.
+
+         CREATE TABLE test AS 
+         SELECT *FROM testing WHERE 1=0;
+
+
+
+
+
+#26. Write a query to fetch first 5 records.
+
+	SELECT *FROM emp LIMIT 5;
+
+
+
+
+#27. Write a query to retrieve the emp first name and emp last name in a single column as "fullname". The first name and last name must be saperated with space.
+
+
+        SELECT CONCAT(fname,' ',lname) AS "FullName" FROM test;
+	
+	
+
+#28. Write a query to fetch details of employees whose emp last name ends with an alphabet 'S' and contains four alphabets
+
+
+	SELECT *FROM employees 
+	WHERE emp_lname LIKE '____S';
+	
+
+
+
+
+#29. Write a query to fetch details of all employees excluding the employees with first names, "SMITH" and "BLAKE" form 
+
+	SELECT *FROM employees 
+	WHERE first_name NOT IN ("SMITH","BLAKE");
+	
+
+
+
+----x----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Group Queries:
+
+
+
+
+
+
+#30. Write a query to fetch the department-wise count of employees sorted by department's count in ascending order.
+
+	SELECT COUNT(empno) AS c, job 
+	FROM emp 
+	GROUP BY job 
+	ORDER BY c asc;
+	
+	
+	
+	
+
+#31. Write a query to retrieve duplicate records from a table.
+
+
+	SELECT *, COUNT(empno) 
+	FROM emp 
+	GROUP BY empno 
+	HAVING COUNT(EMPNO) > 1;
+
+
+
+----x----    
+
+
+
+
+>> ON GROUP: 
+
+Write a query to calculate the aggregate value for groups of records.
+
+          SELECT category, COUNT(id)
+          FROM testing
+          GROUP BY category;
+       
+       
+          
+Write a query to filter rows using aggregate functions.
+
+          SELECT category, AVG(price)
+          FROM testing
+          GROUP BY category
+          HAVING AVG(price) < 58.40;
+          
+                    
           
           
-		Select NAME, LOCATION, PHONE_NUMBER from DATABASE 		
-		WHERE ROLL_NO IN		
-		(
-			SELECT ROLL_NO from STUDENT where SECTION='B'
-		);       
-			  
-
-      Example:       
-      
-          To delete students from Student2 table whose rollno is same as that in Student1 table and having location as punjab
+          
+          
 
 
-		DELETE FROM Student2 
-		WHERE ROLL_NO IN ( SELECT ROLL_NO 
-				   FROM Student1 
-				   WHERE LOCATION = 'punjab);
-				   
-				   
-       
-       Exaple: 
-       
-         To update name of the students to ajay in Student2 table whose location is same as geeta,dev in Student1 table            
-                   
-                   
-		UPDATE Student2 
-		SET NAME= 'ajay' 
-		WHERE LOCATION IN ( SELECT LOCATION 
-				    FROM Student1 
-				    WHERE NAME IN ('geeta','dev'));                 
-                   
-            
----x---
+
+
 

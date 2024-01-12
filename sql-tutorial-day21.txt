@@ -1,0 +1,428 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					----> DAY - 21 <----
+
+#21. SQL JOINS
+
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+        Dfferent Types of SQL JOINs:
+
+
+	    INNER JOIN : Returns records that have matching values in both tables
+	    
+	    LEFT JOIN  : Returns all records from the left table, and the matched records from the right table
+	    
+	    RIGHT JOIN : Returns all records from the right table, and the matched records from the left table
+	    
+	    
+	    FULL JOIN  : Returns all records when there is a match in either left or right table
+
+
+
+
+        1. Inner Join:
+
+		   select *
+		   from A
+		   INNER JOIN B ON A.key = B.key
+
+
+
+	2. Left Join: 
+
+		   select *
+		   from A
+		   Left JOIN B ON A.key = B.key
+
+
+
+	3. Right Join: 
+
+		   select *
+		   from A
+		   Right JOIN B ON A.key = B.key
+		   
+
+
+	4. Full Join: 
+
+		   select *
+		   from A
+		   Full JOIN B ON A.key = B.key
+		   
+
+   
+   
+   
+   
+Examples: 
+  
+  Tables: departments & emp
+
+ 
+
+		desc departments;
+
+		+-----------+-------------+------+-----+---------+-------+
+		| Field     | Type        | Null | Key | Default | Extra |
+		+-----------+-------------+------+-----+---------+-------+
+		| dept_id   | int(11)     | NO   | PRI | 0       |       |
+		| dept_name | varchar(15) | YES  |     | NULL    |       |
+		+-----------+-------------+------+-----+---------+-------+
+
+
+
+		desc emp;
+
+		+----------+-------------+------+-----+---------+-------+
+		| Field    | Type        | Null | Key | Default | Extra |
+		+----------+-------------+------+-----+---------+-------+
+		| eid      | int(11)     | NO   | PRI | NULL    |       |
+		| ename    | varchar(20) | YES  |     | NULL    |       |
+		| eage     | int(11)     | YES  |     | NULL    |       |
+		| eaddress | varchar(25) | YES  |     | NULL    |       |
+		| esalary  | int(11)     | YES  |     | NULL    |       |
+		| dob      | date        | YES  |     | NULL    |       |
+		| dept_id  | int(11)     | YES  | MUL | NULL    |       |
+		+----------+-------------+------+-----+---------+-------+
+
+
+
+
+	select *from departments;
+	
+		+---------+--------------+
+		| dept_id | dept_name    |
+		+---------+--------------+
+		|     500 | holticulture |
+		|     501 | hidle        |
+		|     502 | water        |
+		|     503 | police       |
+		|     504 | holticulture |
+		+---------+--------------+
+
+
+	select *from emp;
+	
+		+-----+-------+------+---------------+---------+------------+---------+
+		| eid | ename | eage | eaddress      | esalary | dob        | dept_id |
+		+-----+-------+------+---------------+---------+------------+---------+
+		|   1 | ajay  |   23 | ladpur        |    2000 | 2023-10-23 |     500 |
+		|   2 | sonu  |   38 | balawala      |    8000 | 2023-01-13 |     500 |
+		|   3 | aryan |   93 | sahastradhara |    3000 | 2023-01-15 |     502 |
+		|   4 | aryan |   93 | dharampur     |    9000 | 2023-02-12 |     500 |
+		|   5 | renu  |   13 | ladpur        |    2000 | 2023-03-22 |     500 |
+		|   6 | dev   |   10 | miyawala      |    4300 | 2023-04-22 |     502 |
+		|   7 | aura  |   13 | nakronda road |    8000 | 2023-04-12 |     501 |
+		|   8 | rakhi |   15 | miyawala      |    2000 | 2023-04-02 |     502 |
+		|   9 | raman |   88 | sahastradhara |    8000 | 2023-05-02 |     500 |
+		|  10 | rakhi |   15 | ladpur        |    7400 | 2023-06-02 |     501 |
+		+-----+-------+------+---------------+---------+------------+---------+
+
+
+
+
+
+Examples: 
+
+
+
+1. INNER JOIN:
+
+		SELECT *
+		FROM departments d INNER JOIN emp e 
+		ON d.dept_id = e.dept_id;
+
+		+---------+--------------+-----+-------+------+---------------+---------+------------+---------+
+		| dept_id | dept_name    | eid | ename | eage | eaddress      | esalary | dob        | dept_id |
+		+---------+--------------+-----+-------+------+---------------+---------+------------+---------+
+		|     500 | holticulture |   1 | ajay  |   23 | ladpur        |    2000 | 2023-10-23 |     500 |
+		|     500 | holticulture |   2 | sonu  |   38 | balawala      |    8000 | 2023-01-13 |     500 |
+		|     502 | water        |   3 | aryan |   93 | sahastradhara |    3000 | 2023-01-15 |     502 |
+		|     500 | holticulture |   4 | aryan |   93 | dharampur     |    9000 | 2023-02-12 |     500 |
+		|     500 | holticulture |   5 | renu  |   13 | ladpur        |    2000 | 2023-03-22 |     500 |
+		|     502 | water        |   6 | dev   |   10 | miyawala      |    4300 | 2023-04-22 |     502 |
+		|     501 | hidle        |   7 | aura  |   13 | nakronda road |    8000 | 2023-04-12 |     501 |
+		|     502 | water        |   8 | rakhi |   15 | miyawala      |    2000 | 2023-04-02 |     502 |
+		|     500 | holticulture |   9 | raman |   88 | sahastradhara |    8000 | 2023-05-02 |     500 |
+		|     501 | hidle        |  10 | rakhi |   15 | ladpur        |    7400 | 2023-06-02 |     501 |
+		+---------+--------------+-----+-------+------+---------------+---------+------------+---------+
+
+
+     'OR'  SELECT d.dept_name, e.ename, e.esalary FROM departments d INNER JOIN emp e ON d.dept_id = e.dept_id;
+
+
+
+
+
+2. LEFT JOIN: 
+
+	SELECT d.dept_name, e.ename, e.esalary FROM departments d LEFT JOIN emp e ON d.dept_id = e.dept_id;
+	
+	'OR'
+	
+	SELECT d.dept_name, e.ename, e.esalary 
+	FROM departments d 
+	LEFT JOIN emp e 
+	ON d.dept_id = e.dept_id;
+
+					+--------------+-------+---------+
+					| dept_name    | ename | esalary |
+					+--------------+-------+---------+
+					| holticulture | ajay  |    2000 |
+					| holticulture | sonu  |    8000 |
+					| holticulture | aryan |    9000 |
+					| holticulture | renu  |    2000 |
+					| holticulture | raman |    8000 |
+					| hidle        | aura  |    8000 |
+					| hidle        | rakhi |    7400 |
+					| water        | aryan |    3000 |
+					| water        | dev   |    4300 |
+					| water        | rakhi |    2000 |
+					| police       | NULL  |    NULL |
+					| holticulture | NULL  |    NULL |
+					+--------------+-------+---------+
+
+
+3. RIGHT JOIN:
+
+	SELECT d.dept_name, e.ename, e.esalary, d.dept_id FROM departments d RIGHT JOIN emp e ON d.dept_id = e.dept_id;
+	
+       'OR'
+	
+	SELECT d.dept_name, e.ename, e.esalary, d.dept_id 
+	FROM departments d 
+	RIGHT JOIN emp e 
+	ON d.dept_id = e.dept_id;
+
+	
+					+--------------+-------+---------+---------+
+					| dept_name    | ename | esalary | dept_id |
+					+--------------+-------+---------+---------+
+					| holticulture | ajay  |    2000 |     500 |
+					| holticulture | sonu  |    8000 |     500 |
+					| water        | aryan |    3000 |     502 |
+					| holticulture | aryan |    9000 |     500 |
+					| holticulture | renu  |    2000 |     500 |
+					| water        | dev   |    4300 |     502 |
+					| hidle        | aura  |    8000 |     501 |
+					| water        | rakhi |    2000 |     502 |
+					| holticulture | raman |    8000 |     500 |
+					| hidle        | rakhi |    7400 |     501 |
+					+--------------+-------+---------+---------+
+
+
+
+----x----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INNER JOIN 
+
+     Syntax:
+
+	    SELECT columns    
+	    FROM table1    
+	    INNER JOIN table2 ON condition1    
+	    INNER JOIN table3 ON condition2   
+	    
+    
+    Example:    
+    
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    INNER JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;       
+	      
+
+
+LEFT JOIN:
+
+     Syntax:
+
+	    SELECT column_lists  
+	    FROM table1    
+	    LEFT JOIN table2    
+	    ON table1.column = table2.column;  
+
+	   
+     Example:
+	
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    LEFT JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;     
+	   
+	
+	
+	
+	     
+ RIGHT JOIN:
+ 
+     Syntax:	
+
+	    SELECT column_lists    
+	    FROM table1    
+	    RIGHT JOIN table2    
+	    ON table1.column = table2.column;	 
+	 
+ 
+    Example:
+
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    RIGHT JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;   
+	     
+	          
+     
+ FULL JOIN:
+ 
+     Syntax:
+
+	    SELECT column_lists    
+	    FROM table1    
+	    FULL JOIN table2    
+	    ON table1.column = table2.column;    
+	 
+	 
+     Example:
+	
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    FULL JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;     
+	     
+	                 
+    
+    
+    Full join on three tables; 
+    
+     
+    	    SELECT column_lists    
+	    FROM table1    
+	    LEFT JOIN table2    
+	    ON table1.column = table2.column;    
+	    LEFT JOIN table3    
+	    ON table3.column = table1.column;    
+	 	 
+    
+    
+
+ SELF JOIN:
+   
+     A table is joined to itself using the SELF JOIN.  
+   
+   
+     Syntax:
+   
+	    SELECT T1.col_name, T2.col_name...    
+	    FROM table1 T1, table1 T2    
+	    WHERE join_condition;       
+	   
+   
+     Example:
+  
+	    SELECT S1.first_name, S2.last_name, S2.city  
+	    FROM Student S1, Student S2  
+	    WHERE S1.id <> S2.iD AND S1.city = S2.city  
+	    ORDER BY S2.city;    
+	         
+   
+   
+CROSS JOIN: 
+
+     Syntax:   
+   
+	    SELECT column_lists    
+	    FROM table1    
+	    CROSS JOIN table2;   
+	   
+	   
+    Example:
+
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    CROSS JOIN Fee  
+	    WHERE Student.admission_no = Fee.admission_no;    
+	     
+   
+   
+   
+
+
+
+----x----
+
+
+
+
+
+1. Left Join (sans I'intersection de B)
+
+	   select *
+	   from A
+	   Left JOIN B ON A.key = B.key
+	   where B.key is null;
+
+
+
+2. Right Join (sans I'intersection de A)
+
+	   select *
+	   from A
+	   Left JOIN B ON A.key = B.key
+	   where A.key is null;
+
+
+
+3. Full Join (sans Intersection)
+
+	   select *
+	   from A
+	   Full JOIN B ON A.key = B.key
+	   where A.key is null OR B.key is null;
+
+
+
+
+----x----
+
+
+
+
+
+
+
+
+
+

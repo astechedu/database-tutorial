@@ -6,8 +6,9 @@
 
 
 
--- 15 --
-#15. Null Functions, Date, Distinct
+-- Day 15 --
+
+#15. Null Functions, Distinct
 
     
 SQL Null Functions:
@@ -16,8 +17,7 @@ SQL Null Functions:
 
 	SELECT ProductName, UnitPrice * (UnitsInStock + UnitsOnOrder)
 	FROM Products; 
-	
-	
+		
 	
 	Solutions:
 
@@ -105,4 +105,329 @@ SQL Working With Dates:
 ---x---
 
 
+>>> LAB : 
+
+
+	desc testing;
+			+---------+-------------+------+-----+----------+-------+
+			| Field   | Type        | Null | Key | Default  | Extra |
+			+---------+-------------+------+-----+----------+-------+
+			| id      | int(11)     | NO   | PRI | NULL     |       |
+			| fname   | varchar(20) | YES  |     | NULL     |       |
+			| lname   | varchar(20) | YES  |     | NULL     |       |
+			| age     | int(2)      | YES  |     | NULL     |       |
+			| city    | varchar(10) | YES  |     | NULL     |       |
+			| state   | varchar(20) | YES  |     | dehradun |       |
+			| country | varchar(20) | YES  |     | NULL     |       |
+			| salary  | float       | YES  |     | NULL     |       |
+			| test1   | int(11)     | YES  |     | NULL     |       |
+			| test2   | int(11)     | YES  |     | NULL     |       |
+			+---------+-------------+------+-----+----------+-------+
+
+	select *from testing;
+	
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL |
+			|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+			|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 |
+			|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 |
+			|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+> When, Column country has null value;
+
+	1. select country from testing;
+					+---------+
+					| country |
+					+---------+
+					| india   |
+					| india   |
+					| india   |
+					| india   |
+					| india   |
+					| india   |
+					| india   |
+					| NULL    |
+					+---------+
+
+	2. select count(country) from testing;
+					+----------------+
+					| count(country) |
+					+----------------+
+					|              7 |
+					+----------------+
+
+
+        3. select distinct(country) from testing;
+						+---------+
+						| country |
+						+---------+
+						| india   |
+						| NULL    |
+						+---------+
+          
+	4. select count(distinct(country)) from testing;
+
+						+--------------------------+
+						| count(distinct(country)) |
+						+--------------------------+
+						|                        1 |
+						+--------------------------+
+
+
+> When coulumn city has null value;
+
+
+	1. select city from testing;
+					+----------+
+					| city     |
+					+----------+
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| Not NULL |
+					+----------+						
+	
+	2. select count(city) from testing;
+	
+					+-------------+
+					| count(city) |
+					+-------------+
+					|           8 |
+					+-------------+
+						
+	3. select distinct(city) from testing;
+	
+					+----------+
+					| city     |
+					+----------+
+					| dehradun |
+					| Not NULL |
+					+----------+
+	
+	4. select count(distinct(city)) from testing;
+	
+					+-----------------------+
+					| count(distinct(city)) |
+					+-----------------------+
+					|                     2 |
+					+-----------------------+
+
+
+> Null value with aggregate fuctions
+
+
+        //Column test1 has no null value.
+        
+	select sum(test1) from testing;
+					+------------+
+					| sum(test1) |
+					+------------+
+					|          9 |
+					+------------+
+//Column test2 has null value.
+        
+	select sum(test2) from testing;
+					+------------+
+					| sum(test2) |
+					+------------+
+					|          8 |
+					+------------+
+
+	select AVG(test2) from testing;
+					+------------+
+					| avg(test2) |
+					+------------+
+					|     1.1429 |
+					+------------+
+
+        //Checking null : ISNULL() function true if specified column has null value.
+        
+	select isnull(test2) from testing;
+	
+					+---------------+
+					| isnull(test2) |
+					+---------------+
+					|             0 |
+					|             0 |
+					|             1 |
+					|             0 |
+					|             0 |
+					|             0 |
+					|             0 |
+					|             0 |
+					+---------------+
+
+
+        //Handling null value:
+
+	select  IFNULL(test2, 0) from testing;
+	
+					+------------------+
+					| IFNULL(test2, 0) |
+					+------------------+
+					|                1 |
+					|                1 |
+					|                0 |
+					|                1 |
+					|                2 |
+					|                1 |
+					|                1 |
+					|                1 |
+					+------------------+
+
+        
+	select AVG( IFNULL(test2, 0)) from testing;
+	
+					+------------------------+
+					| AVG( IFNULL(test2, 0)) |
+					+------------------------+
+					|                 1.0000 |
+					+------------------------+
+
+        // NULL + TRUE = NULL
+        
+  	select  test2 + 1  from testing;
+	
+					+---------+
+					| test2+1 |
+					+---------+
+					|       2 |
+					|       2 |
+					|    NULL |
+					|       2 |
+					|       3 |
+					|       2 |
+					|       2 |
+					|       2 |
+					+---------+
+       
+        // NULL - TRUE  =  NULL
+        
+	select  test2 - 1  from testing;
+					+-----------+
+					| test2 - 1 |
+					+-----------+
+					|         0 |
+					|         0 |
+					|      NULL |
+					|         0 |
+					|         1 |
+					|         0 |
+					|         0 |
+					|         0 |
+					+-----------+
+
+        //NULL * 5 = NULL
+ 	select  test2 * 5  from testing;
+					+-----------+
+					| test2 * 5 |
+					+-----------+
+					|         5 |
+					|         5 |
+					|      NULL |
+					|         5 |
+					|        10 |
+					|         5 |
+					|         5 |
+					|         5 |
+					+-----------+
+					
+					
+        //TRUE + null = null;  null + null = null
+        
+	select  test2 + null from testing;
+					+--------------+
+					| test2 + null |
+					+--------------+
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					+--------------+
+
+
+        //TRUE * null = null;  null * null = null
+        
+	select  test2 * null from testing;
+	
+					+--------------+
+					| test2 * null |
+					+--------------+
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					|         NULL |
+					+--------------+
+
+
+
+	select IF(ISNULL(test2), "Yes Null Value","Not null")  from testing;
+	
+					+------------------------------------------------+
+					| IF(ISNULL(test2), "Yes Null Value","Not null") |
+					+------------------------------------------------+
+					| Not null                                       |
+					| Not null                                       |
+					| Yes Null Value                                 |
+					| Not null                                       |
+					| Not null                                       |
+					| Not null                                       |
+					| Not null                                       |
+					| Not null                                       |
+					+------------------------------------------------+
+
+
+	select IF(ISNULL(test2), 0, test2)  from testing;
+
+					+-----------------------------+
+					| IF(ISNULL(test2), 0, test2) |
+					+-----------------------------+
+					|                           1 |
+					|                           1 |
+					|                           0 |
+					|                           1 |
+					|                           2 |
+					|                           1 |
+					|                           1 |
+					|                           1 |
+					+-----------------------------+
+
+
+
+	select coalesce(test2,0) from testing;
+	
+					+-------------------+
+					| coalesce(test2,0) |
+					+-------------------+
+					|                 1 |
+					|                 1 |
+					|                 0 |
+					|                 1 |
+					|                 2 |
+					|                 1 |
+					|                 1 |
+					|                 1 |
+					+-------------------+
+
+
+
+----x----
 

@@ -1,0 +1,558 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+-- Day 18 ---
+
+#18 Subquery: In FROM, IN SELECT, IN WHERE
+    
+             
+                     SELECT *FROM (Squbquery);  
+                     
+                     SELECT *, (Subquery) FROM;
+                     
+                     SELECT *FROM table_name WHERE COLUMN OPERATOR (Subquery);
+		
+
+              Adding Alliases:
+
+                     SELECT *FROM (Squbquery) AS R;  
+                     
+                     SELECT *, (Subquery) AS R FROM;
+                     
+                     SELECT *FROM table_name WHERE COLUMN OPERATOR (Subquery);
+		
+
+
+--Subquery--
+
+
+1. Subquery in FROM
+
+	Syntax: 
+ 
+	 SELECT *FROM (Squbquery) AS R;                                    //Subquery in from 
+	 
+	 Example: 
+	 
+	 	SELECT *FROM (SELECT *FROM testing) AS R;
+
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+
+
+
+2. Subquery in SELECT                                                      //Subquery in SELECT 
+
+	 Syntax:
+
+	  	SELECT *, (Subquery) FROM;
+	  	
+	 Example: 
+
+		SELECT *, (SELECT max(salary) FROM testing) AS R FROM testing;		
+
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | R    |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL | 7000 |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 | 7000 |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 | 7000 |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 | 7000 |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 | 7000 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+
+		
+	
+
+3. Subquery in WHERE Clause                                                //Subquery in WHERE 
+
+	 Syntax: 
+	 
+		SELECT *FROM table_name WHERE COLUMN OPERATOR (Subquery);
+		
+		
+	 Example: 
+	
+		SELECT *FROM testing WHERE salary =  (SELECT max(salary) FROM testing);
+		
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+
+
+
+
+
+
+
+Examples: 
+
+
+
+IN FROM: 
+        SELECT name FROM( SELECT * FROM university where country = 'india' );
+        
+        
+	SELECT *FROM (SELECT *FROM testing) AS R;
+	
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			
+	
+	
+	SELECT *FROM (SELECT city FROM testing) AS R;
+	
+					+----------+
+					| city     |
+					+----------+
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| Not NULL |
+					+----------+
+	
+	
+	SELECT *FROM (SELECT city,age FROM testing) AS R;
+
+					+----------+------+
+					| city     | age  |
+					+----------+------+
+					| dehradun |   33 |
+					| dehradun |   17 |
+					| dehradun |   33 |
+					| dehradun |   55 |
+					| dehradun |   33 |
+					| dehradun |   65 |
+					| dehradun |   18 |
+					| Not NULL | NULL |
+					+----------+------+
+
+
+	SELECT city FROM (SELECT city,age FROM testing) AS R;
+	
+					+----------+
+					| city     |
+					+----------+
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| dehradun |
+					| Not NULL |
+					+----------+	
+	
+	
+	SELECT city,age FROM (SELECT city,age FROM testing) AS R;
+
+					+----------+------+
+					| city     | age  |
+					+----------+------+
+					| dehradun |   33 |
+					| dehradun |   17 |
+					| dehradun |   33 |
+					| dehradun |   55 |
+					| dehradun |   33 |
+					| dehradun |   65 |
+					| dehradun |   18 |
+					| Not NULL | NULL |
+					+----------+------+
+
+
+	 SELECT *FROM (SELECT *FROM testing WHERE salary > 3000) as r;
+
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL |
+			|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+
+
+	 SELECT MAX(avg_rating) FROM (SELECT country, AVG(rating) AS avg_rating FROM university GROUP BY country);
+
+
+
+
+
+
+IN SELECT: 
+
+        A subquery in the SELECT must return exactly one row with exactly one column.
+
+
+
+	SELECT *, (SELECT max(salary) FROM testing) AS R FROM testing;
+	
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | R    |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL | 7000 |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 | 7000 |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 | 7000 |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 | 7000 |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 | 7000 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+	
+	
+	
+	SELECT *, (select max(salary) FROM testing) AS AVG FROM testing;
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | AVG  |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL | 7000 |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 | 7000 |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 | 7000 |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 | 7000 |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 | 7000 |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 | 7000 |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+	
+	
+	SELECT *, (select 'ajay') AS name FROM testing;
+	
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | name |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 | ajay |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 | ajay |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL | ajay |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 | ajay |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 | ajay |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 | ajay |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 | ajay |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 | ajay |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+------+
+	
+	
+	SELECT *, (select city) AS AVG FROM testing;
+	
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+----------+
+		| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | AVG      |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+----------+
+		|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 | dehradun |
+		|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 | dehradun |
+		|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL | dehradun |
+		|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 | dehradun |
+		|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 | dehradun |
+		|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 | dehradun |
+		|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 | dehradun |
+		|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 | Not NULL |
+		+----+-------+-------+------+----------+-------+---------+--------+-------+-------+----------+
+
+
+	SELECT id, fname, salary, (select max(salary) from testing) AS MaxSal FROM testing;
+
+			+----+-------+--------+--------+
+			| id | fname | salary | MaxSal |
+			+----+-------+--------+--------+
+			|  1 | ajay  |   3000 |   7000 |
+			|  2 | aura  |   3000 |   7000 |
+			|  3 | Rohit |   4000 |   7000 |
+			|  4 | sonu  |   7000 |   7000 |
+			|  5 | aryan |   3000 |   7000 |
+			|  6 | dev   |   1000 |   7000 |
+			|  7 | geeta |   3000 |   7000 |
+			|  8 | NULL  |   NULL |   7000 |
+			+----+-------+--------+--------+
+
+
+	SELECT *, (select salary / 10) AS 'Divide by 10' FROM testing;
+	
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+--------------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 | Divide by 10 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+--------------+
+			|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 |          300 |
+			|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 |          300 |
+			|  3 | Rohit | gupta |   33 | dehradun | uk    | india   |   4000 |     1 |  NULL |          400 |
+			|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |          700 |
+			|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 |          300 |
+			|  6 | dev   | gupta |   65 | dehradun | uk    | india   |   1000 |     1 |     1 |          100 |
+			|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 |          300 |
+			|  8 | NULL  | NULL  | NULL | Not NULL | NULL  | NULL    |   NULL |     1 |     1 |         NULL |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+--------------+
+
+
+
+ 	SELECT name, ( SELECT AVG(price) FROM product WHERE supplied_id = supplied.id) FROM supllier;
+
+
+	SELECT name, (SELECT COUNT(id) FROM product
+	   WHERE supplier_id = supplier.id) AS count_all,
+	    (SELECT COUNT(id) FROM product
+	    WHERE supplier_id = supplier.id AND category = 'food' ) AS count_food
+	FROM supplier;
+
+
+
+IN WHERE:
+
+	SELECT *FROM testing WHERE salary = (SELECT max(salary) FROM testing);
+
+
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			|  4 | sonu  | kumar |   55 | dehradun | uk    | india   |   7000 |     1 |     1 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+
+	SELECT *FROM testing WHERE salary = (SELECT max(salary) FROM testing where id > 6);
+	
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			| id | fname | lname | age  | city     | state | country | salary | test1 | test2 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+			|  1 | ajay  | gupta |   33 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			|  2 | aura  | gupta |   17 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			|  5 | aryan | gupta |   33 | dehradun | uk    | india   |   3000 |     2 |     2 |
+			|  7 | geeta | gupta |   18 | dehradun | uk    | india   |   3000 |     1 |     1 |
+			+----+-------+-------+------+----------+-------+---------+--------+-------+-------+
+
+
+
+---x---
+
+
+
+
+
+
+
+
+
+
+ Example: 
+
+       //The following subqery returns the department numbers for deprtments on the second flool. The outer query retrieves the names
+       of employees who work on the second floor.
+       
+       
+        SELECT ename
+        FROM employees
+        WHERE dept IN (SELECT dno FROM dept WHERE floor = 2);
+        
+
+
+
+---x---
+
+
+
+
+
+       
+Correlated UPDATE:
+-----------------
+
+	UPDATE tbl1 alias1
+	SET column = (SELECT expression
+		     FROM tble2 alias2
+		     WHERE alias1.column = alias2.column);
+		     
+
+
+Correlated DELETE:
+-----------------
+
+	 DELETE FROM tbl1 alias1
+	 WHERE column1 OPERATOR
+		       (SELECT expression 
+		       FROM tbl2 alias2
+		       WHERE alias1.column = alias2.column);
+		       
+              
+Using Exists Operator: 
+----------------------
+
+	SELECT emp_id,lname,job_id,dept_id
+	FROM employee outer
+	WHERE EXISTS (SELECT 'X'
+		     FROM employees
+		     WHERE manager_id = outer.emp_id);              
+		      
+
+
+Using NOT Exists Operator: 
+-------------------------
+
+	SELECT emp_id,lname,job_id,dept_id
+	FROM employee outer
+	WHERE NOT EXISTS (SELECT 'X'
+		     FROM employees
+		     WHERE manager_id = outer.emp_id);              
+		      
+
+
+
+
+
+  EXISTS & NOT EXISTS:
+  SELECT *from products p where EXISTS (select o.pid from orders o where o.pid=p.id);
+  
+				+----+------+-------+------+
+				| id | name | price | qty  |
+				+----+------+-------+------+
+				|  1 | tv   |   388 |    1 |
+				|  2 | comb |    89 |    3 |
+				+----+------+-------+------+
+
+
+
+  SELECT *from products p where NOT EXISTS (select o.pid from orders o where o.pid=p.id);
+  
+				+----+--------+-------+------+
+				| id | name   | price | qty  |
+				+----+--------+-------+------+
+				|  3 | camera |   636 |    2 |
+				|  4 | freeze |  2000 |    3 |
+				|  5 | watch  |   150 |    5 |
+				|  6 | shoes  |   400 |    7 |
+				|  7 | pencil |     5 |   11 |
+				|  8 | table  |  3332 |    1 |
+				|  9 | bench  |  1011 |    3 |
+				| 10 | laptop | 30000 |    1 |
+				+----+--------+-------+------+
+  
+  
+  
+  
+  
+  
+  SELECT ....FROM ....WHERE EXISTS(Q);
+  
+  Exists(Q): Returns true if there at least one tuple in the result of query Q
+  
+  SELECT eid, name, FROM teacher as t where exists (SELECT rollno FROM student as s WHERE s.tid = t.tid AND s.sex = 'F');
+  
+
+----x----
+
+
+
+
+
+
+  Scalar Subqueries
+  Multirow Subqueries
+  Correlated Subquries
+
+
+IN SQL, the operators ANY, ALL & EXISTS are used in combination with subqueries to perform comparisons and logical operations
+
+ ANY Operator
+ ALL Operator
+ EXISTS Operator
+ Examples
+ EXISTS vs IN vs JOINS
+ 
+ 
+ Syntax: 
+ 
+ SELECT column_name(s)
+ FROM table_name
+ WHERE column_name operator ANY (Subquery);
+ (=,<>, !=, >, >+, < , or <=)
+ 
+ 
+ Example: 
+ select *
+ from employee
+ where salary = ANY (
+       select salary 
+       from employee
+       where department = 'HR'
+);       
+ 
+ 
+ Syntax: 
+ select column_name(s)
+ from table_name
+ where column_name operator ALL (Subqueries);
+ 
+ select *
+ from employee
+ where salary > AL (
+       select salary 
+       from employee
+       where department = 'Accounts'
+ );
+ 
+ 
+ 
+ EXISTS (Logical Operator):
+ 
+ Syntax:
+ 
+ SELECT column_name(ss)
+ FROM table_name
+ WHERE EXISTS (Subquery);
+ 
+ 
+ select name
+ from customers
+ where exists (
+     select *
+     from orders
+     where orders.customer_id = customers.id
+);
+ 
+ 
+ 
+ Diff ways: 
+ 
+ select name
+ from customers
+ where name IN (
+     select *
+     from orders
+     where orders.customer_id = customers.id
+);
+
+Exists vs IN: 
+.Performance
+.Readability
+.Personal preference
+

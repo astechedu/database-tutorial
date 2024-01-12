@@ -1,0 +1,351 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					----> DAY - 23 <----
+						
+
+#23. SQL JOINS                        &                                  UNION and UNION ALL
+    
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+        Dfferent Types of SQL JOINs:
+
+	    	    
+	     SELF JOIN: 
+	         
+	                A table is joined to itself using the SELF JOIN. 
+		    
+  
+
+
+		
+		Find the name of respective managers for each of the employees?
+
+
+		select *from emps2;
+			+-------+---------+------------+
+			| empid | empname | manager_id |
+			+-------+---------+------------+
+			|     1 | ajay    |          4 |
+			|     2 | geeta   |          5 |
+			|     3 | aryan   |          2 |
+			|     4 | dev     |          1 |
+			|     5 | bhanu   |          4 |
+			+-------+---------+------------+
+
+
+		                
+						
+		SELECT * 
+		FROM emps2 AS t1
+		JOIN emps2 AS t2
+		ON t1.empid = t2.manager_id;			
+		
+				+-------+---------+------------+-------+---------+------------+
+				| empid | empname | manager_id | empid | empname | manager_id |
+				+-------+---------+------------+-------+---------+------------+
+				|     4 | dev     |          1 |     1 | ajay    |          4 |
+				|     5 | bhanu   |          4 |     2 | geeta   |          5 |
+				|     2 | geeta   |          5 |     3 | aryan   |          2 |
+				|     1 | ajay    |          4 |     4 | dev     |          1 |
+				|     4 | dev     |          1 |     5 | bhanu   |          4 |
+				+-------+---------+------------+-------+---------+------------+
+
+			
+			
+			
+			
+		SELECT t2.empname AS Emp_name, t1.empname AS Mgr_name
+		FROM emps2 AS t1
+		JOIN emps2 AS t2
+		ON t1.empid = t2.manager_id;
+
+					+----------+----------+
+					| Emp_name | Mgr_name |
+					+----------+----------+
+					| ajay     | dev      |
+					| geeta    | bhanu    |
+					| aryan    | geeta    |
+					| dev      | ajay     |
+					| bhanu    | dev      |
+					+----------+----------+
+
+
+
+
+
+
+              'OR'
+
+		SELECT t2.empname AS Emp_name, t1.empname AS Mgr_name
+		FROM emps2 AS t1,
+		emps2 AS t2
+		where t1.empid = t2.manager_id;
+
+					+----------+----------+
+					| Emp_name | Mgr_name |
+					+----------+----------+
+					| ajay     | dev      |
+					| geeta    | bhanu    |
+					| aryan    | geeta    |
+					| dev      | ajay     |
+					| bhanu    | dev      |
+					+----------+----------+
+
+
+
+
+
+
+UNION and INION ALL:
+
+
+			SELECT * from s1;
+			+-------+-------+--------+
+			| n1_id | name  | salary |
+			+-------+-------+--------+
+			|     1 | amit  |   2000 |
+			|     2 | rahul |   1000 |
+			|     3 | sonu  |   4000 |
+			|     4 | zubin |   8000 |
+			+-------+-------+--------+
+
+
+			SELECT * from s2;
+			+-------+-------+--------+
+			| n1_id | name  | salary |
+			+-------+-------+--------+
+			|     1 | amit  |   2000 |
+			|     2 | rohit |   7000 |
+			|     3 | vijay |   3000 |
+			|     4 | amit  |   2000 |
+			+-------+-------+--------+
+
+
+
+
+
+
+	UNION:                              //Remove duplicate records
+
+		SELECT name from s1
+		UNION
+		SELECT name from s2;
+
+					+-------+
+					| name  |
+					+-------+
+					| amit  |
+					| rahul |
+					| sonu  |
+					| zubin |
+					| rohit |
+					| vijay |
+					+-------+
+
+
+
+
+
+		SELECT name,salary from s1
+		UNION 
+		SELECT name,salary from s2;
+				+-------+--------+
+				| name  | salary |
+				+-------+--------+
+				| amit  |   2000 |
+				| rahul |   1000 |
+				| sonu  |   4000 |
+				| zubin |   8000 |
+				| rohit |   7000 |
+				| vijay |   3000 |
+				+-------+--------+
+
+
+
+
+
+
+
+	UNION ALL:                          //Show all recoreds from both tables
+
+		SELECT name from s1
+		UNION ALL
+		SELECT name from s2;
+
+				+-------+
+				| name  |
+				+-------+
+				| amit  |
+				| rahul |
+				| sonu  |
+				| zubin |
+				| amit  |
+				| rohit |
+				| vijay |
+				| amit  |
+				+-------+
+
+
+
+
+
+		SELECT name, salary from s1
+		UNION ALL
+		SELECT name, salary from s2;
+
+
+
+				+-------+--------+
+				| name  | salary |
+				+-------+--------+
+				| amit  |   2000 |
+				| rahul |   1000 |
+				| sonu  |   4000 |
+				| zubin |   8000 |
+				| amit  |   2000 |
+				| rohit |   7000 |
+				| vijay |   3000 |
+				| amit  |   2000 |
+				+-------+--------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----x----
+
+
+
+
+
+
+
+create table emps(
+ empid int auto_increment,
+ empname varchar(20),
+ manager_id int,
+ primary key(empid)
+);	
+	
+insert into emps2(empid, empname, manager_id) values(1,"ajay",4),(2,"geeta",5),(3,"aryan",3),(4,"dev",1),(5,"bhanu",4);
+                             
+		
+
+
+
+
+
+
+
+
+
+
+SELF JOIN: 
+
+
+Example: 
+
+	   
+	     Syntax:
+	   
+		    SELECT T1.col_name, T2.col_name...    
+		    FROM table1 T1, table1 T2    
+		    WHERE join_condition;   
+		    
+		        
+		   
+	   
+	     Example:
+	  
+		    SELECT S1.first_name, S2.last_name, S2.city  
+		    FROM Student S1, Student S2  
+		    WHERE S1.id <> S2.iD AND S1.city = S2.city  
+		    ORDER BY S2.city;    
+			 
+	  
+	   
+		    select a.*, b.* 
+		    FROM customers a, customers b
+		    WHERE a.customer_id <> B.customer_id
+		    AND a.city = b.city
+		    ORDER BY a.city;
+
+
+		    //By left join
+		     
+		    select e.fullname as employee, m.fullname as manager
+		    from employee e
+		    left join employee m
+		    on e.managerId = m.employeeId;   
+		       
+		       
+		    //By cross join
+		            
+		    select e.fullname as employee, m.fullname as manager
+		    from employee e
+		    CROSS JOIN employee m
+		                
+		                
+		                
+		                
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+		                
+		                
+
+           
+----x----
+

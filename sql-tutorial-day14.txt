@@ -8,7 +8,7 @@
 
 --- Day 14 ---
 
-#13. CASE.....END
+#13. CASE.....END, IF.....Else
 
 
 SQL CASE Expression:
@@ -17,28 +17,63 @@ SQL CASE Expression:
          
          If there is no ELSE part and no conditions are true, it returns NULL.
      
+        > IF STATEMENT Syntax:
+        
 	     SELECT columm1, column2,
 	     IF (Condition, TRUE Result, FALSE Result ) AS alias_name
 	     FROM table_name;
+      
+                  
+ 
+        > CASE STATEMENT Syntax:
+
+		CASE
+		    WHEN condition1 THEN result1
+		    WHEN condition2 THEN result2
+		    WHEN conditionN THEN resultN
+		    ELSE result
+		END;   
+		
+
+	> CASE Expression Syntax: 
+
+		CASE Expression
+		  WHEN value1 THEN result1
+		  WHEN value2 THEN result2
+		  WHEN valueN THEN resultN
+		  ELSE other_result
+		END;
+		  
+	  
+	  
+//IF STATEMENT Example: 
 	     
         Example: 
         
               SELECT id, name, percentage,
               IF(percentage >= 33, "Pass","Fail") AS Result
-              FROM students;       
-         
- 
-CASE STATEMENT Syntax:
-
-	CASE
-	    WHEN condition1 THEN result1
-	    WHEN condition2 THEN result2
-	    WHEN conditionN THEN resultN
-	    ELSE result
-	END;   
-  
-  
-//CASE STATEMENT Example: :
+              FROM students; 
+                
+                
+        Example: 
+        
+              SELECT id, fname, percentage,
+              IF(percentage >= 33, "Pass","Fail") AS Result
+              FROM students; 
+                             
+				+----+---------+------------+--------+
+				| id | fname   | percentage | Result |
+				+----+---------+------------+--------+
+				|  1 | ajay    |         45 | Pass   |
+				|  2 | amit    |         25 | Fail   |
+				|  3 | geeta   |         61 | Pass   |
+				|  4 | akshita |         95 | Pass   |
+				|  5 | aura    |         55 | Pass   |
+				|  6 | dev     |         72 | Pass   |
+				+----+---------+------------+--------+
+                                    
+                
+//CASE STATEMENT Example: 
        
          SELECT customers_id, amount,
          CASE 
@@ -46,19 +81,31 @@ CASE STATEMENT Syntax:
             WHEN amount = 100 THEN 'Moderate product'
             ELSE "Inexpensive product'
          END AS ProductStatus
-         FROM payment
+         FROM payment;
+
+     Example: 
+     
+         SELECT id AS 'Roll NO', percentage AS '%',
+         CASE 
+            WHEN percentage >= 33 AND percentage > 45 THEN 'IIIrd Div'
+            WHEN percentage >= 45 AND percentage < 60 THEN 'IInd Div'
+            WHEN percentage >=60 AND percentage <= 100 THEN 'Ist Div'
+            WHEN percentage < 33 THEN "Fail" 
+            ELSE 'No Correct %'
+         END AS 'Division'
+         FROM students;
+				+---------+------+-----------+
+				| Roll NO | %    | Division  |
+				+---------+------+-----------+
+				|       1 |   45 | IInd Div  |
+				|       2 |   25 | Failed    |
+				|       3 |   61 | IIIrd Div |
+				|       4 |   95 | IIIrd Div |
+				|       5 |   55 | IIIrd Div |
+				|       6 |   72 | IIIrd Div |
+				+---------+------+-----------+
+                  
          
-         
-CASE Expression Syntax: 
-
-	CASE Expression
-	  WHEN value1 THEN result1
-	  WHEN value2 THEN result2
-	  WHEN valueN THEN resultN
-	  ELSE other_result
-	END;
-
-
 //CASE Expression Example: 
 
 	 SELECT customer_id
@@ -70,9 +117,33 @@ CASE Expression Syntax:
 	 FROM payment        
  
  
- 
+    Example: 
+    
+ 	 SELECT emp_id, emp_name, emp_salary,
+	 CASE emp_salary
+	    WHEN 9000 THEN 'High'
+	    WHEN 2000 THEN 'Low'
+	    ELSE '-'      
+	 END AS 'Status'
+	 FROM emp;       
+					+--------+----------+------------+--------+
+					| emp_id | emp_name | emp_salary | Status |
+					+--------+----------+------------+--------+
+					|      1 | ajay     |       2000 | Low    |
+					|      2 | sonu     |       8000 | -      |
+					|      3 | aryan    |       3000 | -      |
+					|      4 | aryan    |       9000 | High   |
+					|      5 | renu     |       2000 | Low    |
+					|      6 | dev      |       4300 | -      |
+					|      7 | aura     |       8000 | -      |
+					|      8 | rakhi    |       2000 | Low    |
+					|      9 | raman    |       8000 | -      |
+					|     10 | rakhi    |       7400 | -      |
+					+--------+----------+------------+--------+
+
  
  Example: 
+ 
  Tabe: Students: Field Names: id, name, percentage, age, gender, ciyt, courses
  
 	 SELECT id, name, percentage, 
@@ -86,15 +157,22 @@ CASE Expression Syntax:
 	 END AS Grade
 	 FROM students;
  
+ 
+ 
+ Example: CASE Expression
+ 
 //With Update
 
-	UPDATE students SET
-	percentage = (CASE id
-	    WHEN  3 THEN 40
-	    WHEN  7 THEN 35
-	END) 
-	WHERE id IN (3,7);
+	UPDATE students 
+	SET percentage = (
+	  CASE id
+	     WHEN 3 THEN 84
+	     WHEN 6 THEN 21
+	  END
+	) 
+	WHERE id IN (3,6);
 	 
+ 
  
  
  
@@ -118,7 +196,7 @@ CASE Expression Syntax:
 
 
 
-	Example:
+ Example:
 	
 	SELECT CustomerName, City, Country
 	FROM Customers
@@ -140,6 +218,8 @@ The SQL CASE statement evaluates a list of conditions one-by-one and returns a v
 	FROM orders;	
 	
 	
+	
+  Example: 	
 	
 	SELECT emp_id,emp_salary,
 	CASE
@@ -163,34 +243,31 @@ The SQL CASE statement evaluates a list of conditions one-by-one and returns a v
 				+--------+------------+-----------------+
 
 
-Example: 
+  Example: 
 
 	SELECT *, (
-	    CASE WHEN emp_salary <= 3000 THEN '-Slow-' 
-	      ELSE '' 
-	      END 
-	     )
+	    CASE 
+	      WHEN emp_salary <= 3000 THEN '-Low-' 
+	      ELSE '-' 
+	    END 
+	   )
 	     AS Status 
 	     FROM emp;
 
 			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
 			| emp_id | emp_name | emp_age | emp_address   | emp_salary | created_at          | dept_id | Status |
 			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
-			|      1 | ajay     |      23 | ladpur        |       2000 | 2023-10-23 08:46:28 |     500 | -Slow- |
+			|      1 | ajay     |      23 | ladpur        |       2000 | 2023-10-23 08:46:28 |     500 | -Low-  |
 			|      2 | sonu     |      38 | balawala      |       8000 | 2023-01-13 05:46:28 |     500 |        |
-			|      3 | aryan    |      93 | sahastradhara |       3000 | 2023-01-15 02:36:28 |     502 | -Slow- |
+			|      3 | aryan    |      93 | sahastradhara |       3000 | 2023-01-15 02:36:28 |     502 | -Low-  |
 			|      4 | aryan    |      93 | dharampur     |       9000 | 2023-02-12 02:10:28 |     500 |        |
-			|      5 | renu     |      13 | ladpur        |       2000 | 2023-03-22 04:10:28 |     500 | -Slow- |
+			|      5 | renu     |      13 | ladpur        |       2000 | 2023-03-22 04:10:28 |     500 | -Low-  |
 			|      6 | dev      |      10 | miyawala      |       4300 | 2023-04-22 04:10:28 |     502 |        |
 			|      7 | aura     |      13 | nakronda road |       8000 | 2023-04-12 06:10:28 |     501 |        |
-			|      8 | rakhi    |      15 | miyawala      |       2000 | 2023-04-02 09:08:28 |     502 | -Slow- |
+			|      8 | rakhi    |      15 | miyawala      |       2000 | 2023-04-02 09:08:28 |     502 | -Low-  |
 			|      9 | raman    |      88 | sahastradhara |       8000 | 2023-05-02 04:08:28 |     500 |        |
 			|     10 | rakhi    |      15 | ladpur        |       7400 | 2023-06-02 08:18:28 |     501 |        |
 			+--------+----------+---------+---------------+------------+---------------------+---------+--------+
-
-
-
-
 
 		
 
@@ -208,17 +285,20 @@ Example 1:
 	SELECT customer_id, first_name,
 	CASE
 	  WHEN age >= 18 THEN 'ALLowed'
+	  ELSE 'Not Allowed'
 	END AS can_vote
 	FROM customers;
-				+-------------+------------+----------+
-				| customer_id | first_name | can_vote |
-				+-------------+------------+----------+
-				|           1 | Jyoti      | ALLowed  |
-				|           2 | Rohan      | ALLowed  |
-				|           3 | Dev        | ALLowed  |
-				|           4 | Johar      | ALLowed  |
-				|           5 | Bhanu      | ALLowed  |
-				+-------------+------------+----------+
+				+-------------+------------+-------------+
+				| customer_id | first_name | can_vote    |
+				+-------------+------------+-------------+
+				|           1 | Jyoti      | ALLowed     |
+				|           2 | Rohan      | ALLowed     |
+				|           3 | Dev        | ALLowed     |
+				|           4 | Johar      | ALLowed     |
+				|           5 | Bhanu      | ALLowed     |
+				|           6 | sonu       | Not Allowed |
+				+-------------+------------+-------------+
+
 
 
 
@@ -295,8 +375,9 @@ Example 2:
 
 
 	
-//	
+// 
 The SQL CASE Statement
+
 CASE Statement With ORDER BY Clause
 CASE Statement With GROUP BY Clause
 CASE Statement With UPDATE statement
@@ -322,55 +403,55 @@ END
 	
 //CASE
 	
-SELECT employee_id, job_title, salary
-CASE
-    WHEN salary >=50000 THEN 'The salary is greater then 50000'
-    WHEN salary >=50000 THEN 'The salary is 50000'
-    ELSE 'The salary is under 50000'
-END AS SalaryText	
-FROM AS employees;
+	SELECT employee_id, job_title, salary
+	CASE
+	    WHEN salary >=50000 THEN 'The salary is greater then 50000'
+	    WHEN salary >=50000 THEN 'The salary is 50000'
+	    ELSE 'The salary is under 50000'
+	END AS SalaryText	
+	FROM AS employees;
 
 
 
 //CASE Statement With ORDER BY Clause
 
 //CASE
-select first_name, office_id, salary
-FROM employees
-ORDER BY CASE office_id
-WHEN '1' THEN salary END DESC,
-CASE WHEN '2' THEN salary
-END;
+	select first_name, office_id, salary
+	FROM employees
+	ORDER BY CASE office_id
+	WHEN '1' THEN salary END DESC,
+	CASE WHEN '2' THEN salary
+	END;
 
 
 //CASE Statement With UPDATE statement
 
-UPDATE officers
-SET state = CASE state
-  WHEN 'HO' THEN 'IN'
-  WHEN 'NY' THEN 'TK'
-  ELSE 'TX'
-  END
+	UPDATE officers
+	SET state = CASE state
+	  WHEN 'HO' THEN 'IN'
+	  WHEN 'NY' THEN 'TK'
+	  ELSE 'TX'
+	  END
 
 
 
 //CASE Statement With GROUP BY Clause
 
-SELECT 
- CASE
- WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
- WHEN salary >= 50000 AND salary <=800000 THEN 'Executive-LEVEL'
- ELSE 'Senior Level'
- END AS Designation,
- Min(salary) as MinimumSalary,
- Max(salary) as MaximumSalary
- FROM employees 
- GROUP BY
- CASE
-  WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
-  WHEN salary >= 50000 AND salary <=80000 THEN 'Executive-LEVEL'
-  ELSE 'Senior-level'
- END
+	SELECT 
+	 CASE
+	 WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
+	 WHEN salary >= 50000 AND salary <=800000 THEN 'Executive-LEVEL'
+	 ELSE 'Senior Level'
+	 END AS Designation,
+	 Min(salary) as MinimumSalary,
+	 Max(salary) as MaximumSalary
+	 FROM employees 
+	 GROUP BY
+	 CASE
+	  WHEN salary >= 80000 AND salary <=100000 THEN 'MID-LEVEL'
+	  WHEN salary >= 50000 AND salary <=80000 THEN 'Executive-LEVEL'
+	  ELSE 'Senior-level'
+	 END
 
 ---------------------------------------------------------------------
 

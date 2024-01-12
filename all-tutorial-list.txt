@@ -1,0 +1,134 @@
+--- SQL Tutorial List ----
+
+
+1. sql-tutorial-day1.txt
+
+    Create, Drop, Insert, show, describe or desc table,
+ 
+
+2. sql-tutorial-day2.txt
+
+    Copy table from existing table with data or without data means only structure
+    
+     Inset into new table 
+    
+    
+3. sql-tutorial-day3.txt
+
+     Alter tables commands
+    
+
+4. sql-tutorial-day4.txt
+   
+     Where clause operations
+    
+
+5. sql-tutorial-day5.txt
+   
+     Update Table Operations
+    
+
+6. sql-tutorial-day6.txt
+
+     SQL Aggregate Functions 
+
+7. sql-tutorial-day7.txt
+
+     SQL ORDER BY Clause
+
+8. sql-tutorial-day8.txt
+
+     SQL Revision Day-1 TO Day-7
+
+9. sql-tutorial-day9.txt
+
+     SQL GROUP BY Statement 
+
+10. sql-tutorial-day10.txt
+   
+     The SQL HAVING Clause
+     
+11. sql-tutorial-day11.txt
+
+     SQL Constraints
+
+12. sql-tutorial-day12.txt
+
+     SQL Server Functions
+     #12. STRING FUNCTIONS, DATE FUNCTIONS, NUMERIC FUNCTIONS, ADVANCED FUNCTIONS
+
+
+13. sql-tutorial-day13.txt
+    
+     Whildcards, Alliases, Comments
+
+14. sql-tutorial-day14.txt
+
+     CASE.....END, IF.....Else
+
+15. sql-tutorial-day15.txt
+
+      Null Functions, Date, Distinct
+
+
+16. sql-tutorial-day16.txt
+
+      SQL Problem Solving, Interview for beginners
+
+
+
+
+17. sql-tutorial-day17.txt
+
+      Subquery: 
+    
+             Single Subquery, 
+             Multiple Subquery, 
+             Corelated Subquery
+             
+18. sql-tutorial-day18.txt
+
+      Subquery in FROM, in SELECT & in WHERE
+
+19. sql-tutorial-day19.txt
+    
+      What is join? 
+      CROSS JOIN
+      
+
+20. sql-tutorial-day20.txt
+    
+      Joins
+      
+      
+21. sql-tutorial-day21.txt 
+  
+    Inner, left, right joins
+
+22. sql-tutorial-day22.txt    
+    
+    Full Join 
+
+23. sql-tutorial-day23.txt
+
+24. sql-tutorial-day24.txt
+
+25. sql-tutorial-day25.txt
+
+26. sql-tutorial-day26.txt
+
+27. sql-tutorial-day27.txt
+    
+          
+          
+          
+         
+           
+          
+      
+      
+ 
+
+
+
+----x----

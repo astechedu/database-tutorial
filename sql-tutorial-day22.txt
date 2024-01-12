@@ -1,0 +1,320 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					----> DAY - 22 <----
+
+#22. SQL JOINS
+
+
+SQL Joins:
+
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+        Dfferent Types of SQL JOINs:
+
+
+	    	    
+	    FULL JOIN  : 
+	         
+	                Returns all records when there is a match in either left or right table
+ 
+
+            A full join would give us all records from both tables, whether or not they have a match in the other table, 
+            with NULLs on both sides where there is not match. The result would look like this.
+                        
+		    
+    
+            
+
+         FULL JOIN:
+
+              Ex:
+		   SELECT *
+		   FROM A
+		   FULL JOIN B ON A.key = B.key
+		   
+              Ex:
+              
+ 		   SELECT *
+		   FROM departments d 
+		   FULL JOIN emp e 
+		   ON d.dept_id = e.dept_id;
+	
+	  
+	  
+	  
+         
+           'OR'
+                    SELECT *
+                    FROM products p
+                    LEFT JOIN orders o
+                    ON p.pid = o.pid
+                    
+                    UNION
+                    
+                    SELECT *
+                    FROM products p
+                    LEFT JOIN orders o
+                    ON p.pid = o.pid
+                    WHERE p.pid IS NULL;                
+   
+   
+   
+   
+   
+   
+   
+Examples: 
+  
+  Tables: departments & emp
+
+ 
+
+		desc departments;
+
+		+-----------+-------------+------+-----+---------+-------+
+		| Field     | Type        | Null | Key | Default | Extra |
+		+-----------+-------------+------+-----+---------+-------+
+		| dept_id   | int(11)     | NO   | PRI | 0       |       |
+		| dept_name | varchar(15) | YES  |     | NULL    |       |
+		+-----------+-------------+------+-----+---------+-------+
+
+
+
+		desc emp;
+
+		+----------+-------------+------+-----+---------+-------+
+		| Field    | Type        | Null | Key | Default | Extra |
+		+----------+-------------+------+-----+---------+-------+
+		| eid      | int(11)     | NO   | PRI | NULL    |       |
+		| ename    | varchar(20) | YES  |     | NULL    |       |
+		| eage     | int(11)     | YES  |     | NULL    |       |
+		| eaddress | varchar(25) | YES  |     | NULL    |       |
+		| esalary  | int(11)     | YES  |     | NULL    |       |
+		| dob      | date        | YES  |     | NULL    |       |
+		| dept_id  | int(11)     | YES  | MUL | NULL    |       |
+		+----------+-------------+------+-----+---------+-------+
+
+
+
+
+	select *from departments;
+	
+		+---------+--------------+
+		| dept_id | dept_name    |
+		+---------+--------------+
+		|     500 | holticulture |
+		|     501 | hidle        |
+		|     502 | water        |
+		|     503 | police       |
+		|     504 | holticulture |
+		+---------+--------------+
+
+
+	select *from emp;
+	
+		+-----+-------+------+---------------+---------+------------+---------+
+		| eid | ename | eage | eaddress      | esalary | dob        | dept_id |
+		+-----+-------+------+---------------+---------+------------+---------+
+		|   1 | ajay  |   23 | ladpur        |    2000 | 2023-10-23 |     500 |
+		|   2 | sonu  |   38 | balawala      |    8000 | 2023-01-13 |     500 |
+		|   3 | aryan |   93 | sahastradhara |    3000 | 2023-01-15 |     502 |
+		|   4 | aryan |   93 | dharampur     |    9000 | 2023-02-12 |     500 |
+		|   5 | renu  |   13 | ladpur        |    2000 | 2023-03-22 |     500 |
+		|   6 | dev   |   10 | miyawala      |    4300 | 2023-04-22 |     502 |
+		|   7 | aura  |   13 | nakronda road |    8000 | 2023-04-12 |     501 |
+		|   8 | rakhi |   15 | miyawala      |    2000 | 2023-04-02 |     502 |
+		|   9 | raman |   88 | sahastradhara |    8000 | 2023-05-02 |     500 |
+		|  10 | rakhi |   15 | ladpur        |    7400 | 2023-06-02 |     501 |
+		+-----+-------+------+---------------+---------+------------+---------+
+
+
+
+	
+Example: 
+
+
+     FULL JOIN:      
+     
+     1.
+                    SELECT *
+                    FROM departments d
+                    LEFT JOIN emp e
+                    ON d.dept_id = e.dept_id
+                    
+                    UNION
+                    
+                    SELECT *
+                    FROM departments d
+                    RIGHT JOIN emp e
+                    ON d.dept_id = e.dept_id;
+  
+  
+			+---------+--------------+------+-------+------+---------------+---------+------------+---------+
+			| dept_id | dept_name    | eid  | ename | eage | eaddress      | esalary | dob        | dept_id |
+			+---------+--------------+------+-------+------+---------------+---------+------------+---------+
+			|     500 | holticulture |    1 | ajay  |   23 | ladpur        |    2000 | 2023-10-23 |     500 |
+			|     500 | holticulture |    2 | sonu  |   38 | balawala      |    8000 | 2023-01-13 |     500 |
+			|     500 | holticulture |    4 | aryan |   93 | dharampur     |    9000 | 2023-02-12 |     500 |
+			|     500 | holticulture |    5 | renu  |   13 | ladpur        |    2000 | 2023-03-22 |     500 |
+			|     500 | holticulture |    9 | raman |   88 | sahastradhara |    8000 | 2023-05-02 |     500 |
+			|     501 | hidle        |    7 | aura  |   13 | nakronda road |    8000 | 2023-04-12 |     501 |
+			|     501 | hidle        |   10 | rakhi |   15 | ladpur        |    7400 | 2023-06-02 |     501 |
+			|     502 | water        |    3 | aryan |   93 | sahastradhara |    3000 | 2023-01-15 |     502 |
+			|     502 | water        |    6 | dev   |   10 | miyawala      |    4300 | 2023-04-22 |     502 |
+			|     502 | water        |    8 | rakhi |   15 | miyawala      |    2000 | 2023-04-02 |     502 |
+			|     503 | police       | NULL | NULL  | NULL | NULL          |    NULL | NULL       |    NULL |
+			|     504 | holticulture | NULL | NULL  | NULL | NULL          |    NULL | NULL       |    NULL |
+			+---------+--------------+------+-------+------+---------------+---------+------------+---------+
+ 
+   
+     
+  2. 
+  
+                    SELECT *
+                    FROM products p
+                    LEFT JOIN orders o
+                    ON p.pid = o.pid
+                    
+                    UNION
+                    
+                    SELECT *
+                    FROM products p
+                    RIGHT JOIN orders o
+                    ON p.pid = o.pid;    
+   
+     
+			+------+--------+-------+------+------+------+------------+-------------+-------------+------------+
+			| pid  | name   | price | qty  | id   | pid  | order_date | customer_id | employee_id | shipper_id |
+			+------+--------+-------+------+------+------+------------+-------------+-------------+------------+
+			|    1 | tv     |   388 |    1 |    1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+			|    2 | comb   |    89 |    3 |    2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+			|    1 | tv     |   388 |    1 |    3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+			|    1 | tv     |   388 |    1 |    4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+			|    3 | camera |   636 |    2 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    4 | freeze |  2000 |    3 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    5 | watch  |   150 |    5 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    6 | shoes  |   400 |    7 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    7 | pencil |     5 |   11 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    8 | table  |  3332 |    1 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|    9 | bench  |  1011 |    3 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			|   10 | laptop | 30000 |    1 | NULL | NULL | NULL       |        NULL |        NULL |       NULL |
+			+------+--------+-------+------+------+------+------------+-------------+-------------+------------+    
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----x----
+
+
+ FULL JOIN:
+ 
+     Syntax:
+
+	    SELECT column_lists    
+	    FROM table1    
+	    FULL JOIN table2    
+	    ON table1.column = table2.column;    
+	 
+	 
+     Example:
+	
+	    SELECT Student.admission_no, Student.first_name, Student.last_name, Fee.course, Fee.amount_paid  
+	    FROM Student  
+	    FULL JOIN Fee  
+	    ON Student.admission_no = Fee.admission_no;     
+	     
+	                 
+    
+    
+    Full join on three tables; 
+    
+     
+    	    SELECT column_lists    
+	    FROM table1    
+	    LEFT JOIN table2    
+	    ON table1.column = table2.column;    
+	    LEFT JOIN table3    
+	    ON table3.column = table1.column;    
+	 	 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+----x-----
+
+
+
+
+ SELF JOIN:
+   
+     A table is joined to itself using the SELF JOIN.  
+   
+   
+     Syntax:
+   
+	    SELECT T1.col_name, T2.col_name...    
+	    FROM table1 T1, table1 T2    
+	    WHERE join_condition;       
+	   
+   
+     Example:
+  
+	    SELECT S1.first_name, S2.last_name, S2.city  
+	    FROM Student S1, Student S2  
+	    WHERE S1.id <> S2.iD AND S1.city = S2.city  
+	    ORDER BY S2.city;    
+	         
+  
+   
+            select a.*, b.* 
+            FROM customers a, customers b
+            WHERE a.customer_id <> B.customer_id
+            AND a.city = b.city
+            ORDER BY a.city;
+
+
+            //By left join
+             
+            select e.fullname as employee, m.fullname as manager
+            from employee e
+            left join employee m
+            on e.managerId = m.employeeId;   
+               
+               
+            //By cross join
+                    
+            select e.fullname as employee, m.fullname as manager
+            from employee e
+            CROSS JOIN employee m
+         
+               
+
+           
+----x----
+
