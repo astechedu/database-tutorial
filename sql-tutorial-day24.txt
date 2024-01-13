@@ -6,108 +6,13 @@
 
 
 
--- Day 19 ---
+						    ----> Day 24 <----
 
-#19 Subquery: UPDATE Subquery, DELETE Subquery
-
-		Scalar Subqueries
-		Multi-row Subqueries
-		Correlated Subquries
-		
-       
-Correlated UPDATE:
------------------
-
-	UPDATE tbl1 alias1
-	SET column = (SELECT expression
-		     FROM tble2 alias2
-		     WHERE alias1.column = alias2.column);
-		     
+#24 Views:  
 
 
-Correlated DELETE:
------------------
-
-	 DELETE FROM tbl1 alias1
-	 WHERE column1 OPERATOR
-		       (SELECT expression 
-		       FROM tbl2 alias2
-		       WHERE alias1.column = alias2.column);
-		       
-              
-              
-              
-Using Exists Operator: 
-----------------------
-  	 
-  	Exists(Q): Returns true if there at least one tuple in the result of query Q  
-  	
-  	Syntax: 
-  	SELECT colume_name(s) FROM tbl_name WHERE EXISTS (Subquery); 
-  	
-     Ex:
-  	SELECT eid, name, FROM teacher as t where exists (SELECT rollno FROM student as s WHERE s.tid = t.tid AND s.sex = 'F');
-  
-  
-     Ex: 
-	SELECT emp_id,lname,job_id,dept_id
-	FROM employee outer
-	WHERE EXISTS (SELECT 'X'
-		     FROM employees
-		     WHERE manager_id = outer.emp_id);              
-		      
-
-
-Using NOT Exists Operator: 
--------------------------
-
-  	Syntax: 
-  	SELECT colume_name(s) FROM tbl_name WHERE NOT EXISTS (Subquery); 
-  	
-  	
-     Ex:
-	SELECT emp_id,lname,job_id,dept_id
-	FROM employee outer
-	WHERE NOT EXISTS (SELECT 'X'
-		     FROM employees
-		     WHERE manager_id = outer.emp_id);              
-		      
-
-
-
-
-
-  EXISTS & NOT EXISTS:
-  
-  SELECT *from products p where EXISTS (select o.pid from orders o where o.pid=p.id);
-  
-				+----+------+-------+------+
-				| id | name | price | qty  |
-				+----+------+-------+------+
-				|  1 | tv   |   388 |    1 |
-				|  2 | comb |    89 |    3 |
-				+----+------+-------+------+
-
-
-
-  SELECT *from products p where NOT EXISTS (select o.pid from orders o where o.pid=p.id);
-  
-				+----+--------+-------+------+
-				| id | name   | price | qty  |
-				+----+--------+-------+------+
-				|  3 | camera |   636 |    2 |
-				|  4 | freeze |  2000 |    3 |
-				|  5 | watch  |   150 |    5 |
-				|  6 | shoes  |   400 |    7 |
-				|  7 | pencil |     5 |   11 |
-				|  8 | table  |  3332 |    1 |
-				|  9 | bench  |  1011 |    3 |
-				| 10 | laptop | 30000 |    1 |
-				+----+--------+-------+------+
-    
-
-
-----x----
+           1. Simple View  
+           2. Complex View
 
 
 
@@ -117,82 +22,6 @@ Using NOT Exists Operator:
 
 
 
-IN SQL, the operators ANY, ALL & EXISTS are used in combination with subqueries to perform comparisons and logical operations
-
- ANY Operator
- ALL Operator
- EXISTS Operator
- Examples
- EXISTS vs IN vs JOINS
- 
- 
- Syntax: 
- 
- SELECT column_name(s)
- FROM table_name
- WHERE column_name operator ANY (Subquery);
- (=,<>, !=, >, >+, < , or <=)
- 
- 
- Example: 
- select *
- from employee
- where salary = ANY (
-       select salary 
-       from employee
-       where department = 'HR'
-);       
- 
- 
- Syntax: 
- select column_name(s)
- from table_name
- where column_name operator ALL (Subqueries);
- 
- select *
- from employee
- where salary > AL (
-       select salary 
-       from employee
-       where department = 'Accounts'
- );
- 
- 
- 
- EXISTS (Logical Operator):
- 
- Syntax:
- 
- SELECT column_name(ss)
- FROM table_name
- WHERE EXISTS (Subquery);
- 
- 
- select name
- from customers
- where exists (
-     select *
-     from orders
-     where orders.customer_id = customers.id
-);
- 
- 
- 
- Diff ways: 
- 
- select name
- from customers
- where name IN (
-     select *
-     from orders
-     where orders.customer_id = customers.id
-);
-
-Exists vs IN: 
-.Performance
-.Readability
-.Personal preference
 
 
-----x----
-
+-----x-----
