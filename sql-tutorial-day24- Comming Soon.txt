@@ -6,13 +6,13 @@
 
 
 
-						    ----> Day 24 <----
+			                 ----> Day 24 <----
 
 #24 Views:  
 
 
-           1. Simple View  
-           2. Complex View
+           1. Simple Views  
+           2. Complex Views
 
 
 
@@ -33,30 +33,110 @@ These views can only contain a single base table or can be created only from one
 Group functions such as MAX(), COUNT(), etc., cannot be used here, and it does not contain groups of data. 
 
 
-Example: 
+	Example: 
 
-   Create View: 
+	   Create View: 
 
-CREATE VIEW Syntax
-CREATE VIEW view_name AS
-SELECT column1, column2, ...
-FROM table_name
-WHERE condition; 
-
-
-Example: 
-
-    Update View: 
-
-	UPDATE agentview
-	SET commission=.13
-	WHERE working_area=’London’;
+		CREATE VIEW Syntax
+		CREATE VIEW view_name AS
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE condition; 
 
 
-Example: 
-        Delete View: 
+	Example: 
 
-	DROP VIEW view_name; 
+	
+		CREATE VIEW prodview AS
+		SELECT *
+		FROM products;
+		
+			+-----+--------+-------+------+
+			| pid | name   | price | qty  |
+			+-----+--------+-------+------+
+			|   1 | tv     |   388 |    1 |
+			|   2 | comb   |    89 |    3 |
+			|   3 | camera |   636 |    2 |
+			|   4 | freeze |  2000 |    3 |
+			|   5 | watch  |   150 |    5 |
+			|   6 | shoes  |   400 |    7 |
+			|   7 | pencil |     5 |   11 |
+			|   8 | table  |  3332 |    1 |
+			|   9 | bench  |  1011 |    3 |
+			|  10 | laptop | 30000 |    1 |
+			+-----+--------+-------+------+
+		
+		
+		
+		CREATE VIEW prodview AS SELECT name, price, qty FROM products;		
+				
+			+--------+-------+------+
+			| name   | price | qty  |
+			+--------+-------+------+
+			| tv     |   388 |    1 |
+			| comb   |    89 |    3 |
+			| camera |   636 |    2 |
+			| freeze |  2000 |    3 |
+			| watch  |   150 |    5 |
+			| shoes  |   400 |    7 |
+			| pencil |     5 |   11 |
+			| table  |  3332 |    1 |
+			| bench  |  1011 |    3 |
+			| laptop | 30000 |    1 |
+			+--------+-------+------+
+					
+		
+		
+		
+CREATE VIEW prodview AS SELECT name, price, qty FROM products where price < 2000;	
+
+			+--------+-------+------+
+			| name   | price | qty  |
+			+--------+-------+------+
+			| tv     |   388 |    1 |
+			| comb   |    89 |    3 |
+			| camera |   636 |    2 |
+			| watch  |   150 |    5 |
+			| shoes  |   400 |    7 |
+			| pencil |     5 |   11 |
+			| bench  |  1011 |    3 |
+			| new    |   120 |    5 |
+			| new2   |   125 |   25 |
+			+--------+-------+------+
+
+
+
+
+Insert new row in base table: 
+
+ insert into products( pid,name,price,qty ) values(11,"new",120,5)
+
+
+
+
+Insert new row in view table: 
+
+ insert into prodview( pid,name,price,qty ) values(12,"new2",125,25);
+
+
+
+		
+    	   Update View: 
+
+		UPDATE products
+		SET price = 5000
+		WHERE id = 4;
+
+
+	UPDATE prodview	SET price = 5000 WHERE id = 4;
+
+
+
+
+	Example: 
+        	Delete View: 
+
+		DROP VIEW view_name; 
 
 
 
@@ -69,11 +149,40 @@ These views can contain more than one base table or can be constructed on more t
 
 Example:
 
-CREATE VIEW EmployeeByDepartment AS
+	CREATE VIEW EmployeeByDepartment AS
 
-SELECT e.emp_id, d.dept_id, e.emp_name 
-FROM Employee e, Department d 
-WHERE e.dept_id=d.dept_id;
+	SELECT e.emp_id, d.dept_id, e.emp_name 
+	FROM employee e, department d 
+	WHERE e.dept_id = d.dept_id;
+	
+	
+
+
+
+
+Example: 
+
+
+  	CREATE VIEW prod_order AS
+
+	SELECT e.emp_id, d.dept_id, e.emp_name 
+	FROM products p
+	INNER JOIN orders o 
+	ON p.prod_id = o.dept_id;   
+
+
+
+CREATE VIEW prod_order AS SELECT p.name, p.price, o.order_date FROM products p INNER JOIN orders o ON p.pid = o.pid;
+
+
+		+------+-------+------------+
+		| name | price | order_date |
+		+------+-------+------------+
+		| tv   |   388 | 2023-12-01 |
+		| comb |    89 | 2023-12-22 |
+		| tv   |   388 | 2023-01-01 |
+		| tv   |   388 | 2023-03-05 |
+		+------+-------+------------+
 
 
 
