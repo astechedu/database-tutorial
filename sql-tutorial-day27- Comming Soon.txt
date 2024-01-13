@@ -1,0 +1,98 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+-- Day 27 ---
+
+#24 MySQL Stored Function
+
+		->A stored function in MySQL is a set of SQL statements that perform some task/operation and return a single value.
+
+
+
+Some Points: 
+
+    .The function parameter may contain only the IN parameter but can't allow specifying this parameter, while the procedure can allow      IN, OUT, INOUT parameters.
+
+    .The stored function can return only a single value defined in the function header.
+    .The stored function may also be called within SQL statements.
+    .It may not produce a result set.
+
+
+
+MYSQL: 
+
+DELIMITER $$  
+   
+CREATE FUNCTION fun_name(fun_parameter(s))  
+RETURNS datatype  
+[NOT] {Characteristics}  
+fun_body; 
+
+
+
+Example: 
+
+
+    DELIMITER $$  
+    CREATE FUNCTION Customer_Occupation(  
+        age int  
+    )   
+    RETURNS VARCHAR(30)  
+    DETERMINISTIC  
+    BEGIN  
+        DECLARE customer_occupation VARCHAR(25);  
+        IF age > 56 THEN  
+            SET customer_occupation = 'Scientist';  
+        ELSEIF (age <= 36 AND   
+                age >= 31) THEN  
+            SET customer_occupation = 'Engineer';  
+        ELSEIF age < 31 THEN  
+            SET customer_occupation = 'Actor';  
+        END IF;  
+        -- return the customer occupation  
+        RETURN (customer_occupation);  
+    END$$  
+    DELIMITER;  
+
+
+
+
+> Stored Function Call
+
+    SELECT name, age, Customer_Occupation(age)        //Look at above example
+    FROM customer ORDER BY age;  
+
+
+
+
+> Stored Function Call in Procedure                   //Look at above example
+
+
+DELIMITER $$  
+CREATE PROCEDURE GetCustomerDetail()  
+BEGIN  
+    SELECT name, age, Customer_Occupation(age) FROM customer ORDER BY age;  
+END$$  
+DELIMITER ;
+
+
+
+> Call the stored Function :                    
+        SELECT stored_function_name();
+
+
+
+
+> Call the stored procedure:
+
+	CALL GetCustomerDetail();  
+
+
+
+----x----
+-------------------------------------------------------------

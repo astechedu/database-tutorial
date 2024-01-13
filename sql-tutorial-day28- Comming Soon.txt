@@ -6,7 +6,7 @@
 
 
 
--- Day 25 ---
+-- Day 24 ---
 
 #24 Subquery: UPDATE Subquery, DELETE Subquery
 

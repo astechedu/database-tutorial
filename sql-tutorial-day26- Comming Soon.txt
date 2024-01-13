@@ -1,0 +1,121 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+						     ---> Day 26 <----
+
+#26 SQL Stored Procedures
+
+                
+                      ->A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
+
+                      ->A stored procedure in SQL is a group of SQL statements that are stored together in a database.
+
+		      ->In SQL, a stored procedure is a set of statement(s) that perform some defined actions. 
+			We make stored procedures so that we can reuse statements that are used frequently.
+
+
+      >> Creating a Procedure:    ' CREATE PROCEDURE '
+
+
+
+MySQL:
+
+DELIMITER //
+CREATE PROCEDURE us_customers ()
+BEGIN
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+END //
+DELIMITER ;
+
+
+>Executing Stored Procedure: 
+
+	.SQL Server, Oracle
+
+		EXEC us_customers;
+
+	.PostgreSQL, MySQL:
+
+		CALL us_customers();
+
+
+
+
+>Drop Procedure
+
+	.SQL Server, PostgreSQL, MySQL
+
+		DROP PROCEDURE us_customers;
+
+
+
+
+
+
+
+
+----x----
+
+
+
+
+
+
+
+
+
+SQL Server:
+
+CREATE PROCEDURE us_customers AS
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+
+PostgreSQL
+
+CREATE PROCEDURE us_customers ()
+LANGUAGE SQL
+AS $$
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+$$;
+
+
+MySQL:
+
+DELIMITER //
+CREATE PROCEDURE us_customers ()
+BEGIN
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+END //
+DELIMITER ;
+
+
+Oracle:
+
+CREATE PROCEDURE us_customers
+AS res SYS_REFCURSOR;  
+BEGIN
+open res for
+SELECT customer_id, first_name
+FROM Customers
+WHERE country = 'USA';
+DBMS_SQL.RETURN_RESULT(res);
+END
+
+
+
+
+
+
+----x----
