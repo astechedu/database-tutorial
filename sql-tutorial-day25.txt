@@ -6,374 +6,520 @@
 
 
 
--- Day 25 ---
+						     ---> Day 25 <----
 
-#25 MySQL Stored Function
+#25 SQL Stored Procedures
 
-		->A stored function in MySQL is a set of SQL statements that perform some task/operation and return a single value.
+                
+                      ->A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
 
+                      ->A stored procedure in SQL is a group of SQL statements that are stored together in a database.
 
-
-Some Points: 
-
-    .The stored function can return only a single value defined in the function header.
-    .The stored function may also be called within SQL statements.
-    .It may not produce a result set.
-
-    .The function parameter may contain only the IN parameter but can't allow specifying this parameter, while the procedure can allow      IN, OUT, INOUT parameters.
-
-
-      Stored functions: 
-
-			Stored functions are just like built in functions except that you have to define the stored function yourself. 			Once a stored function has been created, it can be used in SQL statements just like any other function. 
-			The basic syntax for creating a stored function is as shown below
-
-
-HERE
-
-     CREATE FUNCTION sf_name ([parameter(s)]):
-                          is mandatory and tells MySQL server to create a function named `sf_name’ with optional 
-                          parameters defined in the parenthesis.
-
-     RETURNS data type:
-                       is mandatory and specifies the data type that the function should return.
-
-     DETERMINISTIC: 
-                   means the function will return the same values if the same arguments are supplied to it.
-
-     STATEMENTS:  
-                 is the procedural code that the function executes.
+		      ->In SQL, a stored procedure is a set of statement(s) that perform some defined actions. 
+			We make stored procedures so that we can reuse statements that are used frequently.
 
 
 
-Syntax: 
+      >> Creating a Procedure:    ' CREATE PROCEDURE '
 
-CREATE FUNCTION sf_name ([parameter(s)])
-   RETURNS data type
-   DETERMINISTIC
-   STATEMENTS
+
+
+MySQL:
+
+
+DELIMITER //
+
+CREATE PROCEDURE proc_name ()
+
+BEGIN
+  SELECT column1, column2...
+  FROM TableName
+  WHERE condition;
+END //
+
+DELIMITER ;
 
 
 
 
-MYSQL: 
+DELIMITER //
+CREATE PROCEDURE pro_name(param1 INT)
+BEGIN
+SELECT * FROM student_database.student s where s.sname = pram1;
+END//
+DELIMITER;
 
-DELIMITER $$  
-   
-CREATE FUNCTION fun_name(fun_parameter(s))  
-RETURNS datatype  
-[NOT] {Characteristics}  
-fun_body; 
+
+
+
+>Executing Stored Procedure: 
+
+	.SQL Server, Oracle
+
+		EXEC us_customers;
+
+	.PostgreSQL, MySQL:
+
+		CALL us_customers();
+
+
+>Drop Procedure
+
+	.SQL Server, PostgreSQL, MySQL
+
+		DROP PROCEDURE us_customers;
 
 
 
 Example: 
 
+DROP PROCEDURE IF EXISTS pp;
 
-    DELIMITER $$  
-    CREATE FUNCTION Customer_Occupation(  
-        age int  
-    )   
-    RETURNS VARCHAR(30)  
-    DETERMINISTIC  
-    BEGIN  
-        DECLARE customer_occupation VARCHAR(25);  
-        IF age > 56 THEN  
-            SET customer_occupation = 'Scientist';  
-        ELSEIF (age <= 36 AND   
-                age >= 31) THEN  
-            SET customer_occupation = 'Engineer';  
-        ELSEIF age < 31 THEN  
-            SET customer_occupation = 'Actor';  
-        END IF;  
-        -- return the customer occupation  
-        RETURN (customer_occupation);  
-    END$$  
-    DELIMITER;  
-
-
-
-
-> Stored Function Call
-
-    SELECT name, age, Customer_Occupation(age)        //Look at above example
-    FROM customer ORDER BY age;  
-
-
-
-
-> Stored Function Call in Procedure                   //Look at above example
-
-
-DELIMITER $$  
-CREATE PROCEDURE GetCustomerDetail()  
-BEGIN  
-    SELECT name, age, Customer_Occupation(age) FROM customer ORDER BY age;  
-END$$  
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT *FROM products;
+END $$
 DELIMITER ;
 
-
-
-> Call the stored Function :                    
-        SELECT stored_function_name();
+CALL pp;
 
 
 
 
-> Call the stored procedure:
+Example: 
 
-	CALL GetCustomerDetail();  
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price FROM products p;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price FROM products p where price > 2000;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+Example:
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price FROM products p where price BETWEEN 2000 AND 5000;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+--> IF(column, true, false) <---
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price , IF( price < 600, 'no discount', 'discounted') AS Discounted_Status FROM products p;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+---x---
+
+
+
+
+---> CASE <---
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price , 
+CASE WHEN price > 200 THEN price*0.10 
+     ELSE 0 
+END Discounted_Status 
+FROM products p;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price, 
+  CASE WHEN p.price > 100 AND p.price < 250 THEN p.price*0.10
+       WHEN p.price > 250 AND p.price < 700 THEN p.price*0.20
+       ELSE 0
+  END AS Discounted_Status
+  FROM products p;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+---x---
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp2()
+BEGIN
+  SELECT p.name, p.price , IF( price < 600, price*0.10, 'no discount') AS Discounted_Status FROM products p;
+END $$
+DELIMITER ;
+
+CALL pp2;
+
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT *FROM products p INNER JOIN orders o ON p.id = o.product_id ;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+
+
+Example:
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER $$
+CREATE PROCEDURE pp()
+BEGIN
+  SELECT p.name, p.price , o.order_id FROM products p INNER JOIN orders o ON p.id = o.product_id ;
+END $$
+DELIMITER ;
+
+CALL pp;
+
+
+
+
+
+--> Parameters <--
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+
+DELIMITER //
+CREATE PROCEDURE gp(p INT)
+BEGIN
+SELECT * FROM products WHERE price = p;
+END//
+DELIMITER;
+
+CALL gp(600);
+
+
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER //
+CREATE PROCEDURE gp(pname VARCHAR(10))
+BEGIN
+SELECT * FROM products WHERE NAME = pname;
+END//
+DELIMITER;
+
+CALL gp("laptop");
+
+
+
+Example: 
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER //
+CREATE PROCEDURE gp(pname VARCHAR(10))
+BEGIN
+SELECT name FROM products WHERE NAME = pname;
+END//
+DELIMITER;
+
+CALL gp("laptop");
+
+
+
 
 
 
 
 ----x----
--------------------------------------------------------------
-
-
-
-2. User-Defined Function
-   i> Scalar Functions           ii> Table Valued Functions  
-      (Return Single Value)          (Return a table as a result)
-                                        1. Inlined Table Valued Function 
-                                        2. Multi Statement Table Valued Function)
-
-
-i> Scalar Functions Examples:
-
-DELIMITER $$
--- Scalar example:
-CREATE FUNCTION NoParameters()
-  RETURNS INT
-  
-    BEGIN 
-       RETURN (SELECT SUM(id) FROM users);
-    END$$
-    
-DELIMITER ;
-
-//Calling this function
-SELECT NoParameters();
-
----x---
-
->> Function ON Ubuntu
-
-DELIMITER $$
-create function fn1(id int) returns int
-begin
- return id;
-end $$
-DELIMITER ;
-
-
-select id,name, fn1(id) from users;
-
-//Or
-
-DELIMITER $$
-create function fn1() returns int
-begin
- return 100;
-end $$
-DELIMITER ;
-
-
-select id,name, fn1() from users;
-
-//Or
-
-DELIMITER $$
-create function fn1() returns int
-begin
- declare id int;
- set id = 13;
- return id;
-end $$
-DELIMITER ;
-
-
-
-//Or
-
-DELIMITER $$
-create function fn1() returns int
-begin
- declare n1 int;
- declare n2 int;
- set n1 = 10;
- set n2 = 5;
- return n1+n2;
-end $$
-DELIMITER ;
-
-
->>While Loop in function
-
-DELIMITER $$
-create function fn1() returns int
-begin
- declare counter int;
- set counter = 0;
- label:
-  while counter < 10 do
-    set counter = counter + 1;
-  end  
-  while label;
-  return counter;
- end $$
-DELIMITER ;
 
 
 
 
----x---
---------------------------------------------------------------
-
-
-Syntax: 
-
-CREATE FUNCTION schema_name.function_name (parameter_list)  
-RETURNS data_type AS  
-BEGIN  
-    statements  
-    RETURN value  
-END 
-
----x---
-
-//Calculate the net sales 
-
-DELIMITER $$
-
-    CREATE FUNCTION udfNet_Sales(  
-        @quantity INT,  
-        @price DEC(10,2),  
-        @discount DEC(3,2)  
-    )  
-    RETURNS DEC(10,2)  
-    AS   
-    BEGIN  
-        RETURN @quantity * @price * (1 - @discount);  
-    END $$   
-
-DELIMITER ;
-
-//Use this function in select query:
-
-SELECT dbo.udfNet_Sales(25, 500, 0.2) AS net_sales; 
-
----x---
-
---------------------------------------------------------
-
-ii>> Table-Valued Functions
-
-1. Inline Table-Values Functions
-
-Example 01: 
-
-    --It creates a table-valued function to get employees  
-    CREATE FUNCTION fudf_GetEmployee()  
-    RETURNS TABLE  
-    AS  
-     RETURN (SELECT * FROM Employee)  
 
 
 
-//
-SELECT * FROM udf_GetEmployee(); 
- 
----x---
-
--------------------------------------------------------------------
 
 
+SQL Server:
 
->>> Function in phpmyadmin (Working)
+CREATE PROCEDURE us_customers AS
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
 
-DELIMITER $$
-CREATE FUNCTION calcProfit(cost FLOAT, price FLOAT) RETURNS DECIMAL(9,2)
+PostgreSQL
+
+CREATE PROCEDURE us_customers ()
+LANGUAGE SQL
+AS $$
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+$$;
+
+
+MySQL:
+
+DROP PROCEDURE IF EXISTS pp;
+
+DELIMITER //
+CREATE PROCEDURE us_customers ()
 BEGIN
-  DECLARE profit DECIMAL(9,2);
-  SET profit = price-cost;
-  RETURN profit;
-END$$
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+END //
 DELIMITER ;
 
----------------------------------------------------------------------------
-//
 
->>> Function in phpmyadmin (Working)
+Oracle:
 
-DELIMITER $$
-CREATE FUNCTION totalprice(quantity INT, price INT) RETURNS DECIMAL(9,2)
+CREATE PROCEDURE us_customers
+AS res SYS_REFCURSOR;  
 BEGIN
-  DECLARE total DECIMAL(9,2);
-  SET total = quantity*price;
-  RETURN total;
-END $$
-DELIMITER ;
+open res for
+SELECT customer_id, first_name
+FROM Customers
+WHERE country = 'USA';
+DBMS_SQL.RETURN_RESULT(res);
+END
+
+
+
+----x----
+
+
+
+
+
+
+--More Case--
+
+
+
+SELECT player_name,
+       year,
+       CASE WHEN year = 'SR' THEN 'yes'
+            ELSE 'no' END AS is_a_senior
+  FROM benn.college_football_players
+
+
+
+DROP PROCEDURE IF EXISTS pp;
+
+SELECT player_name,
+       weight,
+       CASE WHEN weight > 250 THEN 'over 250'
+            WHEN weight > 200 THEN '201-250'
+            WHEN weight > 175 THEN '176-200'
+            ELSE '175 or under' END AS weight_group
+  FROM benn.college_football_players
+
+
+
+
+SELECT player_name,
+       weight,
+       CASE WHEN weight > 250 THEN 'over 250'
+            WHEN weight > 200 AND weight <= 250 THEN '201-250'
+            WHEN weight > 175 AND weight <= 200 THEN '176-200'
+            ELSE '175 or under' END AS weight_group
+  FROM benn.college_football_players
+
+
+
+
+SELECT player_name,
+       CASE WHEN year = 'FR' AND position = 'WR' THEN 'frosh_wr'
+            ELSE NULL END AS sample_case_statement
+  FROM benn.college_football_players
+
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            ELSE 'Not FR' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY CASE WHEN year = 'FR' THEN 'FR'
+               ELSE 'Not FR' END
+
+
+
+
+
+SELECT COUNT(1) AS fr_count
+  FROM benn.college_football_players
+ WHERE year = 'FR'
+
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY 1
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY year_group
+
+
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY CASE WHEN year = 'FR' THEN 'FR'
+               WHEN year = 'SO' THEN 'SO'
+               WHEN year = 'JR' THEN 'JR'
+               WHEN year = 'SR' THEN 'SR'
+               ELSE 'No Year Data' END
+
+
+
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            *
+  FROM benn.college_football_players
+
+
+
+
+SELECT CASE WHEN year = 'FR' THEN 'FR'
+            WHEN year = 'SO' THEN 'SO'
+            WHEN year = 'JR' THEN 'JR'
+            WHEN year = 'SR' THEN 'SR'
+            ELSE 'No Year Data' END AS year_group,
+            COUNT(1) AS count
+  FROM benn.college_football_players
+ GROUP BY 1
+
+
+
+
+
+SELECT COUNT(CASE WHEN year = 'FR' THEN 1 ELSE NULL END) AS fr_count,
+       COUNT(CASE WHEN year = 'SO' THEN 1 ELSE NULL END) AS so_count,
+       COUNT(CASE WHEN year = 'JR' THEN 1 ELSE NULL END) AS jr_count,
+       COUNT(CASE WHEN year = 'SR' THEN 1 ELSE NULL END) AS sr_count
+  FROM benn.college_football_players
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ----x---
--------------------------------------------------------------
-
-
-
-
-
-
-
---Notes--
-
-
-
-
-Types of functions
-Built-in functions
-
-
-    Strings functions – operate on string data types
-    Numeric functions – operate on numeric data types
-    Date functions – operate on date data types
-    Aggregate functions – operate on all of the above data types and produce summarized result sets.
-    Other functions – MySQL also supports other types of built in functions but we will limit our lesson to the above named functions only.
-
-
-
-
--------------------------------------------------
-Example: 
-
-
-DELIMITER |
-CREATE FUNCTION sf_past_movie_return_date (return_date DATE)
-  RETURNS VARCHAR(3)
-   DETERMINISTIC
-    BEGIN
-     DECLARE sf_value VARCHAR(3);
-        IF curdate() > return_date
-            THEN SET sf_value = 'Yes';
-        ELSEIF  curdate() <= return_date
-            THEN SET sf_value = 'No';
-        END IF;
-     RETURN sf_value;
-    END|
-
-
-
-Executing: 
-
-SELECT `movie_id`,`membership_number`,`return_date`,CURDATE() ,sf_past_movie_return_date(`return_date`)  
-FROM `movierentals`;
-
-
-
-
-
-
-
-
-
