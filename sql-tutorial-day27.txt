@@ -1,0 +1,301 @@
+# ----> SQL Tutorial ----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					---->  Day 27 <----
+
+
+#27 CTE ( Comman Table Expression )
+
+Introduction to Common Table Expression (CTE) in MySQL?: 
+
+
+	A Common Table Expression (CTE) is a temporary named result set that is defined within the scope of a single SQL query.
+	CTE is a temporary named result set that you can reference within a select, insert, update, or delete.
+
+
+        A Common Table Expression, also called as CTE in short form, is a temporary named result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement. The CTE can also be used in a View. 
+
+
+		1. Easily write and maintain complex queries
+		2. Increase readability and simplification 
+
+
+
+	*Benefits of Using CTE:
+
+		Simplify complex queries
+		Improve query performance
+		Reuse code
+		Traverse hierarchical data
+		Simplify debugging
+
+
+
+
+
+MySQL CTE Syntax:
+
+
+
+Syntax: 
+
+
+WITH cte_name AS (
+    SELECT column1, column2, ...
+    FROM table_name
+    WHERE condition
+)
+SELECT *
+FROM cte_name;
+
+
+
+
+> define multiple CTEs:
+
+Syntax: 
+
+WITH cte1 AS (
+    SELECT column1, column2, ...
+    FROM table1
+    WHERE condition1
+),
+cte2 AS (
+    SELECT column3, column4, ...
+    FROM table2
+    WHERE condition2
+)
+SELECT *
+FROM cte1
+JOIN cte2 ON cte1.column1 = cte2.column3;
+
+
+
+
+Example 01: 
+
+With myct1 AS (select *from products) 
+select *from mycte1;
+
+
+
+Example 02: 
+
+With myct1(id, name, price) AS (select *from products) 
+select id, name , price from mycte1;
+
+
+Example 03:
+
+With avgSal AS (select avg(salaray) AS SAL from emp)
+select *from emp, avgsal ;
+
+
+With avgSal AS (select avg(salaray) AS SAL from emp)
+select *from emp, avgsal where emp.sal > avgsal.sal;
+
+
+
+
+
+
+MySQL Recursive CTE Syntax: 
+
+
+
+WITH RECURSIVE cte_name AS (
+    SELECT id, parent_id, name
+    FROM table_name
+    WHERE parent_id IS NULL
+    UNION ALL
+    SELECT child.id, child.parent_id, child.name
+    FROM table_name child
+    JOIN cte_name parent ON child.parent_id = parent.id
+)
+SELECT *
+FROM cte_name;
+
+
+
+
+
+>>Table sales: 
+
+
+
+WITH sales_last_30_days AS (
+    SELECT product_name, SUM(revenue) AS total_revenue
+    FROM sales
+    WHERE sales_date BETWEEN '2023-03-10' AND '2023-04-09'
+    GROUP BY product_name
+),
+sales_previous_30_days AS (
+    SELECT product_name, SUM(revenue) AS total_revenue
+    FROM sales
+    WHERE sales_date BETWEEN '2023-02-08' AND '2023-03-09'
+    GROUP BY product_name
+)
+SELECT
+    s.product_name,
+    s.total_revenue,
+    (s.total_revenue - p.total_revenue) / p.total_revenue * 100 AS revenue_change
+FROM sales_last_30_days s
+JOIN sales_previous_30_days p ON s.product_name = p.product_name;
+
+
+
+
+
+
+>>The More Advanced MySQL CTE Example: 
+
+
+WITH monthly_sales AS (
+  SELECT
+    DATE_FORMAT(order_date, '%Y-%m') AS month,
+    product,
+    SUM(revenue) AS revenue
+  FROM
+    sales
+  GROUP BY
+    month,
+    product
+),
+total_sales AS (
+  SELECT
+    month,
+    SUM(revenue) AS total_revenue
+  FROM
+    monthly_sales
+  GROUP BY
+    month
+)
+SELECT
+  monthly_sales.month,
+  monthly_sales.product,
+  monthly_sales.revenue,
+  (monthly_sales.revenue / total_sales.total_revenue)*100 AS percentage
+FROM
+  monthly_sales
+  JOIN total_sales ON monthly_sales.month = total_sales.month
+ORDER BY
+  monthly_sales.month,
+  percentage DESC;
+
+
+
+
+
+>>MySQL Recursive CTE Example: 
+
+
+
+WITH RECURSIVE employee_hierarchy AS (
+    SELECT employee_id, manager_id, name, 0 AS level
+    FROM employees
+    WHERE manager_id IS NULL
+    UNION ALL
+    SELECT e.employee_id, e.manager_id, e.name, eh.level + 1
+    FROM employees e
+    JOIN employee_hierarchy eh ON e.manager_id = eh.employee_id
+)
+SELECT
+    CONCAT(REPEAT('  ', level), name) AS employee_name,
+    CONCAT(REPEAT('  ', level - 1), eh.name) AS manager_name
+FROM employee_hierarchy eh;
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+
+
+
+Example: 
+
+
+Declare @RowNo int =1;
+;with ROWCTE as  
+   (  
+      SELECT @RowNo as ROWNO    
+		UNION ALL  
+      SELECT  ROWNO+1  
+  FROM  ROWCTE  
+  WHERE RowNo < 10
+    )  
+ 
+SELECT * FROM ROWCTE 
+ 
+
+
+
+----------------------------------------------------------------------
+
+1. 
+
+CREATE TABLE sales (
+    product_name VARCHAR(50),
+    sales_date DATE,
+    revenue DECIMAL(10, 2)
+);
+
+
+
+INSERT INTO sales (product_name, sales_date, revenue) VALUES 
+    ('Product A', '2023-03-01', 1000), 
+    ('Product A', '2023-03-15', 1500), 
+    ('Product A', '2023-03-30', 2000), 
+    ('Product B', '2023-03-01', 800), 
+    ('Product B', '2023-03-15', 1200), 
+    ('Product B', '2023-03-30', 1600),
+    ('Product C', '2023-03-01', 500),
+    ('Product C', '2023-03-15', 750),
+    ('Product C', '2023-03-30', 1000);
+
+
+
+2. 
+
+
+CREATE TABLE sales (
+  order_date DATE,
+  product VARCHAR(50),
+  quantity INT,
+  revenue DECIMAL(10,2)
+);
+
+INSERT INTO sales (order_date, product, quantity, revenue) VALUES 
+('2023-01-01', 'Product A', 10, 1000.00),
+('2023-01-15', 'Product B', 5, 500.00),
+('2023-02-01', 'Product A', 8, 800.00),
+('2023-02-15', 'Product C', 3, 300.00),
+('2023-03-01', 'Product A', 12, 1200.00),
+('2023-03-15', 'Product B', 7, 700.00);
+
+
+----x----
+
+
+
+
+
+
+

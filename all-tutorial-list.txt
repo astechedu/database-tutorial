@@ -110,15 +110,29 @@
     Full Join 
 
 23. sql-tutorial-day23.txt
+    Self Join
 
 24. sql-tutorial-day24.txt
 
+       View 
+
 25. sql-tutorial-day25.txt
+
+       Stored Procedure
 
 26. sql-tutorial-day26.txt
 
+       Stored Function
+
 27. sql-tutorial-day27.txt
     
+       CTE ( Common Table Expression )
+
+
+
+
+
+----x----
           
           
           
