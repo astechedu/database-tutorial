@@ -1,0 +1,433 @@
+# ----> SQL Tutorial <----
+
+# https://github.com/astechedu/database-tutorial.git
+
+# SQL Basics For Beginers
+
+
+
+					------>  Day 28  <------
+
+
+#28 CTE ( Comman Table Expression )
+
+Introduction to Common Table Expression (CTE) in MySQL?: 
+
+
+	A Common Table Expression (CTE) is a temporary named result set that is defined within the scope of a single SQL query.
+	CTE is a temporary named result set that you can reference within a select, insert, update, or delete.
+
+
+        A Common Table Expression, also called as CTE in short form, is a temporary named result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement. The CTE can also be used in a View. 
+
+
+		1. Easily write and maintain complex queries
+		2. Increase readability and simplification 
+
+
+
+	*Benefits of Using CTE:
+
+		Simplify complex queries
+		Improve query performance
+		Reuse code
+		Traverse hierarchical data
+		Simplify debugging
+
+
+
+
+MySQL CTE Syntax:
+
+
+
+Syntax: 
+
+
+WITH cte_name AS (
+    SELECT column1, column2, ...
+    FROM table_name
+    WHERE condition
+)
+SELECT *
+FROM cte_name;
+
+
+
+-------> Recursive CTE <-------
+
+
+//Syntax
+
+WITH RECURSIVE cte_name AS (
+
+CTE_query_definition            -- non recursive term
+
+UNION ALL
+
+recursive_query_definition      -- recursive term
+
+)
+SELECT * FROM cte_name
+
+
+'O R '
+
+
+WITH RECURSIVE cte_count (n) AS (
+      SELECT 1                     -- Anchor member
+      UNION ALL
+      SELECT n + 1                 -- Recursive member
+      FROM cte_count               -- Recursive member
+      WHERE n < 3                  -- Termination condition
+    )
+SELECT n                           -- Query that uses CTE
+FROM cte_count;                    -- Query that uses CTE
+
+
+
+
+
+Example:
+
+
+WITH RECURSIVE cte_count 
+AS 
+(
+SELECT 1 AS n
+UNION ALL 
+SELECT n+1 FROM cte_count WHERE n < 3
+)  
+SELECT n FROM cte_count;
+
+
+'OR'
+
+
+WITH RECURSIVE cte_count (n) 
+AS (
+      SELECT 1
+      UNION ALL
+      SELECT n + 1 
+      FROM cte_count 
+      WHERE n < 3
+    )
+SELECT n 
+FROM cte_count;
+
+
+---x---
+
+
+
+
+
+
+MySQL Recursive CTE Syntax: 
+
+
+
+WITH RECURSIVE cte_name AS (
+    SELECT id, parent_id, name
+    FROM table_name
+    WHERE parent_id IS NULL
+    UNION ALL
+    SELECT child.id, child.parent_id, child.name
+    FROM table_name child
+    JOIN cte_name parent ON child.parent_id = parent.id
+)
+SELECT *
+FROM cte_name;
+
+
+
+
+
+>>MySQL Recursive CTE Example: 
+
+
+
+WITH RECURSIVE employee_hierarchy AS (
+    SELECT employee_id, manager_id, name, 0 AS level
+    FROM employees
+    WHERE manager_id IS NULL
+    UNION ALL
+    SELECT e.employee_id, e.manager_id, e.name, eh.level + 1
+    FROM employees e
+    JOIN employee_hierarchy eh ON e.manager_id = eh.employee_id
+)
+SELECT
+    CONCAT(REPEAT('  ', level), name) AS employee_name,
+    CONCAT(REPEAT('  ', level - 1), eh.name) AS manager_name
+FROM employee_hierarchy eh;
+
+
+
+
+
+
+------ Recursive CTE --------
+
+
+
+Recursive CTE
+
+//Syntax
+
+WITH RECURSIVE cte_name AS (
+
+CTE_query_definition -- non recursive term
+UNION ALL
+recursive_query_definition -- recursive term
+
+)
+SELECT * FROM cte_name
+
+SQL By Rishabh Mishra 3
+Base query/
+anchor member
+
+Recursive query/
+recursive member
+
+
+
+
+
+RECURSIVE cte:
+
+Example: 
+
+
+Recursive CTE
+
+WITH RECURSIVE my_CTE AS (           Base query/
+SELECT 1 AS n                        anchor member
+
+UNION ALL
+
+SELECT n+1 FROM my_CTE             Recursive query/
+WHERE n < 3 )                      recursive member
+
+SELECT * FROM my_CTE
+
+
+
+
+
+Example: 
+
+WITH RECURSIVE EmpCTE AS (
+-- Anchor query
+Select emp_id, emp_name, manager_id
+From employees
+Where emp_id = 7
+
+UNION ALL
+
+-- Recursive query
+Select employees.emp_id , employees.emp_name, employees.manager_id
+From employees
+JOIN EmpCTE
+ON employees.emp_id = EmpCTE.manager_id
+)
+Select * From EmpCTE
+
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+3. Recursive CTE Example:
+
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    manager_id INT
+);
+
+
+INSERT INTO employees VALUES
+    (1, 'Ajay Doe', NULL),         -- CEO, no manager
+    (2, 'Neha Smith', 1),          -- Manager, reports to CEO
+    (3, 'Dev Johnson', 2),         -- Employee, reports to Jane Smith
+    (4, 'Geeta Brown', 2),         -- Employee, reports to Jane Smith
+    (5, 'Aryan Davis', 3);         -- Employee, reports to Bob Johnson
+
+
+
+
+*)Traverse the hierarchical data in the employees table using a recursive CTE:
+
+
+WITH RECURSIVE EmployeeHierarchy AS (
+    SELECT
+        employee_id,
+        employee_name,
+        manager_id,
+        0 AS level
+    FROM
+        employees
+    WHERE
+        manager_id IS NULL        -- Anchor member (root of the hierarchy)
+        
+    UNION ALL
+    
+    SELECT
+        e.employee_id,
+        e.employee_name,
+        e.manager_id,
+        eh.level + 1
+    FROM
+        employees e
+    INNER JOIN
+        EmployeeHierarchy eh ON e.manager_id = eh.employee_id     -- Recursive member
+)
+-- Final query to select from the CTE
+SELECT
+    employee_id,
+    employee_name,
+    manager_id,
+    level
+FROM
+    EmployeeHierarchy
+ORDER BY
+    level, employee_id;
+
+
+
+Output:
+
++-------------+---------------+------------+-------+
+| employee_id | employee_name | manager_id | level |
++-------------+---------------+------------+-------+
+|           1 | Ajay Doe      |       NULL |     0 |
+|           2 | Neha Smith    |          1 |     1 |
+|           3 | Dev Johnson   |          2 |     2 |
+|           4 | Geeta Brown   |          2 |     2 |
+|           5 | aryan Davis   |          3 |     3 |
++-------------+---------------+------------+-------+
+
+
+
+How it works.
+
+    Define The CTE with the name EmployeeHierarchy.
+    Define an anchor member that selects employees who do not have a manager (manager_id IS NULL), starting with the root of the hierarchy (CEO).
+
+    Use a recursive member to join the employees table with the CTE on the condition that the manager_id in the employees table matches the employee_id in the CTE, effectively traversing the hierarchy.
+
+    Select information from the CTE, including the employee’s ID, name, manager’s ID, and the level in the hierarchy in the final query. And sort the result set by level and employee ID.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+
+1. 
+
+CREATE TABLE sales (
+    product_name VARCHAR(50),
+    sales_date DATE,
+    revenue DECIMAL(10, 2)
+);
+
+
+
+INSERT INTO sales (product_name, sales_date, revenue) VALUES 
+    ('Product A', '2023-03-01', 1000), 
+    ('Product A', '2023-03-15', 1500), 
+    ('Product A', '2023-03-30', 2000), 
+    ('Product B', '2023-03-01', 800), 
+    ('Product B', '2023-03-15', 1200), 
+    ('Product B', '2023-03-30', 1600),
+    ('Product C', '2023-03-01', 500),
+    ('Product C', '2023-03-15', 750),
+    ('Product C', '2023-03-30', 1000);
+
+
+
+2. 
+
+
+CREATE TABLE sales (
+  order_date DATE,
+  product VARCHAR(50),
+  quantity INT,
+  revenue DECIMAL(10,2)
+);
+
+INSERT INTO sales (order_date, product, quantity, revenue) VALUES 
+('2023-01-01', 'Product A', 10, 1000.00),
+('2023-01-15', 'Product B', 5, 500.00),
+('2023-02-01', 'Product A', 8, 800.00),
+('2023-02-15', 'Product C', 3, 300.00),
+('2023-03-01', 'Product A', 12, 1200.00),
+('2023-03-15', 'Product B', 7, 700.00);
+
+
+
+
+
+2. 
+
+CREATE TABLE employees (
+
+emp_id serial PRIMARY KEY,
+emp_name VARCHAR NOT NULL,
+manager_id INT );
+
+
+
+INSERT INTO employees (
+
+emp_id, emp_name, manager_id)
+
+VALUES
+
+(1, 'Madhav', NULL),
+(2, 'Sam', 1),
+(3, 'Tom', 2),
+(4, 'Arjun', 6),
+(5, 'Shiva', 4),
+(6, 'Keshav', 1),
+(7, 'Damodar', 5);
+
+
+
+3. 
+
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    manager_id INT
+);
+
+
+INSERT INTO employees VALUES
+    (1, 'Ajay Doe', NULL),         -- CEO, no manager
+    (2, 'Neha Smith', 1),          -- Manager, reports to CEO
+    (3, 'Dev Johnson', 2),         -- Employee, reports to Jane Smith
+    (4, 'Geeta Brown', 2),         -- Employee, reports to Jane Smith
+    (5, 'Aryan Davis', 3);         -- Employee, reports to Bob Johnson
+
+
+
+
+
+----x---
+
+
+
+
+----x----
+
+
+
+
+
+
+

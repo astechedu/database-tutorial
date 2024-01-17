@@ -1,4 +1,4 @@
-# ----> SQL Tutorial ----
+# ----> SQL Tutorial <----
 
 # https://github.com/astechedu/database-tutorial.git
 
@@ -6,7 +6,7 @@
 
 
 
-					---->  Day 27 <----
+					------>  Day 27  <------
 
 
 #27 CTE ( Comman Table Expression )
@@ -37,9 +37,9 @@ Introduction to Common Table Expression (CTE) in MySQL?:
 
 
 
-
 MySQL CTE Syntax:
 
+1.
 
 
 Syntax: 
@@ -55,8 +55,24 @@ FROM cte_name;
 
 
 
+---x---
 
-> define multiple CTEs:
+
+
+
+2.
+
+> Define multiple CTEs:
+
+
+Syntax: 
+
+WITH cte1 AS (cte1_query), 
+     cte2 AS (cte2_query), 
+     cte3 AS (cte3_query)...
+(select_query)
+
+
 
 Syntax: 
 
@@ -76,6 +92,11 @@ JOIN cte2 ON cte1.column1 = cte2.column3;
 
 
 
+----x-----
+
+
+
+
 
 Example 01: 
 
@@ -90,6 +111,7 @@ With myct1(id, name, price) AS (select *from products)
 select id, name , price from mycte1;
 
 
+
 Example 03:
 
 With avgSal AS (select avg(salaray) AS SAL from emp)
@@ -101,26 +123,20 @@ select *from emp, avgsal where emp.sal > avgsal.sal;
 
 
 
+Example:
 
+WITH c1 AS (SELECT *FROM products
+), c2 AS (SELECT *FROM orders)
+SELECT *FROM c1 INNER JOIN c2 ON c1.id = c2.product_id;
 
+Example:
 
-MySQL Recursive CTE Syntax: 
+WITH c1 AS (SELECT *FROM products)
+, c2 AS (SELECT *FROM orders)
+SELECT c1.name, c1.price, c2.order_date FROM c1 INNER JOIN c2 ON c1.id = c2.product_id;
 
-
-
-WITH RECURSIVE cte_name AS (
-    SELECT id, parent_id, name
-    FROM table_name
-    WHERE parent_id IS NULL
-    UNION ALL
-    SELECT child.id, child.parent_id, child.name
-    FROM table_name child
-    JOIN cte_name parent ON child.parent_id = parent.id
-)
-SELECT *
-FROM cte_name;
-
-
+	
+----x----
 
 
 
@@ -190,102 +206,6 @@ ORDER BY
 
 
 
-
->>MySQL Recursive CTE Example: 
-
-
-
-WITH RECURSIVE employee_hierarchy AS (
-    SELECT employee_id, manager_id, name, 0 AS level
-    FROM employees
-    WHERE manager_id IS NULL
-    UNION ALL
-    SELECT e.employee_id, e.manager_id, e.name, eh.level + 1
-    FROM employees e
-    JOIN employee_hierarchy eh ON e.manager_id = eh.employee_id
-)
-SELECT
-    CONCAT(REPEAT('  ', level), name) AS employee_name,
-    CONCAT(REPEAT('  ', level - 1), eh.name) AS manager_name
-FROM employee_hierarchy eh;
-
-
-
-
-
-
------- Recursive CTE --------
-
-
-
-Recursive CTE
-
-//Syntax
-
-WITH RECURSIVE cte_name AS (
-
-CTE_query_definition -- non recursive term
-UNION ALL
-recursive_query_definition -- recursive term
-
-)
-SELECT * FROM cte_name
-
-SQL By Rishabh Mishra 3
-Base query/
-anchor member
-
-Recursive query/
-recursive member
-
-
-
-
-
-RECURSIVE cte:
-
-Example: 
-
-
-Recursive CTE
-
-WITH RECURSIVE my_CTE AS (           Base query/
-SELECT 1 AS n                        anchor member
-
-UNION ALL
-
-SELECT n+1 FROM my_CTE             Recursive query/
-WHERE n < 3 )                      recursive member
-
-SELECT * FROM my_CTE
-
-
-
-
-
-Example: 
-
-WITH RECURSIVE EmpCTE AS (
--- Anchor query
-Select emp_id, emp_name, manager_id
-From employees
-Where emp_id = 7
-
-UNION ALL
-
--- Recursive query
-Select employees.emp_id , employees.emp_name, employees.manager_id
-From employees
-JOIN EmpCTE
-ON employees.emp_id = EmpCTE.manager_id
-)
-Select * From EmpCTE
-
-
-
-
-
-
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -299,7 +219,7 @@ Example:
 
 
 Declare @RowNo int =1;
-;with ROWCTE as  
+with ROWCTE as  
    (  
       SELECT @RowNo as ROWNO    
 		UNION ALL  
@@ -383,6 +303,34 @@ VALUES
 (5, 'Shiva', 4),
 (6, 'Keshav', 1),
 (7, 'Damodar', 5);
+
+
+
+
+
+----x---
+
+
+
+3. Recursive CTE Example:
+
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    manager_id INT
+);
+
+
+INSERT INTO employees VALUES
+    (1, 'Ajay Doe', NULL),         -- CEO, no manager
+    (2, 'Neha Smith', 1),          -- Manager, reports to CEO
+    (3, 'Dev Johnson', 2),         -- Employee, reports to Jane Smith
+    (4, 'Geeta Brown', 2),         -- Employee, reports to Jane Smith
+    (5, 'Aryan Davis', 3);         -- Employee, reports to Bob Johnson
+
+
+
 
 ----x----
 
