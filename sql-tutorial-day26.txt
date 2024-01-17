@@ -6,7 +6,7 @@
 
 
 
-					  --- Day 26 ---
+					    -----> Day 26 <-----
 
 #26 MySQL Stored Function
 
@@ -29,6 +29,7 @@ Some Points:
     .It may not produce a result set.
 
     .The function parameter may contain only the IN parameter but can't allow specifying this parameter, while the procedure can allow      IN, OUT, INOUT parameters.
+
 
 
       Stored functions: 
@@ -54,7 +55,9 @@ HERE
 
 
 
-Syntax: 
+
+
+SYNTAX: 
 
 CREATE FUNCTION sf_name ([parameter(s)])
    RETURNS data type
@@ -75,8 +78,89 @@ fun_body;
 
 
 
-Example: 
+Syntax: 
 
+CREATE FUNCTION fn_name ()
+RETURNS data type
+BEGIN
+   Statements;
+END
+
+
+
+>EXAMPLE:
+
+DROP FUNCTION IF EXISTS fn1;
+
+DELIMITER $$
+create function fn1() returns int
+BEGIN
+ return 100;
+END $$
+DELIMITER ;
+
+
+SELECT *, fn1() FROM products;
+
+				+-----+--------+-------+------+-------+
+				| pid | name   | price | qty  | fn1() |
+				+-----+--------+-------+------+-------+
+				|   1 | tv     |   388 |    1 |   100 |
+				|   2 | comb   |    89 |    3 |   100 |
+				|   3 | camera |   636 |    2 |   100 |
+				|   4 | freeze |  5000 |    3 |   100 |
+				|   5 | watch  |   150 |    5 |   100 |
+				|   6 | shoes  |   400 |    7 |   100 |
+				|   7 | pencil |     5 |   11 |   100 |
+				|   8 | table  |  3332 |    1 |   100 |
+				|   9 | bench  |  1011 |    3 |   100 |
+				|  10 | laptop | 30000 |    1 |   100 |
+				|  11 | new    |   120 |    5 |   100 |
+				|  12 | new2   |   125 |   25 |   100 |
+				+-----+--------+-------+------+-------+
+				
+
+>EXAMPLE: 
+
+
+DROP FUNCTION IF EXISTS fn1;
+
+
+DELIMITER $$
+CREATE FUNCTION fn1() RETURNS INT
+BEGIN
+ DECLARE id INT;
+ SET id = 13;
+ RETURN id;
+END $$
+DELIMITER ;
+
+select fn1();
+SELECT *, fn1() FROM products;
+
+				+-----+--------+-------+------+-------+
+				| pid | name   | price | qty  | fn1() |
+				+-----+--------+-------+------+-------+
+				|   1 | tv     |   388 |    1 |    13 |
+				|   2 | comb   |    89 |    3 |    13 |
+				|   3 | camera |   636 |    2 |    13 |
+				|   4 | freeze |  5000 |    3 |    13 |
+				|   5 | watch  |   150 |    5 |    13 |
+				|   6 | shoes  |   400 |    7 |    13 |
+				|   7 | pencil |     5 |   11 |    13 |
+				|   8 | table  |  3332 |    1 |    13 |
+				|   9 | bench  |  1011 |    3 |    13 |
+				|  10 | laptop | 30000 |    1 |    13 |
+				|  11 | new    |   120 |    5 |    13 |
+				|  12 | new2   |   125 |   25 |    13 |
+				+-----+--------+-------+------+-------+
+
+
+
+
+>EXAMPLE: 
+
+DROP FUNCTION IF EXISTS fn;
 
 DELIMITER $$
 CREATE FUNCTION fn(p INT) RETURNS INT
@@ -88,8 +172,65 @@ DELIMITER ;
 
 SELECT name, price, fn(price) FROM products;
 
+			+--------+-------+-----------+
+			| name   | price | fn(price) |
+			+--------+-------+-----------+
+			| tv     |   388 |       388 |
+			| comb   |    89 |        89 |
+			| camera |   636 |       636 |
+			| freeze |  5000 |      5000 |
+			| watch  |   150 |       150 |
+			| shoes  |   400 |       400 |
+			| pencil |     5 |         5 |
+			| table  |  3332 |      3332 |
+			| bench  |  1011 |      1011 |
+			| laptop | 30000 |     30000 |
+			| new    |   120 |       120 |
+			| new2   |   125 |       125 |
+			+--------+-------+-----------+
 
-Example:
+
+
+
+>EXAMPLE: 
+
+DROP FUNCTION IF EXISTS fn;
+
+DELIMITER $$
+CREATE FUNCTION fn(price INT) RETURNS INT
+BEGIN
+ DECLARE per int;
+ SET per = (price*0.10);
+ RETURN per;
+END $$
+DELIMITER ;
+
+SELECT NAME, price, fn(price) AS "10%" FROM products;
+
+			+--------+-------+------+
+			| NAME   | price | 10%  |
+			+--------+-------+------+
+			| tv     |   388 |   39 |
+			| comb   |    89 |    9 |
+			| camera |   636 |   64 |
+			| freeze |  5000 |  500 |
+			| watch  |   150 |   15 |
+			| shoes  |   400 |   40 |
+			| pencil |     5 |    1 |
+			| table  |  3332 |  333 |
+			| bench  |  1011 |  101 |
+			| laptop | 30000 | 3000 |
+			| new    |   120 |   12 |
+			| new2   |   125 |   13 |
+			+--------+-------+------+
+
+
+
+
+
+>EXAMPLE: 
+
+DROP FUNCTION IF EXISTS fn;
 
 DELIMITER $$
 CREATE FUNCTION fn(p INT) RETURNS INT
@@ -100,42 +241,35 @@ DELIMITER ;
 
 SELECT NAME, price, fn(price) AS "10%" FROM products;
 
+			+--------+-------+------+
+			| NAME   | price | 10%  |
+			+--------+-------+------+
+			| tv     |   388 |   39 |
+			| comb   |    89 |    9 |
+			| camera |   636 |   64 |
+			| freeze |  5000 |  500 |
+			| watch  |   150 |   15 |
+			| shoes  |   400 |   40 |
+			| pencil |     5 |    1 |
+			| table  |  3332 |  333 |
+			| bench  |  1011 |  101 |
+			| laptop | 30000 | 3000 |
+			| new    |   120 |   12 |
+			| new2   |   125 |   13 |
+			+--------+-------+------+
 
 
-Example:
-
-DELIMITER $$
-CREATE FUNCTION fn(p INT) 
-RETURNS INT
-DETERMINISTIC
-BEGIN
- DECLARE discount INT;   
- IF p = 600 THEN 
-    SET discount = p*20;
- END IF; 
- RETURN discount;  
-END $$
-DELIMITER ;
-
-SELECT NAME, price, fn(price) AS "10%" FROM products;
-
-
-
-Example: 
-
+EXAMPLE: 
 
 DROP FUNCTION IF EXISTS fn;
 
 DELIMITER $$
 CREATE FUNCTION fn(p INT) 
 RETURNS INT
-DETERMINISTIC
 BEGIN
  DECLARE discount INT;   
- IF p < 500 THEN 
-    SET discount = p*.20;
-    ELSEIF( p >= 500) THEN 
-    SET discount = p*.30;
+ IF p = 600 THEN 
+    SET discount = (p*0.20);
  END IF; 
  RETURN discount;  
 END $$
@@ -143,33 +277,90 @@ DELIMITER ;
 
 SELECT NAME, price, fn(price) AS "10%" FROM products;
 
+				+--------+-------+------+
+				| NAME   | price | 10%  |
+				+--------+-------+------+
+				| tv     |   388 | NULL |
+				| comb   |    89 | NULL |
+				| camera |   636 | NULL |
+				| freeze |  5000 | NULL |
+				| watch  |   150 | NULL |
+				| shoes  |   400 | NULL |
+				| pencil |     5 | NULL |
+				| table  |  3332 | NULL |
+				| bench  |  1011 | NULL |
+				| laptop | 30000 | NULL |
+				| new    |   120 | NULL |
+				| new2   |   125 | NULL |
+				+--------+-------+------+
 
 
 
-	
 
 
-Example: 
+EXAMPLE: 
 
+DROP FUNCTION IF EXISTS fn;
+
+DELIMITER $$
+CREATE FUNCTION fn(p INT) 
+RETURNS INT
+-- DETERMINISTIC
+BEGIN
+ DECLARE discount INT;   
+ IF p < 500 THEN 
+    SET discount = p*0.20;
+    ELSEIF( p >= 500) THEN 
+    SET discount = p*0.30;
+ END IF; 
+ RETURN discount;  
+END $$
+DELIMITER ;
+
+SELECT NAME, price, fn(price) AS "discount" FROM products;
+
+			+--------+-------+----------+
+			| NAME   | price | discount |
+			+--------+-------+----------+
+			| tv     |   388 |       78 |
+			| comb   |    89 |       18 |
+			| camera |   636 |      191 |
+			| freeze |  5000 |     1500 |
+			| watch  |   150 |       30 |
+			| shoes  |   400 |       80 |
+			| pencil |     5 |        1 |
+			| table  |  3332 |     1000 |
+			| bench  |  1011 |      303 |
+			| laptop | 30000 |     9000 |
+			| new    |   120 |       24 |
+			| new2   |   125 |       25 |
+			+--------+-------+----------+
+
+
+
+
+EXAMPLE: 
+
+DROP FUNCTION IF EXISTS cust_Occupation;
 
     DELIMITER $$  
-    CREATE FUNCTION Customer_Occupation(  
+    CREATE FUNCTION cust_Occupation(  
         age int  
     )   
     RETURNS VARCHAR(30)  
     DETERMINISTIC  
     BEGIN  
-        DECLARE customer_occupation VARCHAR(25);  
+        DECLARE cust_occupation VARCHAR(25);  
         IF age > 56 THEN  
-            SET customer_occupation = 'Scientist';  
+            SET cust_occupation = 'Scientist';  
         ELSEIF (age <= 36 AND   
                 age >= 31) THEN  
-            SET customer_occupation = 'Engineer';  
+            SET cust_occupation = 'Engineer';  
         ELSEIF age < 31 THEN  
-            SET customer_occupation = 'Actor';  
+            SET cust_occupation = 'Actor';  
         END IF;  
         -- return the customer occupation  
-        RETURN (customer_occupation);  
+        RETURN (cust_occupation);  
     END$$  
     DELIMITER;  
 
@@ -224,25 +415,47 @@ DELIMITER ;
 
 i> Scalar Functions Examples:
 
+DROP FUNCTION IF EXISTS avg;
+
 DELIMITER $$
--- Scalar example:
-CREATE FUNCTION NoParameters()
-  RETURNS INT
-  
+CREATE FUNCTION avg(price int)
+  RETURNS INT  
+  -- DETERMINISTIC
     BEGIN 
-       RETURN (SELECT SUM(id) FROM users);
-    END$$
-    
+       RETURN (SELECT AVG(price) FROM products);
+    END $$    
 DELIMITER ;
 
 //Calling this function
 
-SELECT NoParameters();
+SELECT *, AVG(price) from products;
 
+
+
+
+i> Scalar Functions Examples:
+
+DROP FUNCTION IF EXISTS min;
+
+DELIMITER $$
+CREATE FUNCTION min(price int)
+  RETURNS INT 
+    BEGIN 
+       RETURN (SELECT MIN(price) FROM products);
+    END $$    
+DELIMITER ;
+
+//Calling this function
+
+SELECT *, MIN(price) from products;
 
 ---x---
 
+
+
 >> Function ON Ubuntu
+
+DROP FUNCTION IF EXISTS fn1;
 
 DELIMITER $$
 create function fn1(id int) returns int
@@ -254,7 +467,11 @@ DELIMITER ;
 
 select id,name, fn1(id) from users;
 
+
+
 //Or
+
+DROP FUNCTION IF EXISTS fn1;
 
 DELIMITER $$
 create function fn1() returns int
@@ -267,6 +484,9 @@ DELIMITER ;
 select id,name, fn1() from users;
 
 //Or
+
+DROP FUNCTION IF EXISTS fn1;
+
 
 DELIMITER $$
 create function fn1() returns int
@@ -281,6 +501,8 @@ DELIMITER ;
 
 //Or
 
+DROP FUNCTION IF EXISTS fn1;
+
 DELIMITER $$
 create function fn1() returns int
 begin
@@ -293,7 +515,30 @@ end $$
 DELIMITER ;
 
 
+
+//OR
+
+DROP FUNCTION IF EXISTS fn1;
+
+DELIMITER $$
+create function fn1() returns int
+begin
+ declare n1 int;
+ declare n2 int;
+ declare sum int;
+ set n1 = 10;
+ set n2 = 5;
+ set sum = (n1+n2);      
+ return sum;
+end $$
+DELIMITER ;
+
+
+
+
 >>While Loop in function
+//DROP FUNCTION IF EXISTS fn1;
+
 
 DELIMITER $$
 create function fn1() returns int
@@ -327,6 +572,7 @@ END
 
 ---x---
 
+
 //Calculate the net sales 
 
 DELIMITER $$
@@ -352,6 +598,7 @@ SELECT dbo.udfNet_Sales(25, 500, 0.2) AS net_sales;
 
 --------------------------------------------------------
 
+
 ii>> Table-Valued Functions
 
 1. Inline Table-Values Functions
@@ -371,7 +618,8 @@ SELECT * FROM udf_GetEmployee();
  
 ---x---
 
--------------------------------------------------------------------
+
+---------------------------------------------------------------------------
 
 
 
@@ -387,6 +635,8 @@ END$$
 DELIMITER ;
 
 ---------------------------------------------------------------------------
+
+
 //
 
 >>> Function in phpmyadmin (Working)
@@ -429,7 +679,8 @@ Built-in functions
 
 
 
--------------------------------------------------
+--------------------------------------------------------------------
+
 Example: 
 
 
@@ -532,7 +783,9 @@ DELIMITER ;
 
 SHOW FUNCTION STATUS WHERE db = 'classicmodels';
 
--------------------------------------------
+
+
+---------------------------------------------------------------
 
 
 

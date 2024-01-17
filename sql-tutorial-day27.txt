@@ -37,21 +37,47 @@ Introduction to Common Table Expression (CTE) in MySQL?:
 
 
 
-MySQL CTE Syntax:
+--> MySQL CTE Syntax:
 
 1.
+
+Syntax: 
+
+WITH expression_name AS (cte_query)
+
+(cte_query_definition);
+
+
+
+'OR'
+
+-- Define the CTE expression name and column list.
+
+WITH expression_name 
+
+AS
+
+-- Define the CTE query.
+(
+     cte_query
+)
+
+-- Define the outer query referncting the expression_name.
+ (cte_query_definition_;
+
+
 
 
 Syntax: 
 
 
-WITH cte_name AS (
+WITH expression_name AS (
     SELECT column1, column2, ...
     FROM table_name
     WHERE condition
 )
 SELECT *
-FROM cte_name;
+FROM expression_name;
 
 
 
@@ -62,7 +88,7 @@ FROM cte_name;
 
 2.
 
-> Define multiple CTEs:
+--> Define multiple CTEs:
 
 
 Syntax: 
@@ -110,6 +136,166 @@ Example 02:
 With myct1(id, name, price) AS (select *from products) 
 select id, name , price from mycte1;
 
+Example: 
+
+WITH my_cte AS (select *from products)  
+select *from my_cte;
+			+-----+--------+-------+------+
+			| pid | name   | price | qty  |
+			+-----+--------+-------+------+
+			|   1 | tv     |   388 |    1 |
+			|   2 | comb   |    89 |    3 |
+			|   3 | camera |   636 |    2 |
+			|   4 | freeze |  5000 |    3 |
+			|   5 | watch  |   150 |    5 |
+			|   6 | shoes  |   400 |    7 |
+			|   7 | pencil |     5 |   11 |
+			|   8 | table  |  3332 |    1 |
+			|   9 | bench  |  1011 |    3 |
+			|  10 | laptop | 30000 |    1 |
+			|  11 | new    |   120 |    5 |
+			|  12 | new2   |   125 |   25 |
+			+-----+--------+-------+------+
+
+
+Example:
+
+WITH my_cte AS (select pid, name, price from products)
+select *from my_cte;
+
+			+-----+--------+-------+
+			| pid | name   | price |
+			+-----+--------+-------+
+			|   1 | tv     |   388 |
+			|   2 | comb   |    89 |
+			|   3 | camera |   636 |
+			|   4 | freeze |  5000 |
+			|   5 | watch  |   150 |
+			|   6 | shoes  |   400 |
+			|   7 | pencil |     5 |
+			|   8 | table  |  3332 |
+			|   9 | bench  |  1011 |
+			|  10 | laptop | 30000 |
+			|  11 | new    |   120 |
+			|  12 | new2   |   125 |
+			+-----+--------+-------+
+
+
+
+Example:
+
+WITH my_cte AS (select pid, name, price from products)
+select name, price from my_cte;
+
+			+--------+-------+
+			| name   | price |
+			+--------+-------+
+			| tv     |   388 |
+			| comb   |    89 |
+			| camera |   636 |
+			| freeze |  5000 |
+			| watch  |   150 |
+			| shoes  |   400 |
+			| pencil |     5 |
+			| table  |  3332 |
+			| bench  |  1011 |
+			| laptop | 30000 |
+			| new    |   120 |
+			| new2   |   125 |
+			+--------+-------+
+
+
+Example:
+
+WITH my_cte AS (select *from products)
+select name, price from my_cte;
+
+				+--------+-------+
+				| name   | price |
+				+--------+-------+
+				| tv     |   388 |
+				| comb   |    89 |
+				| camera |   636 |
+				| freeze |  5000 |
+				| watch  |   150 |
+				| shoes  |   400 |
+				| pencil |     5 |
+				| table  |  3332 |
+				| bench  |  1011 |
+				| laptop | 30000 |
+				| new    |   120 |
+				| new2   |   125 |
+				+--------+-------+
+
+
+
+Example:
+
+WITH my_cte(id,fname,lname,age,address,sal,city,country,dob) AS (select *from employees)
+select *from my_cte;
+
+
+
+Example: 
+
+with avg_price AS ( select AVG(price) from products ) 
+select *from products, avg_price;
+
+				+-----+--------+-------+------+------------+
+				| pid | name   | price | qty  | AVG(price) |
+				+-----+--------+-------+------+------------+
+				|   1 | tv     |   388 |    1 |       3438 |
+				|   2 | comb   |    89 |    3 |       3438 |
+				|   3 | camera |   636 |    2 |       3438 |
+				|   4 | freeze |  5000 |    3 |       3438 |
+				|   5 | watch  |   150 |    5 |       3438 |
+				|   6 | shoes  |   400 |    7 |       3438 |
+				|   7 | pencil |     5 |   11 |       3438 |
+				|   8 | table  |  3332 |    1 |       3438 |
+				|   9 | bench  |  1011 |    3 |       3438 |
+				|  10 | laptop | 30000 |    1 |       3438 |
+				|  11 | new    |   120 |    5 |       3438 |
+				|  12 | new2   |   125 |   25 |       3438 |
+				+-----+--------+-------+------+------------+
+
+
+
+Example: 
+
+with avg_price AS ( select AVG(price) AS avg from products ) 
+select *from products p, avg_price where p.price > avg_price.avg;
+
+				+-----+--------+-------+------+------+
+				| pid | name   | price | qty  | avg  |
+				+-----+--------+-------+------+------+
+				|   4 | freeze |  5000 |    3 | 3438 |
+				|  10 | laptop | 30000 |    1 | 3438 |
+				+-----+--------+-------+------+------+
+
+
+Example: 
+
+with avg_price(avg) AS ( select AVG(price) from products ) 
+select *from products p, avg_price where p.price < avg_price.avg;
+
+				+-----+--------+-------+------+------+
+				| pid | name   | price | qty  | avg  |
+				+-----+--------+-------+------+------+
+				|   1 | tv     |   388 |    1 | 3438 |
+				|   2 | comb   |    89 |    3 | 3438 |
+				|   3 | camera |   636 |    2 | 3438 |
+				|   5 | watch  |   150 |    5 | 3438 |
+				|   6 | shoes  |   400 |    7 | 3438 |
+				|   7 | pencil |     5 |   11 | 3438 |
+				|   8 | table  |  3332 |    1 | 3438 |
+				|   9 | bench  |  1011 |    3 | 3438 |
+				|  11 | new    |   120 |    5 | 3438 |
+				|  12 | new2   |   125 |   25 | 3438 |
+				+-----+--------+-------+------+------+
+
+
+
+
 
 
 Example 03:
@@ -118,8 +304,57 @@ With avgSal AS (select avg(salaray) AS SAL from emp)
 select *from emp, avgsal ;
 
 
+
 With avgSal AS (select avg(salaray) AS SAL from emp)
 select *from emp, avgsal where emp.sal > avgsal.sal;
+
+
+
+
+
+
+
+Example: 
+
+WITH cte1 
+AS 
+(
+	select *from products
+), cte2 
+AS 
+(
+	select *from orders
+)
+select *from cte1 INNER JOIN cte2 ON cte1.pid = cte2.pid;
+
+
+			+-----+------+-------+------+----+------+------------+-------------+-------------+------------+
+			| pid | name | price | qty  | id | pid  | order_date | customer_id | employee_id | shipper_id |
+			+-----+------+-------+------+----+------+------------+-------------+-------------+------------+
+			|   1 | tv   |   388 |    1 |  1 |    1 | 2023-12-01 |           1 |           2 |          1 |
+			|   2 | comb |    89 |    3 |  2 |    2 | 2023-12-22 |           2 |           1 |          2 |
+			|   1 | tv   |   388 |    1 |  3 |    1 | 2023-01-01 |           1 |           1 |          1 |
+			|   1 | tv   |   388 |    1 |  4 |    1 | 2023-03-05 |           3 |           2 |          3 |
+			+-----+------+-------+------+----+------+------------+-------------+-------------+------------+
+
+
+
+Example: 
+
+WITH cte1 AS (select *from products), cte2 AS (select *from orders)
+select c1.name, c1.price, c2.order_date from cte1 c1 INNER JOIN cte2 c2 ON c1.pid = c2.pid;
+
+
+				+------+-------+------------+
+				| name | price | order_date |
+				+------+-------+------------+
+				| tv   |   388 | 2023-12-01 |
+				| comb |    89 | 2023-12-22 |
+				| tv   |   388 | 2023-01-01 |
+				| tv   |   388 | 2023-03-05 |
+				+------+-------+------------+
+
+
 
 
 

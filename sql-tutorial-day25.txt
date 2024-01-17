@@ -8,7 +8,7 @@
 
 						     ---> Day 25 <----
 
-#25 SQL Stored Procedures
+#25 SQL Stored Procedures:
 
                 
                       ->A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
@@ -29,7 +29,7 @@ MySQL:
 
 DELIMITER //
 
-CREATE PROCEDURE proc_name ()
+CREATE PROCEDURE proc_name()
 
 BEGIN
   SELECT column1, column2...
@@ -42,10 +42,14 @@ DELIMITER ;
 
 
 
+
+//Passing Params
+
+
 DELIMITER //
-CREATE PROCEDURE pro_name(param1 INT)
+CREATE PROCEDURE pro_name(param1 datatype)
 BEGIN
-SELECT * FROM student_database.student s where s.sname = pram1;
+SELECT * FROM tableName where column = value;
 END//
 DELIMITER;
 
@@ -71,83 +75,161 @@ DELIMITER;
 
 
 
+
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
+
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT *FROM products;
 END $$
 DELIMITER ;
 
-CALL pp;
+
+//CALL prod;
+CALL prod();
+
+		+-----+--------+-------+------+
+		| pid | name   | price | qty  |
+		+-----+--------+-------+------+
+		|   1 | tv     |   388 |    1 |
+		|   2 | comb   |    89 |    3 |
+		|   3 | camera |   636 |    2 |
+		|   4 | freeze |  5000 |    3 |
+		|   5 | watch  |   150 |    5 |
+		|   6 | shoes  |   400 |    7 |
+		|   7 | pencil |     5 |   11 |
+		|   8 | table  |  3332 |    1 |
+		|   9 | bench  |  1011 |    3 |
+		|  10 | laptop | 30000 |    1 |
+		|  11 | new    |   120 |    5 |
+		|  12 | new2   |   125 |   25 |
+		+-----+--------+-------+------+
+
 
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price FROM products p;
 END $$
 DELIMITER ;
 
-CALL pp;
 
+//CALL prod;
+
+			+--------+-------+
+			| name   | price |
+			+--------+-------+
+			| tv     |   388 |
+			| comb   |    89 |
+			| camera |   636 |
+			| freeze |  5000 |
+			| watch  |   150 |
+			| shoes  |   400 |
+			| pencil |     5 |
+			| table  |  3332 |
+			| bench  |  1011 |
+			| laptop | 30000 |
+			| new    |   120 |
+			| new2   |   125 |
+			+--------+-------+
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
+
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price FROM products p where price > 2000;
 END $$
 DELIMITER ;
 
-CALL pp;
+//CALL prod;
+
+			+--------+-------+
+			| name   | price |
+			+--------+-------+
+			| freeze |  5000 |
+			| table  |  3332 |
+			| laptop | 30000 |
+			+--------+-------+
+
 
 
 
 Example:
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price FROM products p where price BETWEEN 2000 AND 5000;
 END $$
 DELIMITER ;
 
-CALL pp;
+//CALL prod;
+
+				+--------+-------+
+				| name   | price |
+				+--------+-------+
+				| freeze |  5000 |
+				| table  |  3332 |
+				+--------+-------+
 
 
 
---> IF(column, true, false) <---
+
+----> IF(column, true, false) <----
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price , IF( price < 600, 'no discount', 'discounted') AS Discounted_Status FROM products p;
 END $$
 DELIMITER ;
 
-CALL pp;
+//CALL prod;
+
++--------+-------+-------------------+
+| name   | price | Discounted_Status |
++--------+-------+-------------------+
+| tv     |   388 | no discount       |
+| comb   |    89 | no discount       |
+| camera |   636 | discounted        |
+| freeze |  5000 | discounted        |
+| watch  |   150 | no discount       |
+| shoes  |   400 | no discount       |
+| pencil |     5 | no discount       |
+| table  |  3332 | discounted        |
+| bench  |  1011 | discounted        |
+| laptop | 30000 | discounted        |
+| new    |   120 | no discount       |
+| new2   |   125 | no discount       |
++--------+-------+-------------------+
+
+
+
+
 
 ---x---
 
@@ -158,29 +240,48 @@ CALL pp;
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price , 
 CASE WHEN price > 200 THEN price*0.10 
      ELSE 0 
-END Discounted_Status 
+END AS Discounted_Status 
 FROM products p;
 END $$
 DELIMITER ;
 
-CALL pp;
+CALL prod;
+
+
+			+--------+-------+--------------------+
+			| name   | price | Discounted_Status  |
+			+--------+-------+--------------------+
+			| tv     |   388 | 38.800000000000004 |
+			| comb   |    89 |                  0 |
+			| camera |   636 |               63.6 |
+			| freeze |  5000 |                500 |
+			| watch  |   150 |                  0 |
+			| shoes  |   400 |                 40 |
+			| pencil |     5 |                  0 |
+			| table  |  3332 | 333.20000000000005 |
+			| bench  |  1011 | 101.10000000000001 |
+			| laptop | 30000 |               3000 |
+			| new    |   120 |                  0 |
+			| new2   |   125 |                  0 |
+			+--------+-------+--------------------+
+
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price, 
   CASE WHEN p.price > 100 AND p.price < 250 THEN p.price*0.10
@@ -191,40 +292,64 @@ BEGIN
 END $$
 DELIMITER ;
 
-CALL pp;
+CALL prod;
+
+
+
+
+			+--------+-------+-------------------+
+			| name   | price | Discounted_Status |
+			+--------+-------+-------------------+
+			| tv     |   388 | 77.60000000000001 |
+			| comb   |    89 |                 0 |
+			| camera |   636 |             127.2 |
+			| freeze |  5000 |                 0 |
+			| watch  |   150 |                15 |
+			| shoes  |   400 |                80 |
+			| pencil |     5 |                 0 |
+			| table  |  3332 |                 0 |
+			| bench  |  1011 |                 0 |
+			| laptop | 30000 |                 0 |
+			| new    |   120 |                12 |
+			| new2   |   125 |              12.5 |
+			+--------+-------+-------------------+
 
 
 
 ---x---
 
 
+
+
+
+
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp2()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT p.name, p.price , IF( price < 600, price*0.10, 'no discount') AS Discounted_Status FROM products p;
 END $$
 DELIMITER ;
 
-CALL pp2;
+CALL prod;
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
   SELECT *FROM products p INNER JOIN orders o ON p.id = o.product_id ;
 END $$
 DELIMITER ;
 
-CALL pp;
+CALL prod;
 
 
 
@@ -232,18 +357,25 @@ CALL pp;
 
 Example:
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 DELIMITER $$
-CREATE PROCEDURE pp()
+CREATE PROCEDURE prod()
 BEGIN
-  SELECT p.name, p.price , o.order_id FROM products p INNER JOIN orders o ON p.id = o.product_id ;
+  SELECT p.name, p.price , o.order_date FROM products p INNER JOIN orders o ON p.pid = o.pid ;
 END $$
 DELIMITER ;
 
-CALL pp;
+//CALL prod;
 
-
+		+------+-------+------------+
+		| name | price | order_date |
+		+------+-------+------------+
+		| tv   |   388 | 2023-12-01 |
+		| comb |    89 | 2023-12-22 |
+		| tv   |   388 | 2023-01-01 |
+		| tv   |   388 | 2023-03-05 |
+		+------+-------+------------+
 
 
 
@@ -251,7 +383,7 @@ CALL pp;
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS prod;
 
 
 DELIMITER //
@@ -259,31 +391,42 @@ CREATE PROCEDURE gp(p INT)
 BEGIN
 SELECT * FROM products WHERE price = p;
 END//
-DELIMITER;
+DELIMITER ;
 
-CALL gp(600);
+//CALL gp(5000);
+
+			+-----+--------+-------+------+
+			| pid | name   | price | qty  |
+			+-----+--------+-------+------+
+			|   4 | freeze |  5000 |    3 |
+			+-----+--------+-------+------+
 
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS gp;
 
 DELIMITER //
 CREATE PROCEDURE gp(pname VARCHAR(10))
 BEGIN
 SELECT * FROM products WHERE NAME = pname;
 END//
-DELIMITER;
+DELIMITER ;
 
-CALL gp("laptop");
+CALL gp("tv");
+				+-----+------+-------+------+
+				| pid | name | price | qty  |
+				+-----+------+-------+------+
+				|   1 | tv   |   388 |    1 |
+				+-----+------+-------+------+
 
 
 
 Example: 
 
-DROP PROCEDURE IF EXISTS pp;
+DROP PROCEDURE IF EXISTS gp;
 
 DELIMITER //
 CREATE PROCEDURE gp(pname VARCHAR(10))
@@ -301,6 +444,20 @@ CALL gp("laptop");
 
 
 ----x----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
