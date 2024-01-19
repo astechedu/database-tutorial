@@ -162,6 +162,57 @@ SELECT n
 FROM cte_count;
 
 
+
+-- How to define variable in mysql
+-- https://blog.devart.com/mysql-variables-html.html
+SET @num:=129;        -- Set variable in mysql
+
+
+-- Find length of given string
+SET @name:="Ajay Sisaudiay";    -- Set variable in mysql
+
+WITH RECURSIVE CTE AS (
+
+SELECT 1 AS cnt
+UNION ALL 
+SELECT cnt+1 FROM CTE
+WHERE cnt < LENGTH(@name)
+)
+SELECT *FROM CTE;
+
+
+
+-- Pringin Alphabet from string given 
+SET @name:="Ajay Sisaudiay";    -- Set variable in mysql
+
+WITH RECURSIVE CTE AS (
+
+SELECT 1 AS cnt
+UNION ALL 
+SELECT cnt+1 FROM CTE
+WHERE cnt < LENGTH(@name)
+)
+SELECT SUBSTRING(@name, cnt, 1) FROM CTE;
+
+
+
+
+
+SET @startdate:= '2022-01-01';
+DECLARE @enddate:= '2022-01-10';
+
+WITH RecursiveCTE AS (
+
+SELECT @startdate AS OrderDate
+UNION ALL 
+SELECT DateAdd(d,1,OrderDate) FROM RecursiveCTE
+WHERE DateAdd(d,1,OrderDate) <= @enddate
+)
+SELECT *FROM RecursiveCTE;
+
+
+
+
 ---x---
 
 
