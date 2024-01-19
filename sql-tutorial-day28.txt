@@ -87,6 +87,22 @@ FROM cte_count;                    -- Query that uses CTE
 
 
 
+Example: 
+
+SQL : Loop
+
+CTE Recursive                                //Like: for(i=0;i<5;i++)
+
+With recursive mytable (i) as                // i
+(
+  select 0                                   // i=0
+  union all
+  select i+1 from mytable where i < 5        // i+1 = 0 + 1 = 1
+)
+select *from mytable;
+
+
+
 
 Example:
 
