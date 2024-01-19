@@ -9,7 +9,7 @@
 					------>  Day 28  <------
 
 
-#28 CTE ( Comman Table Expression )                              -- Looping
+#28 CTE ( Comman Table Expression )                                    -- Looping
 
 Introduction to Common Table Expression (CTE) in MySQL?: 
 
@@ -20,7 +20,8 @@ Introduction to Common Table Expression (CTE) in MySQL?:
 
 
 
-MySQL CTE Recursive 
+MySQL CTE Recursive:
+
 
 -------> Recursive CTE <-------
 
@@ -51,8 +52,8 @@ WITH RECURSIVE cte_count (n) AS (
       FROM cte_count               -- Recursive member
       WHERE n < 3                  -- Termination condition
     )
-SELECT n                           -- Query that uses CTE
-FROM cte_count;                    -- Query that uses CTE
+SELECT n  FROM cte_count;          -- Query that uses CTE
+                   		
 
 
 
@@ -112,7 +113,7 @@ With recursive mytable (i) as                -- i
 (
   select 0                                   -- i=0
   union all
-  select i+1 from mytable where i < 5        -- i+1 = 0 + 1 = 1
+  select i+1 from mytable where i < 5        -- i+1 = 0 + 1 = 1             
 )
 select *from mytable;
 				+------+
@@ -123,7 +124,7 @@ select *from mytable;
 				|    2 |
 				|    3 |
 				|    4 |
-				|    5 |
+				|    5 |               -- 4+1 = 5
 				+------+
 
 
@@ -137,16 +138,16 @@ SELECT 1 AS n
 UNION ALL 
 SELECT n+1 FROM cte_count WHERE n < 3
 )  
-SELECT n FROM cte_count;
+SELECT n, n+1 FROM cte_count;
 
+				+------+------+
+				| n    | n+1  |
+				+------+------+
+				|    1 |    2 |
+				|    2 |    3 |
+				|    3 |    4 |
+				+------+------+
 
-				+------+
-				| n    |
-				+------+
-				|    1 |
-				|    2 |
-				|    3 |
-				+------+
 
 
 'OR'
@@ -176,6 +177,7 @@ SET @num:=129;                      -- Set variable in mysql
 
 
 SET @name:="Ajay Sisaudiay";        -- Set variable in mysql
+
 
 WITH RECURSIVE CTE AS (
 
@@ -248,7 +250,6 @@ SELECT SUBSTRING(@name, cnt, 1) FROM CTE;
 
 
 Example 07:
-
 
 
 WITH RECURSIVE my_CTE AS (           -- Base query/
@@ -420,6 +421,82 @@ SELECT * FROM cte;
 		|    4 |   -8 |    8 |
 		|    5 |   16 |  -16 |
 		+------+------+------+
+
+
+
+Example: 14
+
+  -- Pringing Alphabet A to Z
+  
+  
+WITH RECURSIVE my 
+AS 
+(
+ SELECT char(65) as n 
+ UNION ALL 
+ SELECT char(ascii(n)+1) FROM my WHERE n < 'Z' 
+) 
+SELECT *FROM my;
+
+				+------+
+				| n    |
+				+------+
+				| A    |
+				| B    |
+				| C    |
+				| D    |
+				| E    |
+				| F    |
+				| G    |
+				| H    |
+				| I    |
+				| J    |
+				| K    |
+				| L    |
+				| M    |
+				| N    |
+				| O    |
+				| P    |
+				| Q    |
+				| R    |
+				| S    |
+				| T    |
+				| U    |
+				| V    |
+				| W    |
+				| X    |
+				| Y    |
+				| Z    |
+				+------+
+
+
+
+-- Pringin even numbers
+
+
+With recursive numbers as                  
+(
+  select 1 as n                              
+  union 
+  select n+1 from numbers where n < 10      
+)
+select IF(n%2=0, n, '') as Even from numbers;
+
+
++------+
+| Even |
++------+
+|      |
+| 2    |
+|      |
+| 4    |
+|      |
+| 6    |
+|      |
+| 8    |
+|      |
+| 10   |
++------+
 
 
 
